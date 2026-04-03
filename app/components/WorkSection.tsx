@@ -11,21 +11,19 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const projects = [
   {
-    id: "project1",
-    category: "Enterprise Web Application",
-    title: "Atlas — Real-Time Fleet Intelligence",
-    body: "A large-scale logistics enterprise needed to coordinate thousands of vehicles across 14 countries in real time. We architected a distributed event-driven platform that reduced dispatch latency by 94% and eliminated their legacy bottleneck.",
-    stack: ["Next.js", "Go", "Kafka", "PostgreSQL", "AWS"],
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1000&q=80",
+    id: "atlas",
+    category: "High-Velocity Event Ticketing",
+    title: "Atlas — The Sovereign Exchange",
+    body: "A high-velocity ticketing platform engineered for the modern event landscape. Atlas serves as a primary gateway for thousands of users, facilitating seamless access to premier entertainment experiences through mission-critical infrastructure that handles high-demand releases with absolute precision.",
+    image: "/images/projects/atlas_marketplace_cover.png",
     imageLeft: true,
   },
   {
-    id: "project2",
-    category: "AI-Driven Platform",
-    title: "Meridian — AI-Powered Clinical Triage",
-    body: "A healthcare startup needed an AI system that could assist physicians without replacing their judgment. We built a fine-tuned triage co-pilot that improved case prioritization accuracy by 38%, deployed across 6 hospital networks.",
-    stack: ["Python", "FastAPI", "PyTorch", "React", "GCP"],
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1000&q=80",
+    id: "niena",
+    category: "AI-Driven Career Integration",
+    title: "Niena — The Professional Catalyst",
+    body: "An intelligent ecosystem redefining the professional journey. Niena leverages advanced AI to harmonize resume synthesis with real-time, high-fidelity interview simulations. By bridging the gap between talent and opportunity, it provides a sophisticated matching engine that aligns aspirations with the market's most compelling roles.",
+    image: "/images/projects/campushelper_cover.png",
     imageLeft: false,
   },
 ];
@@ -153,19 +151,7 @@ export default function WorkSection() {
               }}>
                 {project.body}
               </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "32px" }}>
-                {project.stack.map((tech) => (
-                  <span key={tech} style={{
-                    fontFamily: "'Cinzel', serif", fontSize: "8px", letterSpacing: "0.16em",
-                    textTransform: "uppercase", color: "var(--color-gold)",
-                    background: "rgba(201,168,76,0.08)", border: "var(--border-gold)",
-                    borderRadius: "var(--radius-tag)", padding: "4px 10px",
-                  }}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <a href="#contact" className="btn-ghost">Start a similar project →</a>
+              <a href="#contact" className="btn-ghost" style={{ marginTop: "8px" }}>Start a similar project →</a>
             </div>
           </div>
         ))}

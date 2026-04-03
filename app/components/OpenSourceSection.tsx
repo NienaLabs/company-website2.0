@@ -20,7 +20,7 @@ const libraries = [
       "Accessible by default with keyboard and screen reader support",
       "Tree-shakeable, < 4kb gzipped",
     ],
-    href: "https://github.com/orgs/Nienalabs-community/repositories",
+    href: "https://github.com/orgs/Niena Labs-community/repositories",
     tag: "Library",
   },
   {
@@ -35,7 +35,7 @@ const libraries = [
       "Choose your ORM: Prisma or Drizzle — fully configured",
       "Environment scaffolding, typed routes, and project structure included",
     ],
-    href: "https://github.com/orgs/Nienalabs-community/repositories",
+    href: "https://github.com/orgs/Niena Labs-community/repositories",
     tag: "CLI Tool",
   },
 ];
@@ -106,7 +106,7 @@ export default function OpenSourceSection() {
             <div className="overline">Open Source</div>
             {/* GitHub org pill */}
             <a
-              href="https://github.com/orgs/Nienalabs-community/repositories"
+              href="https://github.com/orgs/Niena Labs-community/repositories"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -129,7 +129,7 @@ export default function OpenSourceSection() {
               onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(201,168,76,0.08)")}
             >
               <GitHubArrowIcon />
-              Nienalabs Community
+              Niena Labs Community
             </a>
           </div>
 
@@ -323,12 +323,12 @@ export default function OpenSourceSection() {
               lineHeight: 1.7,
               maxWidth: "480px",
             }}>
-              All our libraries live in the Nienalabs Community GitHub organization.
+              All our libraries live in the Niena Labs Community GitHub organization.
               Contributions, issues, and ideas are always welcome.
             </p>
           </div>
           <a
-            href="https://github.com/orgs/Nienalabs-community/repositories"
+            href="https://github.com/orgs/Niena Labs-community/repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary"

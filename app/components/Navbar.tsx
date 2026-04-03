@@ -94,9 +94,9 @@ export default function Navbar() {
           ref={logoRef}
           style={{ display: "flex", alignItems: "center", gap: "4px" }}
         >
-        
-           <Image src="/logo-white.svg" alt="Logo" width={25} height={25} />
-          
+
+          <Image src="/logo-white.svg" alt="Logo" width={25} height={25} />
+
           <span style={{
             fontFamily: "'Cinzel', serif",
             fontSize: "18px",
@@ -104,7 +104,7 @@ export default function Navbar() {
             color: "var(--color-text-primary)",
             textTransform: "uppercase",
           }}>
-            NIENALABS
+            Niena Labs
           </span>
         </div>
 
@@ -129,11 +129,11 @@ export default function Navbar() {
         <div ref={ctaRef} style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           {/* GitHub Community Link */}
           <a
-            href="https://github.com/orgs/Nienalabs-community/repositories"
+            href="https://github.com/orgs/Niena Labs-community/repositories"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Nienalabs GitHub Community"
-            title="Nienalabs Open Source Community"
+            aria-label="Niena Labs GitHub Community"
+            title="Niena Labs Open Source Community"
             style={{
               color: "rgba(232,223,200,0.45)",
               display: "flex",
@@ -161,7 +161,7 @@ export default function Navbar() {
 
 function CallButton() {
   const [copied, setCopied] = useState(false);
-  
+
   const handleCallClick = () => {
     navigator.clipboard.writeText("+233556732796");
     setCopied(true);
@@ -170,10 +170,10 @@ function CallButton() {
 
   return (
     <div style={{ position: "relative", display: "inline-block" }}>
-      <a 
-        href="tel:+233556732796" 
+      <a
+        href="tel:+233556732796"
         onClick={handleCallClick}
-        className="btn-secondary" 
+        className="btn-secondary"
         style={{ fontSize: "9px" }}
       >
         Book a Call

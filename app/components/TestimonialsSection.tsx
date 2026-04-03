@@ -9,7 +9,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const testimonials = [
   {
-    quote: "They did not build what we asked for. They built what we needed — which turned out to be a far harder and more valuable thing. Nienalabs understood our problem before we fully did.",
+    quote: "They did not build what we asked for. They built what we needed — which turned out to be a far harder and more valuable thing. Niena Labs understood our problem before we fully did.",
     name: "AMARA OSEI", company: "VANTARA HEALTH", role: "Co-Founder & CEO",
   },
   {

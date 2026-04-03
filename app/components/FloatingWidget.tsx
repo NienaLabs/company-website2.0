@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ChatModal from "./ChatModal";
 
 // Social Icons as inline SVGs
 const LinkedInIcon = () => (
@@ -11,7 +12,7 @@ const LinkedInIcon = () => (
 
 const TelegramIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.32-.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.32-.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
   </svg>
 );
 
@@ -48,6 +49,8 @@ const PlusIcon = () => (
 
 export default function FloatingWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   // Configuration for radial position
   const RADIUS = 96; // Distance of icons from center
@@ -60,121 +63,132 @@ export default function FloatingWidget() {
   ];
 
   return (
-    <div style={{
-      position: "fixed",
-      bottom: "32px",
-      right: "32px",
-      zIndex: 9999,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}>
-      {/* Container holding everything relative to the center origin */}
-      <div style={{ position: "relative", width: "56px", height: "56px" }}>
-        
-        {/* Sub-buttons cluster */}
-        {options.map((opt) => {
-          // Convert angle from degrees to radians, where 0 is right, 90 is up.
-          const rad = (opt.angle * Math.PI) / 180;
-          // Calculate x,y targeting offset (left is negative X, up is negative Y in CSS)
-          const tx = Math.cos(rad) * RADIUS;
-          const ty = -Math.sin(rad) * RADIUS;
+    <>
+      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+      <div style={{
+        position: "fixed",
+        bottom: "32px",
+        right: "32px",
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
+        {/* Container holding everything relative to the center origin */}
+        <div style={{ position: "relative", width: "56px", height: "56px" }}>
 
-          return (
-            <a
-              key={opt.id}
-              href={opt.href}
-              target={opt.target}
-              rel={opt.target === "_blank" ? "noopener noreferrer" : undefined}
-              className="social-sub-btn"
-              style={{
-                position: "absolute",
-                top: "8px",
-                left: "8px",
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                background: "var(--color-slate-elevated)",
-                border: "var(--border-gold-faint)",
-                color: "var(--color-gold)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-                // Transition mechanics: if open, translate to calculated position + scale up
-                transform: isOpen ? `translate(${tx}px, ${ty}px) scale(1)` : `translate(0px, 0px) scale(0)`,
-                opacity: isOpen ? 1 : 0,
-                pointerEvents: isOpen ? "auto" : "none",
-                transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease",
-                boxShadow: "0 4px 12px rgba(10,18,20,0.6)",
-              }}
-              title={opt.tooltip}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--color-void)";
-                e.currentTarget.style.borderColor = "var(--color-gold)";
-                e.currentTarget.style.transform = `translate(${tx}px, ${ty}px) scale(1.1)`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "var(--color-slate-elevated)";
-                e.currentTarget.style.borderColor = "var(--color-gold-faint)";
-                e.currentTarget.style.transform = `translate(${tx}px, ${ty}px) scale(1)`;
-              }}
-            >
-              {opt.icon}
-            </a>
-          );
-        })}
+          {/* Sub-buttons cluster */}
+          {options.map((opt) => {
+            // Convert angle from degrees to radians, where 0 is right, 90 is up.
+            const rad = (opt.angle * Math.PI) / 180;
+            // Calculate x,y targeting offset (left is negative X, up is negative Y in CSS)
+            const tx = Math.cos(rad) * RADIUS;
+            const ty = -Math.sin(rad) * RADIUS;
 
-        {/* Main interactive button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "56px",
-            height: "56px",
-            borderRadius: "50%",
-            background: isOpen ? "rgba(201,168,76,0.15)" : "var(--color-gold)",
-            color: isOpen ? "var(--color-gold)" : "var(--color-void)",
-            border: isOpen ? "1px solid var(--color-gold)" : "1px solid transparent",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            boxShadow: isOpen ? "none" : "0 8px 24px rgba(201,168,76,0.25)",
-            transition: "all 0.3s ease",
-            outline: "none",
-          }}
-        >
-          {/* Inner wrapper for rotational icon transition */}
-          <div style={{
-            position: "relative",
-            width: "24px",
-            height: "24px",
-            transform: isOpen ? "rotate(135deg)" : "rotate(0deg)",
-            transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
-          }}>
-            {/* The Plus/X icon (visible when open, forms the X via 135deg rotation) */}
+            const isHovered = hoveredId === opt.id;
+
+            return (
+              <a
+                key={opt.id}
+                href={opt.id === "ai" ? "#ai" : opt.href}
+                target={opt.target}
+                rel={opt.target === "_blank" ? "noopener noreferrer" : undefined}
+                className="social-sub-btn"
+                onClick={(e) => {
+                  if (opt.id === "ai") {
+                    e.preventDefault();
+                    setIsChatOpen(true);
+                    setIsOpen(false);
+                    setHoveredId(null);
+                  }
+                }}
+                onMouseEnter={() => setHoveredId(opt.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  left: "8px",
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: isHovered ? "var(--color-void)" : "var(--color-slate-elevated)",
+                  border: isHovered ? "1px solid var(--color-gold)" : "var(--border-gold-faint)",
+                  color: "var(--color-gold)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textDecoration: "none",
+                  // Transition mechanics: if open, translate to calculated position + scale up
+                  transform: isOpen ? `translate(${tx}px, ${ty}px) scale(${isHovered ? 1.1 : 1})` : `translate(0px, 0px) scale(0)`,
+                  opacity: isOpen ? 1 : 0,
+                  pointerEvents: isOpen ? "auto" : "none",
+                  transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease",
+                  boxShadow: "0 4px 12px rgba(10,18,20,0.6)",
+                }}
+                title={opt.tooltip}
+              >
+                {opt.icon}
+              </a>
+            );
+          })}
+
+          {/* Main interactive button */}
+          <button
+            onClick={() => {
+              if (isChatOpen) {
+                setIsChatOpen(false);
+              } else {
+                setIsOpen(!isOpen);
+              }
+            }}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "56px",
+              height: "56px",
+              borderRadius: "50%",
+              background: (isOpen || isChatOpen) ? "rgba(201,168,76,0.15)" : "var(--color-gold)",
+              color: (isOpen || isChatOpen) ? "var(--color-gold)" : "var(--color-void)",
+              border: (isOpen || isChatOpen) ? "1px solid var(--color-gold)" : "1px solid transparent",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              boxShadow: (isOpen || isChatOpen) ? "none" : "0 8px 24px rgba(201,168,76,0.25)",
+              transition: "all 0.3s ease",
+              outline: "none",
+            }}
+          >
+            {/* Inner wrapper for rotational icon transition */}
             <div style={{
-              position: "absolute", inset: 0,
-              opacity: isOpen ? 1 : 0,
-              transition: "opacity 0.3s ease",
+              position: "relative",
+              width: "24px",
+              height: "24px",
+              transform: (isOpen || isChatOpen) ? "rotate(135deg)" : "rotate(0deg)",
+              transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
             }}>
-              <PlusIcon />
-            </div>
+              {/* The Plus/X icon (visible when open, forms the X via 135deg rotation) */}
+              <div style={{
+                position: "absolute", inset: 0,
+                opacity: (isOpen || isChatOpen) ? 1 : 0,
+                transition: "opacity 0.3s ease",
+              }}>
+                <PlusIcon />
+              </div>
 
-            {/* The Chat bubble icon (visible when closed) */}
-            <div style={{
-              position: "absolute", inset: 0,
-              opacity: isOpen ? 0 : 1,
-              transition: "opacity 0.3s ease",
-            }}>
-              <ChatBubbleIcon />
+              {/* The Chat bubble icon (visible when closed) */}
+              <div style={{
+                position: "absolute", inset: 0,
+                opacity: (isOpen || isChatOpen) ? 0 : 1,
+                transition: "opacity 0.3s ease",
+              }}>
+                <ChatBubbleIcon />
+              </div>
             </div>
-          </div>
-        </button>
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

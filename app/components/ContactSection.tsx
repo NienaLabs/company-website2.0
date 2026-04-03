@@ -41,8 +41,30 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormState("sending");
-    await new Promise((r) => setTimeout(r, 1400));
-    setFormState("sent");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (response.ok) {
+        setFormState("sent");
+        setForm({ name: "", email: "", idea: "" });
+      } else {
+        const data = await response.json();
+        console.error("Form Error:", data.error);
+        setFormState("idle");
+        alert("There was an error sending your message. Please try again or email us directly.");
+      }
+    } catch (err) {
+      console.error("Submission Error:", err);
+      setFormState("idle");
+      alert("There was a connection error. Please check your internet and try again.");
+    }
   };
 
   const handlePhoneClick = () => {
@@ -83,11 +105,11 @@ export default function ContactSection() {
             </p>
             {[
               { label: "Book a call", value: copiedPhone ? "Number Copied!" : "+233 55 673 2796", href: "tel:+233556732796", isPhone: true },
-              { label: "Email", value: "hello@nienalabs.com", href: "mailto:hello@nienalabs.com" },
-              { label: "LinkedIn", value: "Nienalabs", href: "https://www.linkedin.com/company/nienalabs" },
+              { label: "Email", value: "hello@Niena Labs.com", href: "mailto:hello@Niena Labs.com" },
+              { label: "LinkedIn", value: "Niena Labs", href: "https://www.linkedin.com/company/Niena Labs" },
             ].map((ch) => (
-              <a 
-                key={ch.label} 
+              <a
+                key={ch.label}
                 href={ch.href}
                 target={ch.href.startsWith("http") ? "_blank" : undefined}
                 rel={ch.href.startsWith("http") ? "noopener noreferrer" : undefined}

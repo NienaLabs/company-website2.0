@@ -2,27 +2,27 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nienalabs — Building the Software That Pushes Humanity Forward",
+  title: "Niena Labs — Building the Software That Pushes Humanity Forward",
   description:
-    "Nienalabs builds scalable, AI-driven enterprise applications for businesses ready to scale. Custom software engineered with precision, for ideas that matter.",
+    "Niena Labs builds scalable, AI-driven enterprise applications for businesses ready to scale. Custom software engineered with precision, for ideas that matter.",
   keywords: [
     "enterprise software",
     "AI applications",
     "custom software development",
     "scalable applications",
     "software engineering",
-    "Nienalabs",
+    "Niena Labs",
   ],
   openGraph: {
-    title: "Nienalabs — Built with Purpose",
+    title: "Niena Labs — Built with Purpose",
     description:
       "We build scalable enterprise software for companies that intend to matter.",
     type: "website",
-    url: "https://nienalabs.com",
+    url: "https://Niena Labs.com",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nienalabs — Built with Purpose",
+    title: "Niena Labs — Built with Purpose",
   },
   icons: {
     icon: [

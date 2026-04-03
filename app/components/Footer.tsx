@@ -24,9 +24,9 @@ export default function Footer() {
           {/* Brand Column */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "20px" }}>
-             
-                <Image src="/logo-white.svg" alt="Logo" width={20} height={20} />
-              
+
+              <Image src="/logo-white.svg" alt="Logo" width={20} height={20} />
+
               <span
                 style={{
                   fontFamily: "'Cinzel', serif",
@@ -36,7 +36,7 @@ export default function Footer() {
                   textTransform: "uppercase",
                 }}
               >
-                NIENALABS
+                Niena Labs
               </span>
             </div>
             <p
@@ -151,7 +151,7 @@ export default function Footer() {
                 lineHeight: 1.6,
               }}
             >
-              hello@nienalabs.com
+              hello@Niena Labs.com
             </div>
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function Footer() {
             textTransform: "uppercase",
           }}
         >
-          © {new Date().getFullYear()} NIENALABS · ALL RIGHTS RESERVED · BUILT WITH PURPOSE
+          © {new Date().getFullYear()} Niena Labs · ALL RIGHTS RESERVED · BUILT WITH PURPOSE
         </div>
       </div>
 

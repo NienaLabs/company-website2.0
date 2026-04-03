@@ -1,449 +1,1189 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:#0f1a1c;color:#e8dfc8;font-family:'EB Garamond',Georgia,serif;line-height:1.7;}
-  ::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-track{background:#0a1214;} ::-webkit-scrollbar-thumb{background:#c9a84c33;}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 
-  .wrapper{max-width:900px;margin:0 auto;padding:48px 40px 120px;}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* Cover */
-  .cover{text-align:center;padding:80px 0 72px;border-bottom:1px solid rgba(201,168,76,0.15);margin-bottom:72px;}
-  .cover-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.32em;color:rgba(201,168,76,0.55);text-transform:uppercase;margin-bottom:20px;}
-  .cover-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:58px;line-height:1.05;color:#e8dfc8;margin-bottom:8px;}
-  .cover-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;font-weight:300;color:rgba(232,223,200,0.45);margin-bottom:36px;}
-  .gold-line{background:#c9a84c;margin:0 auto 28px;}
-  .cover-meta{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.22em;color:rgba(201,168,76,0.3);text-transform:uppercase;}
+    body {
+      background: #0f1a1c;
+      color: #e8dfc8;
+      font-family: 'EB Garamond', Georgia, serif;
+      line-height: 1.7;
+    }
 
-  /* Section header */
-  .sec{margin-bottom:72px;}
-  .sec-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.28em;color:rgba(201,168,76,0.5);text-transform:uppercase;margin-bottom:4px;}
-  .sec-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:38px;color:#e8dfc8;margin-bottom:4px;line-height:1.1;}
-  .sec-gold{height:1px;width:40px;background:#c9a84c;margin-bottom:22px;}
-  .sec-lead{font-size:17px;line-height:1.85;color:rgba(232,223,200,0.6);margin-bottom:28px;max-width:680px;}
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
 
-  /* Content blocks */
-  .detail-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;color:rgba(201,168,76,0.7);text-transform:uppercase;margin-bottom:6px;}
-  .detail-body{font-size:14.5px;line-height:1.9;color:rgba(232,223,200,0.6);margin-bottom:20px;}
+    ::-webkit-scrollbar-track {
+      background: #0a1214;
+    }
 
-  /* Card */
-  .card{background:#1c2b2e;border:1px solid rgba(255,255,255,0.07);border-radius:4px;padding:28px 28px 24px;margin-bottom:20px;}
-  .card-gold{border-top:2px solid #c9a84c;}
-  .card-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.14em;color:#e8dfc8;text-transform:uppercase;margin-bottom:10px;}
-  .card-body{font-size:14px;line-height:1.9;color:rgba(232,223,200,0.55);}
+    ::-webkit-scrollbar-thumb {
+      background: #c9a84c33;
+    }
 
-  /* Grid */
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
-  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;}
+    .wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 40px 120px;
+    }
 
-  /* Spec row */
-  .spec-row{display:flex;gap:0;margin-bottom:2px;border-bottom:1px solid rgba(255,255,255,0.05);}
-  .spec-key{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.16em;color:rgba(201,168,76,0.6);text-transform:uppercase;width:200px;flex-shrink:0;padding:10px 0;}
-  .spec-val{font-size:13.5px;color:rgba(232,223,200,0.55);padding:10px 0 10px 16px;line-height:1.6;}
+    /* Cover */
+    .cover {
+      text-align: center;
+      padding: 80px 0 72px;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+      margin-bottom: 72px;
+    }
 
-  /* Anim tag */
-  .anim-pill{display:inline-block;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:2px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.16em;color:#c9a84c;text-transform:uppercase;padding:3px 10px;margin:3px 4px 3px 0;}
+    .cover-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .32em;
+      color: rgba(201, 168, 76, 0.55);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
 
-  /* Divider */
-  .div-faint{height:1px;background:rgba(201,168,76,0.1);margin:64px 0;}
+    .cover-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 58px;
+      line-height: 1.05;
+      color: #e8dfc8;
+      margin-bottom: 8px;
+    }
 
-  /* Hero wireframe */
-  .wireframe{background:#0a1214;border:1px solid rgba(201,168,76,0.15);border-radius:4px;padding:28px;margin-bottom:28px;position:relative;overflow:hidden;}
-  .wf-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(201,168,76,0.4);text-transform:uppercase;position:absolute;top:12px;right:16px;}
-  .wf-row{display:flex;gap:12px;margin-bottom:12px;align-items:stretch;}
-  .wf-block{background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.1);border-radius:3px;display:flex;align-items:center;justify-content:center;}
-  .wf-text{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:.14em;color:rgba(201,168,76,0.35);text-transform:uppercase;}
+    .cover-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 300;
+      color: rgba(232, 223, 200, 0.45);
+      margin-bottom: 36px;
+    }
 
-  /* Quote */
-  .pull-quote{border-left:2px solid #c9a84c;padding:16px 24px;margin:28px 0;background:rgba(201,168,76,0.04);}
-  .pull-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;font-weight:300;color:rgba(232,223,200,0.7);line-height:1.7;}
+    .gold-line {
+      background: #c9a84c;
+      margin: 0 auto 28px;
+    }
 
-  /* Footer */
-  .doc-footer{padding-top:40px;border-top:1px solid rgba(201,168,76,0.12);text-align:center;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(201,168,76,0.25);text-transform:uppercase;}
-</style>
+    .cover-meta {
+      font-family: 'Cinzel', serif;
+      font-size: 8px;
+      letter-spacing: .22em;
+      color: rgba(201, 168, 76, 0.3);
+      text-transform: uppercase;
+    }
+
+    /* Section header */
+    .sec {
+      margin-bottom: 72px;
+    }
+
+    .sec-num {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .28em;
+      color: rgba(201, 168, 76, 0.5);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 38px;
+      color: #e8dfc8;
+      margin-bottom: 4px;
+      line-height: 1.1;
+    }
+
+    .sec-gold {
+      height: 1px;
+      width: 40px;
+      background: #c9a84c;
+      margin-bottom: 22px;
+    }
+
+    .sec-lead {
+      font-size: 17px;
+      line-height: 1.85;
+      color: rgba(232, 223, 200, 0.6);
+      margin-bottom: 28px;
+      max-width: 680px;
+    }
+
+    /* Content blocks */
+    .detail-label {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .2em;
+      color: rgba(201, 168, 76, 0.7);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .detail-body {
+      font-size: 14.5px;
+      line-height: 1.9;
+      color: rgba(232, 223, 200, 0.6);
+      margin-bottom: 20px;
+    }
+
+    /* Card */
+    .card {
+      background: #1c2b2e;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 4px;
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+    }
+
+    .card-gold {
+      border-top: 2px solid #c9a84c;
+    }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: .14em;
+      color: #e8dfc8;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .card-body {
+      font-size: 14px;
+      line-height: 1.9;
+      color: rgba(232, 223, 200, 0.55);
+    }
+
+    /* Grid */
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* Spec row */
+    .spec-row {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .spec-key {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .16em;
+      color: rgba(201, 168, 76, 0.6);
+      text-transform: uppercase;
+      width: 200px;
+      flex-shrink: 0;
+      padding: 10px 0;
+    }
+
+    .spec-val {
+      font-size: 13.5px;
+      color: rgba(232, 223, 200, 0.55);
+      padding: 10px 0 10px 16px;
+      line-height: 1.6;
+    }
+
+    /* Anim tag */
+    .anim-pill {
+      display: inline-block;
+      background: rgba(201, 168, 76, 0.1);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 2px;
+      font-family: 'Cinzel', serif;
+      font-size: 8px;
+      letter-spacing: .16em;
+      color: #c9a84c;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      margin: 3px 4px 3px 0;
+    }
+
+    /* Divider */
+    .div-faint {
+      height: 1px;
+      background: rgba(201, 168, 76, 0.1);
+      margin: 64px 0;
+    }
+
+    /* Hero wireframe */
+    .wireframe {
+      background: #0a1214;
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 4px;
+      padding: 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wf-label {
+      font-family: 'Cinzel', serif;
+      font-size: 8px;
+      letter-spacing: .18em;
+      color: rgba(201, 168, 76, 0.4);
+      text-transform: uppercase;
+      position: absolute;
+      top: 12px;
+      right: 16px;
+    }
+
+    .wf-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: stretch;
+    }
+
+    .wf-block {
+      background: rgba(201, 168, 76, 0.05);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wf-text {
+      font-family: 'Cinzel', serif;
+      font-size: 7.5px;
+      letter-spacing: .14em;
+      color: rgba(201, 168, 76, 0.35);
+      text-transform: uppercase;
+    }
+
+    /* Quote */
+    .pull-quote {
+      border-left: 2px solid #c9a84c;
+      padding: 16px 24px;
+      margin: 28px 0;
+      background: rgba(201, 168, 76, 0.04);
+    }
+
+    .pull-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(232, 223, 200, 0.7);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .doc-footer {
+      padding-top: 40px;
+      border-top: 1px solid rgba(201, 168, 76, 0.12);
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 8px;
+      letter-spacing: .2em;
+      color: rgba(201, 168, 76, 0.25);
+      text-transform: uppercase;
+    }
+  </style>
 </head>
+
 <body>
-<div class="wrapper">
+  <div class="wrapper">
 
-  <!-- COVER -->
-  <div class="cover">
-    <div class="cover-eyebrow">Brand Concept Document · Landing Page</div>
-    <div class="cover-title">Nienalabs</div>
-    <div class="cover-sub">Building the software that pushes humanity forward.</div>
-    <div class="gold-line" style="width:56px;height:1px;"></div>
-    <div class="cover-meta">Concept by Design · GSAP Scroll-Triggered · Neoclassical Dark — v1.0</div>
-  </div>
-
-  <!-- OVERVIEW -->
-  <div class="sec">
-    <div class="sec-num">Concept Overview</div>
-    <div class="sec-title">The Story We're Telling</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">This landing page is not a brochure. It is a manifesto that unfolds as the visitor scrolls — a journey from the darkness of unbuilt potential, through the act of creation, to the illuminated proof of what software can make possible. Every section has a purpose in the narrative arc.</div>
-    <div class="grid3">
-      <div class="card card-gold"><div class="card-title">Tone</div><div class="card-body">Gravitas. Controlled ambition. The confidence of an institution that knows it builds for centuries, not quarters.</div></div>
-      <div class="card card-gold"><div class="card-title">Emotion</div><div class="card-body">Awe at the scale of what software can achieve. Urgency for founders with an idea. Trust for enterprises choosing a partner.</div></div>
-      <div class="card card-gold"><div class="card-title">Narrative</div><div class="card-body">Darkness → Spark → Creation → Proof → Invitation. The page is a story. Scroll is the chapter turn.</div></div>
-    </div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 1: NAV -->
-  <div class="sec">
-    <div class="sec-num">Section 01</div>
-    <div class="sec-title">Navigation — The First Mark</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">The navigation is the brand's first impression. It must feel architectural, not digital. Fixed to the top, it fades into the page — a ghost presence that becomes solid only when the user scrolls.</div>
-
-    <div class="wireframe">
-      <div class="wf-label">Nav Wireframe</div>
-      <div class="wf-row" style="align-items:center;padding:10px 0;">
-        <div class="wf-block" style="width:36px;height:36px;flex-shrink:0;border-color:rgba(201,168,76,0.3);"><div style="width:14px;height:14px;background:linear-gradient(135deg,#c9a84c 50%,transparent 50%);border-radius:1px;"></div></div>
-        <div style="margin-left:10px;"><div class="wf-text" style="color:rgba(201,168,76,0.6);">NIENALABS</div></div>
-        <div style="flex:1;display:flex;gap:28px;justify-content:center;">
-          <div class="wf-text">Services</div><div class="wf-text">Work</div><div class="wf-text">About</div><div class="wf-text">Philosophy</div>
-        </div>
-        <div class="wf-block" style="padding:7px 18px;border-color:rgba(201,168,76,0.5);"><div class="wf-text" style="color:rgba(201,168,76,0.7);">Get In Touch</div></div>
-      </div>
+    <!-- COVER -->
+    <div class="cover">
+      <div class="cover-eyebrow">Brand Concept Document · Landing Page</div>
+      <div class="cover-title">Niena Labs</div>
+      <div class="cover-sub">Building the software that pushes humanity forward.</div>
+      <div class="gold-line" style="width:56px;height:1px;"></div>
+      <div class="cover-meta">Concept by Design · GSAP Scroll-Triggered · Neoclassical Dark — v1.0</div>
     </div>
 
-    <div class="spec-row"><div class="spec-key">Background</div><div class="spec-val">Transparent on load. On scroll past 80px: transitions to <code>rgba(10,18,20,0.92)</code> with <code>backdrop-filter: blur(16px)</code>. Duration 300ms ease.</div></div>
-    <div class="spec-row"><div class="spec-key">Logo Mark</div><div class="spec-val">The chamfered diamond mark (from brand identity) at 32×32px. To its right: wordmark "NIENALABS" in Cinzel 11px, tracking 0.28em, color <code>--color-text-primary</code> (Parchment). The mark itself has a subtle gold border.</div></div>
-    <div class="spec-row"><div class="spec-key">Nav Links</div><div class="spec-val">Cinzel, 9px, tracking 0.2em, uppercase. Color: <code>--color-text-secondary</code> (Vellum) at rest. On hover: slides underline in from left — a 1px gold line, <code>width: 0 → 100%</code>, 200ms ease. No background on hover.</div></div>
-    <div class="spec-row"><div class="spec-key">CTA Button</div><div class="spec-val">Secondary button style: transparent bg, 1px solid gold border, gold text "GET IN TOUCH" in Cinzel 9px. On hover: gold-faint background fills in, 150ms ease. 3px border-radius.</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP Animation</div><div class="spec-val">On page load: each nav link <code>y: -20, opacity: 0 → y: 0, opacity: 1</code>, staggered 0.08s from left, starting after 0.6s delay. The logo mark scales in from 0.8 → 1 simultaneously. Total entrance: ~1s.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 2: HERO -->
-  <div class="sec">
-    <div class="sec-num">Section 02</div>
-    <div class="sec-title">Hero — The Manifesto</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">Full viewport height. No images in the traditional sense — the background IS the experience. The hero declares the company's belief before the visitor even reads a word. It speaks in the grammar of stone and light.</div>
-
-    <div class="wireframe">
-      <div class="wf-label">Hero Wireframe — 100vh</div>
-      <!-- Background grid lines -->
-      <div style="position:relative;height:420px;overflow:hidden;">
-        <!-- Subtle architectural grid overlay -->
-        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;"></div>
-        <!-- Center mark -->
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:80%;">
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.3em;color:rgba(201,168,76,0.45);text-transform:uppercase;margin-bottom:16px;">We believe the world can be changed</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;color:#e8dfc8;line-height:1.05;margin-bottom:6px;">Every idea that matters</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;font-style:italic;color:rgba(232,223,200,0.45);margin-bottom:24px;">deserves the engineering to match.</div>
-          <div style="display:inline-block;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.35);padding:10px 28px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:#c9a84c;margin-right:12px;">BUILD WITH US</div>
-          <div style="display:inline-block;border:1px solid rgba(255,255,255,0.12);padding:10px 28px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);">SEE OUR WORK</div>
+    <!-- OVERVIEW -->
+    <div class="sec">
+      <div class="sec-num">Concept Overview</div>
+      <div class="sec-title">The Story We're Telling</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">This landing page is not a brochure. It is a manifesto that unfolds as the visitor scrolls —
+        a journey from the darkness of unbuilt potential, through the act of creation, to the illuminated proof of what
+        software can make possible. Every section has a purpose in the narrative arc.</div>
+      <div class="grid3">
+        <div class="card card-gold">
+          <div class="card-title">Tone</div>
+          <div class="card-body">Gravitas. Controlled ambition. The confidence of an institution that knows it builds
+            for centuries, not quarters.</div>
         </div>
-        <!-- Scroll indicator -->
-        <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);text-align:center;">
-          <div style="width:1px;height:40px;background:linear-gradient(to bottom,rgba(201,168,76,0.6),transparent);margin:0 auto 6px;"></div>
-          <div style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.22em;color:rgba(201,168,76,0.35);text-transform:uppercase;">Scroll</div>
+        <div class="card card-gold">
+          <div class="card-title">Emotion</div>
+          <div class="card-body">Awe at the scale of what software can achieve. Urgency for founders with an idea. Trust
+            for enterprises choosing a partner.</div>
+        </div>
+        <div class="card card-gold">
+          <div class="card-title">Narrative</div>
+          <div class="card-body">Darkness → Spark → Creation → Proof → Invitation. The page is a story. Scroll is the
+            chapter turn.</div>
         </div>
       </div>
     </div>
 
-    <div class="spec-row"><div class="spec-key">Background</div><div class="spec-val">Pure <code>--color-void (#0a1214)</code>. Over this: a very subtle architectural grid — 48px squares, lines at 4% gold opacity. This evokes precision drafting and engineering blueprints without being literal.</div></div>
-    <div class="spec-row"><div class="spec-key">Ambient Visual</div><div class="spec-val">A single large, faint geometric form — a chamfered octagon, the brand's geometric signature, drawn with 0.5px gold lines at 8% opacity, centered behind the text. Scale: roughly 600×600px. It does not animate on load — it is already there, waiting. On scroll, it very slowly rotates (0.02deg/frame, GSAP ticker). Creates a sense of living geometry without distraction.</div></div>
-    <div class="spec-row"><div class="spec-key">Overline</div><div class="spec-val">Cinzel, 9px, tracking 0.32em, <code>--color-gold</code> at 60% opacity, uppercase. Text: "WE BELIEVE THE WORLD CAN BE CHANGED". Centered. Appears first in the load sequence.</div></div>
-    <div class="spec-row"><div class="spec-key">Headline</div><div class="spec-val">Two lines. Line 1: Cormorant Garamond Light 300, 72px (desktop), <code>--color-text-primary</code>, roman. "Every idea that matters" — Line 2: Same font, italic, 72px, <code>--color-text-secondary</code> at 55% opacity. "deserves the engineering to match." The typographic contrast between roman and italic creates voice — assertion then reflection.</div></div>
-    <div class="spec-row"><div class="spec-key">Sub-headline</div><div class="spec-val">EB Garamond, 18px, color <code>--color-text-secondary</code>, max-width 560px, centered. "We build scalable enterprise software for companies that intend to matter." One sentence. No bullet points. No list. Just a declaration.</div></div>
-    <div class="spec-row"><div class="spec-key">CTA Pair</div><div class="spec-val">Two buttons side by side: PRIMARY (gold bg, Void text, "BUILD WITH US") and SECONDARY (transparent, gold border, "SEE OUR WORK"). 24px gap between them. On desktop, centered below the sub-headline. 48px margin-top from sub-headline.</div></div>
-    <div class="spec-row"><div class="spec-key">Scroll Indicator</div><div class="spec-val">Bottom center: a 1px wide gold line, 40px tall, that pulses (opacity 1 → 0.3, 2s loop, GSAP). Below it: "SCROLL" in Cinzel 7px, tracking 0.22em, gold at 35% opacity. Disappears (fadeOut) after user scrolls 100px.</div></div>
+    <div class="div-faint"></div>
 
-    <div class="pull-quote"><p>"The animation sequence must feel like a curtain being drawn, not a page loading. Each element enters with intention — the overline first, then the headline splits and rises in, the sub-headline fades, the buttons bloom. Total sequence: 2.2 seconds from page-ready."</p></div>
+    <!-- SECTION 1: NAV -->
+    <div class="sec">
+      <div class="sec-num">Section 01</div>
+      <div class="sec-title">Navigation — The First Mark</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">The navigation is the brand's first impression. It must feel architectural, not digital.
+        Fixed to the top, it fades into the page — a ghost presence that becomes solid only when the user scrolls.</div>
 
-    <div class="detail-label">GSAP Hero Entrance — Sequence</div>
-    <div class="detail-body">
-      <span class="anim-pill">t=0.2s</span> Geometric background octagon: <code>opacity: 0 → 0.08, scale: 0.95 → 1</code>, 1.2s ease-out<br>
-      <span class="anim-pill">t=0.4s</span> Overline: <code>y: 12, opacity: 0 → y: 0, opacity: 1</code>, 0.7s ease<br>
-      <span class="anim-pill">t=0.65s</span> Headline line 1: <code>y: 28, opacity: 0 → y: 0, opacity: 1</code>, 0.8s ease. Split via SplitText or word-by-word, stagger 0.04s<br>
-      <span class="anim-pill">t=0.85s</span> Headline line 2: same, italic line rises 0.1s after line 1 completes<br>
-      <span class="anim-pill">t=1.1s</span> Sub-headline: <code>opacity: 0 → 1</code>, 0.6s ease<br>
-      <span class="anim-pill">t=1.4s</span> Buttons: stagger 0.12s, each <code>y: 16, opacity: 0 → y: 0, opacity: 1</code>, 0.5s ease<br>
-      <span class="anim-pill">t=1.9s</span> Scroll indicator: fades in, begins pulse loop
-    </div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 3: BELIEF STATEMENT -->
-  <div class="sec">
-    <div class="sec-num">Section 03</div>
-    <div class="sec-title">The Philosophy — A Scroll-Driven Reveal</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">This section exists to earn trust before asking for anything. It tells the reader who Nienalabs is at its core — not a feature list, not a service menu, but a philosophical stance. Rendered as large editorial text that assembles word by word as the user scrolls.</div>
-
-    <div class="wireframe">
-      <div class="wf-label">Philosophy Section</div>
-      <div style="padding:40px 32px;text-align:center;">
-        <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.28em;color:rgba(201,168,76,0.45);text-transform:uppercase;margin-bottom:20px;">Our Philosophy</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:26px;color:#e8dfc8;max-width:600px;margin:0 auto;line-height:1.4;">We believe the world can be changed the way we found it.<br><span style="color:rgba(232,223,200,0.4);">Every product we build has one purpose:</span><br><span style="color:#c9a84c;font-style:italic;">to push humanity forward.</span></div>
-        <div style="width:1px;height:48px;background:linear-gradient(to bottom,rgba(201,168,76,0.4),transparent);margin:32px auto 0;"></div>
-      </div>
-    </div>
-
-    <div class="spec-row"><div class="spec-key">Layout</div><div class="spec-val">Full-width section, <code>--color-void</code> background. Centered content column, max-width 760px. Tall vertical padding: <code>--space-11 (128px)</code> top and bottom. This section demands space.</div></div>
-    <div class="spec-row"><div class="spec-key">Typography</div><div class="spec-val">The philosophy text renders in three parts: (1) "We believe the world can be changed the way we found it." — Cormorant Garamond Light, 48px, Parchment. (2) "Every product we build has one purpose:" — same font, 36px, Vellum (secondary text). (3) "to push humanity forward." — same font, italic, 48px, <strong style="color:#c9a84c;">Gold (#c9a84c)</strong>. The gold italic line is the emotional peak of the entire page.</div></div>
-    <div class="spec-row"><div class="spec-key">Image Placement</div><div class="spec-val">No photographic images in this section. The only visual is the typography itself and a single horizontal gold rule (1px, 80px wide) between the overline and the text block. Negative space is the luxury signal here.</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP ScrollTrigger</div><div class="spec-val">Each word of the philosophy text is wrapped in a span. On ScrollTrigger, words transition from <code>color: rgba(232,223,200,0.12)</code> (barely visible, like ghost text carved in stone) to their final color, staggered 0.03s per word. The effect: the philosophy text "illuminates" as the user reads it, word by word, as if a light is traveling across a wall inscription.</div></div>
-    <div class="spec-row"><div class="spec-key">Vertical Separator</div><div class="spec-val">At the bottom of this section, a 1px gold vertical line, 64px tall, fades in and "grows" downward (<code>scaleY: 0 → 1</code>, transform-origin top) as the section exits. It connects visually to the next section, implying continuation.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 4: CAPABILITIES -->
-  <div class="sec">
-    <div class="sec-num">Section 04</div>
-    <div class="sec-title">Capabilities — The Bento Grid</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">This is where Nienalabs demonstrates range without fragmentation. A bento grid of capabilities — not a list of services, but a composed tableau. Each cell is a window into a discipline. The grid enters one cell at a time, like rooms being revealed.</div>
-
-    <div class="wireframe">
-      <div class="wf-label">Bento Grid — Capabilities</div>
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:180px 180px;gap:12px;padding:4px;">
-        <!-- Featured cell -->
-        <div class="wf-block" style="grid-row:1/3;border-color:rgba(201,168,76,0.25);flex-direction:column;gap:8px;padding:20px;align-items:flex-start;justify-content:flex-end;background:linear-gradient(to top,rgba(10,18,20,0.9) 0%,rgba(10,18,20,0.4) 50%,transparent 100%),rgba(201,168,76,0.04);">
-          <div style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.2em;color:rgba(201,168,76,0.6);text-transform:uppercase;">Enterprise Web</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:#e8dfc8;">Scalable by architecture,<br>not by accident.</div>
-        </div>
-        <div class="wf-block" style="flex-direction:column;gap:6px;padding:16px;align-items:flex-start;justify-content:flex-end;">
-          <div style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.18em;color:rgba(201,168,76,0.5);text-transform:uppercase;">Mobile</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;color:#e8dfc8;">iOS & Android, native at heart.</div>
-        </div>
-        <div class="wf-block" style="flex-direction:column;gap:6px;padding:16px;align-items:flex-start;justify-content:flex-end;">
-          <div style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.18em;color:rgba(201,168,76,0.5);text-transform:uppercase;">AI-Driven</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;color:#e8dfc8;">Intelligence embedded, not bolted on.</div>
-        </div>
-        <div class="wf-block" style="flex-direction:column;gap:6px;padding:16px;align-items:flex-start;justify-content:flex-end;">
-          <div style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.18em;color:rgba(201,168,76,0.5);text-transform:uppercase;">Cloud</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;color:#e8dfc8;">Infrastructure that disappears.</div>
-        </div>
-        <div class="wf-block" style="flex-direction:column;gap:6px;padding:16px;align-items:flex-start;justify-content:flex-end;">
-          <div style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.18em;color:rgba(201,168,76,0.5);text-transform:uppercase;">Desktop</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;color:#e8dfc8;">Power without compromise.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec-row"><div class="spec-key">Grid Structure</div><div class="spec-val">Desktop: 3-column, 2-row bento grid. Column 1 spans both rows (featured "Enterprise Web" cell). Columns 2 and 3 each have 2 cells. 24px gutter between all cells. Each cell: 4px border-radius, <code>--border-subtle</code>.</div></div>
-    <div class="spec-row"><div class="spec-key">Featured Cell</div><div class="spec-val">The large left cell (spans full height, roughly 400×480px on desktop) gets a real background image: an abstract, architecturally composed photograph — think server infrastructure with dramatic raking light, processed with a sepia-warm overlay at 20% opacity to match the brand palette. The scrim formula: <code>linear-gradient(to top, rgba(10,18,20,0.92) 0%, rgba(10,18,20,0.5) 50%, transparent 100%)</code>. Text is bottom-left anchored inside. A <code>--border-gold</code> top edge on this cell only (1px solid gold, full opacity). One chamfered corner (clip-path polygon) on top-right corner, 16px cut, echoing the logo mark.</div></div>
-    <div class="spec-row"><div class="spec-key">Standard Cells</div><div class="spec-val">Each has: (1) A Cinzel overline 9px in gold (the discipline name), (2) a Cormorant Garamond Light 22px heading (a one-line philosophical statement about that discipline), (3) an EB Garamond 14px body (1–2 sentences). Bottom-left alignment within the cell. <code>--space-6 (24px)</code> inner padding. On hover: <code>--border-gold</code> transitions in (opacity 0 → 1), <code>--shadow-3</code> elevates, 180ms ease.</div></div>
-    <div class="spec-row"><div class="spec-key">Cell Content — Copy</div><div class="spec-val">Web Dev: "Scalable by architecture, not by accident." — Mobile: "iOS & Android, native at heart." — AI Apps: "Intelligence embedded, not bolted on." — Cloud: "Infrastructure that disappears." — Desktop: "Power without compromise." Every line is a brand statement, not a service description.</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP ScrollTrigger</div><div class="spec-val">As the section scrolls into view: cells enter one at a time, staggered 0.15s, each from <code>y: 40, opacity: 0 → y: 0, opacity: 1</code>, 0.7s ease. Featured cell enters first, slightly larger stagger delay for the smaller cells. The grid "assembles" from the inside out, like a mosaic being laid.</div></div>
-    <div class="spec-row"><div class="spec-key">Mobile Layout</div><div class="spec-val">Single column. Featured cell at top, then four cells stacked. Each cell: 220px min-height. Same scrim and text layout.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 5: THE APPROACH -->
-  <div class="sec">
-    <div class="sec-num">Section 05</div>
-    <div class="sec-title">The Process — How We Build</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">A horizontal scroll-driven timeline (on desktop) that shows the Nienalabs approach to building software. Not a generic "Discover → Design → Develop → Deploy" diagram. A narrative of how great software comes to life. On mobile, this becomes a vertical stacked sequence.</div>
-
-    <div class="spec-row"><div class="spec-key">Layout</div><div class="spec-val">Full-width horizontal panel, viewport height ~80vh. Left side (40%): sticky text block with overline, section title, and a paragraph explaining the process philosophy. Right side (60%): horizontal scroll container with 5 steps, each ~320px wide, 24px gutter. As the user scrolls vertically, the right side scrolls horizontally — achieved via GSAP ScrollTrigger <code>horizontal: true</code> pinning the section.</div></div>
-    <div class="spec-row"><div class="spec-key">Each Step Card</div><div class="spec-val">320×440px card. <code>--color-slate-deep</code> background. Gold top-border on the "active" (currently centered) step. Cinzel overline with a step number (01, 02, 03, 04, 05) in Cormorant Garamond 64px Light, gold, 15% opacity — this giant number floats behind the title. Then: step name in Cinzel 11px, then Cormorant 26px title, then EB Garamond 15px body copy of 3–4 sentences. A horizontal gold line (40px) between the number zone and the text.</div></div>
-    <div class="spec-row"><div class="spec-key">5 Steps — Copy</div><div class="spec-val">01 — Understand: "We begin with the problem, not the stack." 02 — Architect: "Every line of code is preceded by a decision." 03 — Build: "Precision. Iteration. No shortcuts." 04 — Launch: "Deployment is not the finish line." 05 — Evolve: "The best software is always becoming."</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP Horizontal Scroll</div><div class="spec-val">Section is pinned while scroll progress drives <code>x</code> translation of the card container. Cards at <code>x: 0</code> on entry, travel to <code>x: -(totalWidth - viewportWidth)</code> by section exit. Each card "brightens" (border-top gold fades in, body text opacity increases from 0.4 → 1) when it reaches the center viewport position. Progress indicator: a thin gold horizontal line at the bottom, <code>scaleX: 0 → 1</code> as scroll advances.</div></div>
-    <div class="spec-row"><div class="spec-key">Image — Step Cards</div><div class="spec-val">No photographs in these cards. The large faded step number is the only "visual." This restraint says: our process is intellectual, not performative. The typography IS the illustration.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 6: STATS/PROOF -->
-  <div class="sec">
-    <div class="sec-num">Section 06</div>
-    <div class="sec-title">The Numbers — Proof in Stillness</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">Three or four large numerical statements. Not a table. Not a grid of icons. Just numbers that speak for themselves, set in enormous Cormorant Garamond type, each one earning its space. The section feels like an inscription on a monument.</div>
-
-    <div class="wireframe">
-      <div class="wf-label">Stats Section</div>
-      <div style="padding:40px 20px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:rgba(201,168,76,0.1);">
-        <div style="background:#0f1a1c;padding:32px 24px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:54px;color:#c9a84c;line-height:1;">50+</div>
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);text-transform:uppercase;margin-top:10px;">Products shipped</div>
-        </div>
-        <div style="background:#0f1a1c;padding:32px 24px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:54px;color:#c9a84c;line-height:1;">3</div>
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);text-transform:uppercase;margin-top:10px;">Continents served</div>
-        </div>
-        <div style="background:#0f1a1c;padding:32px 24px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:54px;color:#c9a84c;line-height:1;">∞</div>
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);text-transform:uppercase;margin-top:10px;">Ideas worth building</div>
-        </div>
-        <div style="background:#0f1a1c;padding:32px 24px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:54px;color:#c9a84c;line-height:1;">01</div>
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);text-transform:uppercase;margin-top:10px;">Purpose</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec-row"><div class="spec-key">Layout</div><div class="spec-val">4-column grid, divided by 1px gold-faint vertical lines (<code>--border-gold-faint</code>). No outer border. Each column: the number in Cormorant Garamond Light 80px, gold, followed by a Cinzel 9px label. Padding: <code>--space-8 (48px)</code> top/bottom, <code>--space-6 (24px)</code> left/right per column. Section background: <code>--color-void</code>.</div></div>
-    <div class="spec-row"><div class="spec-key">Numbers — Copy</div><div class="spec-val">"50+" — Products shipped. "3" — Continents served. "∞" — Ideas worth building (the infinity symbol, same font, same size — a philosophical statement rendered as data). "01" — Purpose (the number one, with label "Purpose" — a powerful declaration that the company has one north star).</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP Animation</div><div class="spec-val">On scroll-into-view, each number counts up from 0 to its final value (<code>GSAP CountTo</code>), staggered 0.2s per column. Duration per count: 1.5s with <code>ease: power2.out</code>. The "∞" and "01" do not count — they snap in with an opacity fade and a slight <code>y: 20 → 0</code>. After all numbers land, the vertical dividers "draw down" from <code>scaleY: 0 → 1</code>, transform-origin top, 0.4s each, staggered 0.1s.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 7: WORK/CASE STUDIES -->
-  <div class="sec">
-    <div class="sec-num">Section 07</div>
-    <div class="sec-title">Selected Work — The Portfolio</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">A curated selection of 2–3 projects. Not a gallery. A curated exhibition — each project given breathing room, positioned asymmetrically, with one large image and deliberate editorial copy. This is Nienalabs showing, not telling.</div>
-
-    <div class="spec-row"><div class="spec-key">Layout — Each Project</div><div class="spec-val">Alternating left-right layout. Project 1: image takes 58% of width on the left (full bleed image, 480px tall, object-fit:cover, 4px border-radius, scrim applied), copy takes 38% on right (vertically centered). Project 2: copy on left, image on right. 64px vertical gap between projects. No cards — the image IS the card.</div></div>
-    <div class="spec-row"><div class="spec-key">Image Requirements</div><div class="spec-val">Fine art photography style per brand imagery rules: warm tones, muted palette, architectural composition, soft grain, dramatic raking light. Subject matter: real or analogous representations of the product in use — abstracted, not literal screenshots. Each image: golden hour warm toning, sepia wash overlay at 15% opacity applied via CSS <code>mix-blend-mode: multiply</code> on a <code>rgba(201,168,76,0.12)</code> overlay div.</div></div>
-    <div class="spec-row"><div class="spec-key">Project Copy Structure</div><div class="spec-val">Cinzel overline (9px, gold): project category (e.g., "Enterprise Web Application"). Cormorant Garamond 36px title: the project name or tagline. EB Garamond 16px body: 3 sentences about the challenge and what was built. A Cinzel 9px tag row for tech stack (e.g., "React · Node.js · AWS · PostgreSQL"). Finally: a ghost button "Read Case Study" (transparent, subtle border, gold text hover).</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP ScrollTrigger</div><div class="spec-val">Each project pair enters with a parallax: the image scrolls at 0.85x speed (GSAP <code>scrub: true, y: -40 → 40</code> as the section scrolls through), while the text scrolls at normal speed. This creates depth — the image feels cinematic and dimensional. Text block: <code>x: 30, opacity: 0 → x: 0, opacity: 1</code> on entry, 0.8s ease. Image: <code>scale: 1.05 → 1</code> on entry (Ken Burns-style settle), 1.2s.</div></div>
-    <div class="spec-row"><div class="spec-key">Section Header</div><div class="spec-val">Before the projects: Cinzel overline "Selected Work", Cormorant 48px title "Built with purpose.", 40px gold horizontal line, then EB Garamond body "A selection of products we're proud to have built." — 2 sentences max. 96px below the section header, the first project begins.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 8: THE MANIFESTO INTERLUDE -->
-  <div class="sec">
-    <div class="sec-num">Section 08</div>
-    <div class="sec-title">The Interlude — A Full-Bleed Moment</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">A full-viewport-height section that breaks the grid and speaks directly to the visitor who has an idea. This is the emotional core — not a feature section, not a portfolio section. A direct address. It must stop the scroll.</div>
-
-    <div class="wireframe">
-      <div class="wf-label">Interlude — Full Bleed</div>
-      <div style="height:280px;background:linear-gradient(135deg,#0a1214 0%,#1c2b2e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;position:relative;">
-        <div style="position:absolute;inset:0;background-image:radial-gradient(circle at 50% 50%,rgba(201,168,76,0.07) 0%,transparent 70%);"></div>
-        <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.28em;color:rgba(201,168,76,0.5);text-transform:uppercase;margin-bottom:16px;position:relative;">For founders. For builders.</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:28px;color:#e8dfc8;max-width:480px;line-height:1.3;position:relative;margin-bottom:16px;">If you believe your idea could make a huge impact on the world —</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:28px;font-style:italic;color:#c9a84c;position:relative;">we're ready to build it with you.</div>
-        <div style="margin-top:28px;position:relative;display:flex;gap:12px;">
-          <div style="background:#c9a84c;padding:9px 22px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:#0a1214;">REACH OUT</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="spec-row"><div class="spec-key">Background</div><div class="spec-val"><code>--color-abyss</code> base. A radial gradient glow centered on the section: <code>radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 65%)</code>. This creates a soft golden pool of light that feels like a spotlight. No photograph — pure abstraction.</div></div>
-    <div class="spec-row"><div class="spec-key">Overline</div><div class="spec-val">Cinzel 9px, tracking 0.28em, gold 50% opacity: "FOR FOUNDERS · FOR BUILDERS · FOR DREAMERS" — using centered dots as dividers, all on one line.</div></div>
-    <div class="spec-row"><div class="spec-key">Headline</div><div class="spec-val">Two parts, centered. Part 1: Cormorant Garamond Light 52px, Parchment: "If you believe your idea could make a huge impact on the world —" Part 2: Cormorant Garamond Light Italic 52px, <strong style="color:#c9a84c;">Gold</strong>: "we're ready to build it with you." A dramatic em dash bridges the two parts visually and rhetorically.</div></div>
-    <div class="spec-row"><div class="spec-key">CTA</div><div class="spec-val">A single primary CTA: "REACH OUT" — Gold background, Void text, Cinzel. This is the only primary gold button in the entire page. It earns its gold here, at the most emotionally resonant moment.</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP ScrollTrigger</div><div class="spec-val">As the section enters: the gold glow radial gradient expands <code>scale: 0 → 1</code> (GSAP on a CSS variable driving the gradient size), 1.4s ease-out. The headline splits across two lines — Part 1 enters from left (<code>x: -60 → 0, opacity: 0 → 1</code>), Part 2 enters from right (<code>x: 60 → 0, opacity: 0 → 1</code>), both 0.9s, staggered 0.3s apart. This mimics two hands reaching across a table to meet. The CTA button then blooms in from <code>scale: 0.8, opacity: 0 → scale: 1, opacity: 1</code>.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 9: TESTIMONIALS -->
-  <div class="sec">
-    <div class="sec-num">Section 09</div>
-    <div class="sec-title">Testimonials — Voices in Stone</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">2–3 client quotes, rendered as large pull-quote typography against dark backgrounds. Not carousel cards with headshots. The words themselves are the testimonial. The attribution is secondary.</div>
-
-    <div class="spec-row"><div class="spec-key">Layout</div><div class="spec-val">Full-width section. Each testimonial occupies its own "row" — roughly 240px tall. No card wrapper. The quote text runs edge-to-edge within the content max-width (840px), centered, in Cormorant Garamond Light Italic 28px, Parchment. Below each quote: a thin 1px hairline divider, then the attribution line: Cinzel 9px, Stone color, "— CLIENT NAME · COMPANY · ROLE".</div></div>
-    <div class="spec-row"><div class="spec-key">Opening Quotation Mark</div><div class="spec-val">A massive typographic opening curly quote ("") — Cormorant Garamond, 200px, gold at 8% opacity — floats as a background element behind the first testimonial, positioned top-left of the quote block. It's decorative but not decorative: it signals "this is a quote" at a glance.</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP ScrollTrigger</div><div class="spec-val">Each quote: on entry, text renders word by word, fading from <code>opacity: 0.15 → 1</code>, staggered 0.025s per word. The same "illuminating inscription" effect from the philosophy section — this creates thematic continuity. The attribution line fades in as a whole after the quote completes.</div></div>
-    <div class="spec-row"><div class="spec-key">Visual Accent</div><div class="spec-val">A gold-faint horizontal divider (1px, full content width) between each testimonial. On the last testimonial's divider, the line is gold at full opacity (not faint) — it signals the section is ending and the next major moment is approaching.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 10: CTA/CONTACT -->
-  <div class="sec">
-    <div class="sec-num">Section 10</div>
-    <div class="sec-title">Contact — The Closing Invitation</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">The final section of the page. It must not feel like a form — it must feel like an open door. A two-column layout: left side carries the brand statement again, the emotional close. Right side holds a minimal contact form — the only form on the page.</div>
-
-    <div class="wireframe">
-      <div class="wf-label">Contact Section</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:32px 20px;">
-        <div>
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.22em;color:rgba(201,168,76,0.5);text-transform:uppercase;margin-bottom:14px;">Start the conversation</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:#e8dfc8;margin-bottom:10px;">Tell us what you're building.</div>
-          <div style="font-size:13px;color:rgba(232,223,200,0.45);line-height:1.8;">We don't need a full brief. We need to know what you believe is possible.</div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:16px;">
-          <div>
-            <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(201,168,76,0.6);text-transform:uppercase;margin-bottom:6px;">Name</div>
-            <div style="background:#0a1214;border:1px solid #2e4248;border-radius:3px;height:36px;"></div>
+      <div class="wireframe">
+        <div class="wf-label">Nav Wireframe</div>
+        <div class="wf-row" style="align-items:center;padding:10px 0;">
+          <div class="wf-block" style="width:36px;height:36px;flex-shrink:0;border-color:rgba(201,168,76,0.3);">
+            <div
+              style="width:14px;height:14px;background:linear-gradient(135deg,#c9a84c 50%,transparent 50%);border-radius:1px;">
+            </div>
           </div>
-          <div>
-            <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(201,168,76,0.6);text-transform:uppercase;margin-bottom:6px;">Your idea, in one sentence</div>
-            <div style="background:#0a1214;border:1px solid #2e4248;border-radius:3px;height:64px;"></div>
+          <div style="margin-left:10px;">
+            <div class="wf-text" style="color:rgba(201,168,76,0.6);">Niena Labs</div>
           </div>
-          <div style="display:inline-block;background:#c9a84c;padding:9px 24px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:#0a1214;align-self:flex-start;">SEND</div>
+          <div style="flex:1;display:flex;gap:28px;justify-content:center;">
+            <div class="wf-text">Services</div>
+            <div class="wf-text">Work</div>
+            <div class="wf-text">About</div>
+            <div class="wf-text">Philosophy</div>
+          </div>
+          <div class="wf-block" style="padding:7px 18px;border-color:rgba(201,168,76,0.5);">
+            <div class="wf-text" style="color:rgba(201,168,76,0.7);">Get In Touch</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-row">
+        <div class="spec-key">Background</div>
+        <div class="spec-val">Transparent on load. On scroll past 80px: transitions to <code>rgba(10,18,20,0.92)</code>
+          with <code>backdrop-filter: blur(16px)</code>. Duration 300ms ease.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Logo Mark</div>
+        <div class="spec-val">The chamfered diamond mark (from brand identity) at 32×32px. To its right: wordmark "Niena
+          Labs" in Cinzel 11px, tracking 0.28em, color <code>--color-text-primary</code> (Parchment). The mark itself
+          has a subtle gold border.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Nav Links</div>
+        <div class="spec-val">Cinzel, 9px, tracking 0.2em, uppercase. Color: <code>--color-text-secondary</code>
+          (Vellum) at rest. On hover: slides underline in from left — a 1px gold line, <code>width: 0 → 100%</code>,
+          200ms ease. No background on hover.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">CTA Button</div>
+        <div class="spec-val">Secondary button style: transparent bg, 1px solid gold border, gold text "GET IN TOUCH" in
+          Cinzel 9px. On hover: gold-faint background fills in, 150ms ease. 3px border-radius.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP Animation</div>
+        <div class="spec-val">On page load: each nav link <code>y: -20, opacity: 0 → y: 0, opacity: 1</code>, staggered
+          0.08s from left, starting after 0.6s delay. The logo mark scales in from 0.8 → 1 simultaneously. Total
+          entrance: ~1s.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 2: HERO -->
+    <div class="sec">
+      <div class="sec-num">Section 02</div>
+      <div class="sec-title">Hero — The Manifesto</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">Full viewport height. No images in the traditional sense — the background IS the experience.
+        The hero declares the company's belief before the visitor even reads a word. It speaks in the grammar of stone
+        and light.</div>
+
+      <div class="wireframe">
+        <div class="wf-label">Hero Wireframe — 100vh</div>
+        <!-- Background grid lines -->
+        <div style="position:relative;height:420px;overflow:hidden;">
+          <!-- Subtle architectural grid overlay -->
+          <div
+            style="position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;">
+          </div>
+          <!-- Center mark -->
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:80%;">
+            <div
+              style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.3em;color:rgba(201,168,76,0.45);text-transform:uppercase;margin-bottom:16px;">
+              We believe the world can be changed</div>
+            <div
+              style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;color:#e8dfc8;line-height:1.05;margin-bottom:6px;">
+              Every idea that matters</div>
+            <div
+              style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;font-style:italic;color:rgba(232,223,200,0.45);margin-bottom:24px;">
+              deserves the engineering to match.</div>
+            <div
+              style="display:inline-block;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.35);padding:10px 28px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:#c9a84c;margin-right:12px;">
+              BUILD WITH US</div>
+            <div
+              style="display:inline-block;border:1px solid rgba(255,255,255,0.12);padding:10px 28px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);">
+              SEE OUR WORK</div>
+          </div>
+          <!-- Scroll indicator -->
+          <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);text-align:center;">
+            <div
+              style="width:1px;height:40px;background:linear-gradient(to bottom,rgba(201,168,76,0.6),transparent);margin:0 auto 6px;">
+            </div>
+            <div
+              style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.22em;color:rgba(201,168,76,0.35);text-transform:uppercase;">
+              Scroll</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-row">
+        <div class="spec-key">Background</div>
+        <div class="spec-val">Pure <code>--color-void (#0a1214)</code>. Over this: a very subtle architectural grid —
+          48px squares, lines at 4% gold opacity. This evokes precision drafting and engineering blueprints without
+          being literal.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Ambient Visual</div>
+        <div class="spec-val">A single large, faint geometric form — a chamfered octagon, the brand's geometric
+          signature, drawn with 0.5px gold lines at 8% opacity, centered behind the text. Scale: roughly 600×600px. It
+          does not animate on load — it is already there, waiting. On scroll, it very slowly rotates (0.02deg/frame,
+          GSAP ticker). Creates a sense of living geometry without distraction.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Overline</div>
+        <div class="spec-val">Cinzel, 9px, tracking 0.32em, <code>--color-gold</code> at 60% opacity, uppercase. Text:
+          "WE BELIEVE THE WORLD CAN BE CHANGED". Centered. Appears first in the load sequence.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Headline</div>
+        <div class="spec-val">Two lines. Line 1: Cormorant Garamond Light 300, 72px (desktop),
+          <code>--color-text-primary</code>, roman. "Every idea that matters" — Line 2: Same font, italic, 72px,
+          <code>--color-text-secondary</code> at 55% opacity. "deserves the engineering to match." The typographic
+          contrast between roman and italic creates voice — assertion then reflection.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Sub-headline</div>
+        <div class="spec-val">EB Garamond, 18px, color <code>--color-text-secondary</code>, max-width 560px, centered.
+          "We build scalable enterprise software for companies that intend to matter." One sentence. No bullet points.
+          No list. Just a declaration.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">CTA Pair</div>
+        <div class="spec-val">Two buttons side by side: PRIMARY (gold bg, Void text, "BUILD WITH US") and SECONDARY
+          (transparent, gold border, "SEE OUR WORK"). 24px gap between them. On desktop, centered below the
+          sub-headline. 48px margin-top from sub-headline.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Scroll Indicator</div>
+        <div class="spec-val">Bottom center: a 1px wide gold line, 40px tall, that pulses (opacity 1 → 0.3, 2s loop,
+          GSAP). Below it: "SCROLL" in Cinzel 7px, tracking 0.22em, gold at 35% opacity. Disappears (fadeOut) after user
+          scrolls 100px.</div>
+      </div>
+
+      <div class="pull-quote">
+        <p>"The animation sequence must feel like a curtain being drawn, not a page loading. Each element enters with
+          intention — the overline first, then the headline splits and rises in, the sub-headline fades, the buttons
+          bloom. Total sequence: 2.2 seconds from page-ready."</p>
+      </div>
+
+      <div class="detail-label">GSAP Hero Entrance — Sequence</div>
+      <div class="detail-body">
+        <span class="anim-pill">t=0.2s</span> Geometric background octagon:
+        <code>opacity: 0 → 0.08, scale: 0.95 → 1</code>, 1.2s ease-out<br>
+        <span class="anim-pill">t=0.4s</span> Overline: <code>y: 12, opacity: 0 → y: 0, opacity: 1</code>, 0.7s ease<br>
+        <span class="anim-pill">t=0.65s</span> Headline line 1: <code>y: 28, opacity: 0 → y: 0, opacity: 1</code>, 0.8s
+        ease. Split via SplitText or word-by-word, stagger 0.04s<br>
+        <span class="anim-pill">t=0.85s</span> Headline line 2: same, italic line rises 0.1s after line 1 completes<br>
+        <span class="anim-pill">t=1.1s</span> Sub-headline: <code>opacity: 0 → 1</code>, 0.6s ease<br>
+        <span class="anim-pill">t=1.4s</span> Buttons: stagger 0.12s, each
+        <code>y: 16, opacity: 0 → y: 0, opacity: 1</code>, 0.5s ease<br>
+        <span class="anim-pill">t=1.9s</span> Scroll indicator: fades in, begins pulse loop
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 3: BELIEF STATEMENT -->
+    <div class="sec">
+      <div class="sec-num">Section 03</div>
+      <div class="sec-title">The Philosophy — A Scroll-Driven Reveal</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">This section exists to earn trust before asking for anything. It tells the reader who Niena
+        Labs is at its core — not a feature list, not a service menu, but a philosophical stance. Rendered as large
+        editorial text that assembles word by word as the user scrolls.</div>
+
+      <div class="wireframe">
+        <div class="wf-label">Philosophy Section</div>
+        <div style="padding:40px 32px;text-align:center;">
+          <div
+            style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.28em;color:rgba(201,168,76,0.45);text-transform:uppercase;margin-bottom:20px;">
+            Our Philosophy</div>
+          <div
+            style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:26px;color:#e8dfc8;max-width:600px;margin:0 auto;line-height:1.4;">
+            We believe the world can be changed the way we found it.<br><span style="color:rgba(232,223,200,0.4);">Every
+              product we build has one purpose:</span><br><span style="color:#c9a84c;font-style:italic;">to push
+              humanity forward.</span></div>
+          <div
+            style="width:1px;height:48px;background:linear-gradient(to bottom,rgba(201,168,76,0.4),transparent);margin:32px auto 0;">
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-row">
+        <div class="spec-key">Layout</div>
+        <div class="spec-val">Full-width section, <code>--color-void</code> background. Centered content column,
+          max-width 760px. Tall vertical padding: <code>--space-11 (128px)</code> top and bottom. This section demands
+          space.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Typography</div>
+        <div class="spec-val">The philosophy text renders in three parts: (1) "We believe the world can be changed the
+          way we found it." — Cormorant Garamond Light, 48px, Parchment. (2) "Every product we build has one purpose:" —
+          same font, 36px, Vellum (secondary text). (3) "to push humanity forward." — same font, italic, 48px, <strong
+            style="color:#c9a84c;">Gold (#c9a84c)</strong>. The gold italic line is the emotional peak of the entire
+          page.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Image Placement</div>
+        <div class="spec-val">No photographic images in this section. The only visual is the typography itself and a
+          single horizontal gold rule (1px, 80px wide) between the overline and the text block. Negative space is the
+          luxury signal here.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP ScrollTrigger</div>
+        <div class="spec-val">Each word of the philosophy text is wrapped in a span. On ScrollTrigger, words transition
+          from <code>color: rgba(232,223,200,0.12)</code> (barely visible, like ghost text carved in stone) to their
+          final color, staggered 0.03s per word. The effect: the philosophy text "illuminates" as the user reads it,
+          word by word, as if a light is traveling across a wall inscription.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Vertical Separator</div>
+        <div class="spec-val">At the bottom of this section, a 1px gold vertical line, 64px tall, fades in and "grows"
+          downward (<code>scaleY: 0 → 1</code>, transform-origin top) as the section exits. It connects visually to the
+          next section, implying continuation.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 4: CAPABILITIES -->
+    <div class="sec">
+      <div class="sec-num">Section 04</div>
+      <div class="sec-title">Capabilities — The Bento Grid</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">This is where Niena Labs demonstrates range without fragmentation. A bento grid of
+        capabilities — not a list of services, but a composed tableau. Each cell is a window into a discipline. The grid
+        enters one cell at a time, like rooms being revealed.</div>
+
+      <div class="wireframe">
+        <div class="wf-label">Bento Grid — Capabilities</div>
+        <div
+          style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:180px 180px;gap:12px;padding:4px;">
+          <!-- Featured cell -->
+          <div class="wf-block"
+            style="grid-row:1/3;border-color:rgba(201,168,76,0.25);flex-direction:column;gap:8px;padding:20px;align-items:flex-start;justify-content:flex-end;background:linear-gradient(to top,rgba(10,18,20,0.9) 0%,rgba(10,18,20,0.4) 50%,transparent 100%),rgba(201,168,76,0.04);">
+            <div
+              style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.2em;color:rgba(201,168,76,0.6);text-transform:uppercase;">
+              Enterprise Web</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:#e8dfc8;">Scalable
+              by architecture,<br>not by accident.</div>
+          </div>
+          <div class="wf-block"
+            style="flex-direction:column;gap:6px;padding:16px;align-items:flex-start;justify-content:flex-end;">
+            <div
+              style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.18em;color:rgba(201,168,76,0.5);text-transform:uppercase;">
+              Mobile</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;color:#e8dfc8;">iOS &
+              Android, native at heart.</div>
+          </div>
+          <div class="wf-block"
+            style="flex-direction:column;gap:6px;padding:16px;align-items:flex-start;justify-content:flex-end;">
+            <div
+              style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.18em;color:rgba(201,168,76,0.5);text-transform:uppercase;">
+              AI-Driven</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;color:#e8dfc8;">
+              Intelligence embedded, not bolted on.</div>
+          </div>
+          <div class="wf-block"
+            style="flex-direction:column;gap:6px;padding:16px;align-items:flex-start;justify-content:flex-end;">
+            <div
+              style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.18em;color:rgba(201,168,76,0.5);text-transform:uppercase;">
+              Cloud</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;color:#e8dfc8;">
+              Infrastructure that disappears.</div>
+          </div>
+          <div class="wf-block"
+            style="flex-direction:column;gap:6px;padding:16px;align-items:flex-start;justify-content:flex-end;">
+            <div
+              style="font-family:'Cinzel',serif;font-size:7px;letter-spacing:.18em;color:rgba(201,168,76,0.5);text-transform:uppercase;">
+              Desktop</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:300;color:#e8dfc8;">Power
+              without compromise.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-row">
+        <div class="spec-key">Grid Structure</div>
+        <div class="spec-val">Desktop: 3-column, 2-row bento grid. Column 1 spans both rows (featured "Enterprise Web"
+          cell). Columns 2 and 3 each have 2 cells. 24px gutter between all cells. Each cell: 4px border-radius,
+          <code>--border-subtle</code>.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Featured Cell</div>
+        <div class="spec-val">The large left cell (spans full height, roughly 400×480px on desktop) gets a real
+          background image: an abstract, architecturally composed photograph — think server infrastructure with dramatic
+          raking light, processed with a sepia-warm overlay at 20% opacity to match the brand palette. The scrim
+          formula:
+          <code>linear-gradient(to top, rgba(10,18,20,0.92) 0%, rgba(10,18,20,0.5) 50%, transparent 100%)</code>. Text
+          is bottom-left anchored inside. A <code>--border-gold</code> top edge on this cell only (1px solid gold, full
+          opacity). One chamfered corner (clip-path polygon) on top-right corner, 16px cut, echoing the logo mark.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Standard Cells</div>
+        <div class="spec-val">Each has: (1) A Cinzel overline 9px in gold (the discipline name), (2) a Cormorant
+          Garamond Light 22px heading (a one-line philosophical statement about that discipline), (3) an EB Garamond
+          14px body (1–2 sentences). Bottom-left alignment within the cell. <code>--space-6 (24px)</code> inner padding.
+          On hover: <code>--border-gold</code> transitions in (opacity 0 → 1), <code>--shadow-3</code> elevates, 180ms
+          ease.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Cell Content — Copy</div>
+        <div class="spec-val">Web Dev: "Scalable by architecture, not by accident." — Mobile: "iOS & Android, native at
+          heart." — AI Apps: "Intelligence embedded, not bolted on." — Cloud: "Infrastructure that disappears." —
+          Desktop: "Power without compromise." Every line is a brand statement, not a service description.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP ScrollTrigger</div>
+        <div class="spec-val">As the section scrolls into view: cells enter one at a time, staggered 0.15s, each from
+          <code>y: 40, opacity: 0 → y: 0, opacity: 1</code>, 0.7s ease. Featured cell enters first, slightly larger
+          stagger delay for the smaller cells. The grid "assembles" from the inside out, like a mosaic being laid.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Mobile Layout</div>
+        <div class="spec-val">Single column. Featured cell at top, then four cells stacked. Each cell: 220px min-height.
+          Same scrim and text layout.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 5: THE APPROACH -->
+    <div class="sec">
+      <div class="sec-num">Section 05</div>
+      <div class="sec-title">The Process — How We Build</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">A horizontal scroll-driven timeline (on desktop) that shows the Niena Labs approach to
+        building software. Not a generic "Discover → Design → Develop → Deploy" diagram. A narrative of how great
+        software comes to life. On mobile, this becomes a vertical stacked sequence.</div>
+
+      <div class="spec-row">
+        <div class="spec-key">Layout</div>
+        <div class="spec-val">Full-width horizontal panel, viewport height ~80vh. Left side (40%): sticky text block
+          with overline, section title, and a paragraph explaining the process philosophy. Right side (60%): horizontal
+          scroll container with 5 steps, each ~320px wide, 24px gutter. As the user scrolls vertically, the right side
+          scrolls horizontally — achieved via GSAP ScrollTrigger <code>horizontal: true</code> pinning the section.
+        </div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Each Step Card</div>
+        <div class="spec-val">320×440px card. <code>--color-slate-deep</code> background. Gold top-border on the
+          "active" (currently centered) step. Cinzel overline with a step number (01, 02, 03, 04, 05) in Cormorant
+          Garamond 64px Light, gold, 15% opacity — this giant number floats behind the title. Then: step name in Cinzel
+          11px, then Cormorant 26px title, then EB Garamond 15px body copy of 3–4 sentences. A horizontal gold line
+          (40px) between the number zone and the text.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">5 Steps — Copy</div>
+        <div class="spec-val">01 — Understand: "We begin with the problem, not the stack." 02 — Architect: "Every line
+          of code is preceded by a decision." 03 — Build: "Precision. Iteration. No shortcuts." 04 — Launch: "Deployment
+          is not the finish line." 05 — Evolve: "The best software is always becoming."</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP Horizontal Scroll</div>
+        <div class="spec-val">Section is pinned while scroll progress drives <code>x</code> translation of the card
+          container. Cards at <code>x: 0</code> on entry, travel to <code>x: -(totalWidth - viewportWidth)</code> by
+          section exit. Each card "brightens" (border-top gold fades in, body text opacity increases from 0.4 → 1) when
+          it reaches the center viewport position. Progress indicator: a thin gold horizontal line at the bottom,
+          <code>scaleX: 0 → 1</code> as scroll advances.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Image — Step Cards</div>
+        <div class="spec-val">No photographs in these cards. The large faded step number is the only "visual." This
+          restraint says: our process is intellectual, not performative. The typography IS the illustration.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 6: STATS/PROOF -->
+    <div class="sec">
+      <div class="sec-num">Section 06</div>
+      <div class="sec-title">The Numbers — Proof in Stillness</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">Three or four large numerical statements. Not a table. Not a grid of icons. Just numbers
+        that speak for themselves, set in enormous Cormorant Garamond type, each one earning its space. The section
+        feels like an inscription on a monument.</div>
+
+      <div class="wireframe">
+        <div class="wf-label">Stats Section</div>
+        <div
+          style="padding:40px 20px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:rgba(201,168,76,0.1);">
+          <div style="background:#0f1a1c;padding:32px 24px;">
+            <div
+              style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:54px;color:#c9a84c;line-height:1;">
+              50+</div>
+            <div
+              style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);text-transform:uppercase;margin-top:10px;">
+              Products shipped</div>
+          </div>
+          <div style="background:#0f1a1c;padding:32px 24px;">
+            <div
+              style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:54px;color:#c9a84c;line-height:1;">
+              3</div>
+            <div
+              style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);text-transform:uppercase;margin-top:10px;">
+              Continents served</div>
+          </div>
+          <div style="background:#0f1a1c;padding:32px 24px;">
+            <div
+              style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:54px;color:#c9a84c;line-height:1;">
+              ∞</div>
+            <div
+              style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);text-transform:uppercase;margin-top:10px;">
+              Ideas worth building</div>
+          </div>
+          <div style="background:#0f1a1c;padding:32px 24px;">
+            <div
+              style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:54px;color:#c9a84c;line-height:1;">
+              01</div>
+            <div
+              style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.2em;color:rgba(232,223,200,0.4);text-transform:uppercase;margin-top:10px;">
+              Purpose</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-row">
+        <div class="spec-key">Layout</div>
+        <div class="spec-val">4-column grid, divided by 1px gold-faint vertical lines
+          (<code>--border-gold-faint</code>). No outer border. Each column: the number in Cormorant Garamond Light 80px,
+          gold, followed by a Cinzel 9px label. Padding: <code>--space-8 (48px)</code> top/bottom,
+          <code>--space-6 (24px)</code> left/right per column. Section background: <code>--color-void</code>.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Numbers — Copy</div>
+        <div class="spec-val">"50+" — Products shipped. "3" — Continents served. "∞" — Ideas worth building (the
+          infinity symbol, same font, same size — a philosophical statement rendered as data). "01" — Purpose (the
+          number one, with label "Purpose" — a powerful declaration that the company has one north star).</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP Animation</div>
+        <div class="spec-val">On scroll-into-view, each number counts up from 0 to its final value
+          (<code>GSAP CountTo</code>), staggered 0.2s per column. Duration per count: 1.5s with
+          <code>ease: power2.out</code>. The "∞" and "01" do not count — they snap in with an opacity fade and a slight
+          <code>y: 20 → 0</code>. After all numbers land, the vertical dividers "draw down" from
+          <code>scaleY: 0 → 1</code>, transform-origin top, 0.4s each, staggered 0.1s.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 7: WORK/CASE STUDIES -->
+    <div class="sec">
+      <div class="sec-num">Section 07</div>
+      <div class="sec-title">Selected Work — The Portfolio</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">A curated selection of 2–3 projects. Not a gallery. A curated exhibition — each project
+        given breathing room, positioned asymmetrically, with one large image and deliberate editorial copy. This is
+        Niena Labs showing, not telling.</div>
+
+      <div class="spec-row">
+        <div class="spec-key">Layout — Each Project</div>
+        <div class="spec-val">Alternating left-right layout. Project 1: image takes 58% of width on the left (full bleed
+          image, 480px tall, object-fit:cover, 4px border-radius, scrim applied), copy takes 38% on right (vertically
+          centered). Project 2: copy on left, image on right. 64px vertical gap between projects. No cards — the image
+          IS the card.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Image Requirements</div>
+        <div class="spec-val">Fine art photography style per brand imagery rules: warm tones, muted palette,
+          architectural composition, soft grain, dramatic raking light. Subject matter: real or analogous
+          representations of the product in use — abstracted, not literal screenshots. Each image: golden hour warm
+          toning, sepia wash overlay at 15% opacity applied via CSS <code>mix-blend-mode: multiply</code> on a
+          <code>rgba(201,168,76,0.12)</code> overlay div.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Project Copy Structure</div>
+        <div class="spec-val">Cinzel overline (9px, gold): project category (e.g., "Enterprise Web Application").
+          Cormorant Garamond 36px title: the project name or tagline. EB Garamond 16px body: 3 sentences about the
+          challenge and what was built. A Cinzel 9px tag row for tech stack (e.g., "React · Node.js · AWS ·
+          PostgreSQL"). Finally: a ghost button "Read Case Study" (transparent, subtle border, gold text hover).</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP ScrollTrigger</div>
+        <div class="spec-val">Each project pair enters with a parallax: the image scrolls at 0.85x speed (GSAP
+          <code>scrub: true, y: -40 → 40</code> as the section scrolls through), while the text scrolls at normal speed.
+          This creates depth — the image feels cinematic and dimensional. Text block:
+          <code>x: 30, opacity: 0 → x: 0, opacity: 1</code> on entry, 0.8s ease. Image: <code>scale: 1.05 → 1</code> on
+          entry (Ken Burns-style settle), 1.2s.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Section Header</div>
+        <div class="spec-val">Before the projects: Cinzel overline "Selected Work", Cormorant 48px title "Built with
+          purpose.", 40px gold horizontal line, then EB Garamond body "A selection of products we're proud to have
+          built." — 2 sentences max. 96px below the section header, the first project begins.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 8: THE MANIFESTO INTERLUDE -->
+    <div class="sec">
+      <div class="sec-num">Section 08</div>
+      <div class="sec-title">The Interlude — A Full-Bleed Moment</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">A full-viewport-height section that breaks the grid and speaks directly to the visitor who
+        has an idea. This is the emotional core — not a feature section, not a portfolio section. A direct address. It
+        must stop the scroll.</div>
+
+      <div class="wireframe">
+        <div class="wf-label">Interlude — Full Bleed</div>
+        <div
+          style="height:280px;background:linear-gradient(135deg,#0a1214 0%,#1c2b2e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;position:relative;">
+          <div
+            style="position:absolute;inset:0;background-image:radial-gradient(circle at 50% 50%,rgba(201,168,76,0.07) 0%,transparent 70%);">
+          </div>
+          <div
+            style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.28em;color:rgba(201,168,76,0.5);text-transform:uppercase;margin-bottom:16px;position:relative;">
+            For founders. For builders.</div>
+          <div
+            style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:28px;color:#e8dfc8;max-width:480px;line-height:1.3;position:relative;margin-bottom:16px;">
+            If you believe your idea could make a huge impact on the world —</div>
+          <div
+            style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:28px;font-style:italic;color:#c9a84c;position:relative;">
+            we're ready to build it with you.</div>
+          <div style="margin-top:28px;position:relative;display:flex;gap:12px;">
+            <div
+              style="background:#c9a84c;padding:9px 22px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:#0a1214;">
+              REACH OUT</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-row">
+        <div class="spec-key">Background</div>
+        <div class="spec-val"><code>--color-abyss</code> base. A radial gradient glow centered on the section:
+          <code>radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 65%)</code>. This creates a
+          soft golden pool of light that feels like a spotlight. No photograph — pure abstraction.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Overline</div>
+        <div class="spec-val">Cinzel 9px, tracking 0.28em, gold 50% opacity: "FOR FOUNDERS · FOR BUILDERS · FOR
+          DREAMERS" — using centered dots as dividers, all on one line.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Headline</div>
+        <div class="spec-val">Two parts, centered. Part 1: Cormorant Garamond Light 52px, Parchment: "If you believe
+          your idea could make a huge impact on the world —" Part 2: Cormorant Garamond Light Italic 52px, <strong
+            style="color:#c9a84c;">Gold</strong>: "we're ready to build it with you." A dramatic em dash bridges the two
+          parts visually and rhetorically.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">CTA</div>
+        <div class="spec-val">A single primary CTA: "REACH OUT" — Gold background, Void text, Cinzel. This is the only
+          primary gold button in the entire page. It earns its gold here, at the most emotionally resonant moment.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP ScrollTrigger</div>
+        <div class="spec-val">As the section enters: the gold glow radial gradient expands <code>scale: 0 → 1</code>
+          (GSAP on a CSS variable driving the gradient size), 1.4s ease-out. The headline splits across two lines — Part
+          1 enters from left (<code>x: -60 → 0, opacity: 0 → 1</code>), Part 2 enters from right
+          (<code>x: 60 → 0, opacity: 0 → 1</code>), both 0.9s, staggered 0.3s apart. This mimics two hands reaching
+          across a table to meet. The CTA button then blooms in from
+          <code>scale: 0.8, opacity: 0 → scale: 1, opacity: 1</code>.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 9: TESTIMONIALS -->
+    <div class="sec">
+      <div class="sec-num">Section 09</div>
+      <div class="sec-title">Testimonials — Voices in Stone</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">2–3 client quotes, rendered as large pull-quote typography against dark backgrounds. Not
+        carousel cards with headshots. The words themselves are the testimonial. The attribution is secondary.</div>
+
+      <div class="spec-row">
+        <div class="spec-key">Layout</div>
+        <div class="spec-val">Full-width section. Each testimonial occupies its own "row" — roughly 240px tall. No card
+          wrapper. The quote text runs edge-to-edge within the content max-width (840px), centered, in Cormorant
+          Garamond Light Italic 28px, Parchment. Below each quote: a thin 1px hairline divider, then the attribution
+          line: Cinzel 9px, Stone color, "— CLIENT NAME · COMPANY · ROLE".</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Opening Quotation Mark</div>
+        <div class="spec-val">A massive typographic opening curly quote ("") — Cormorant Garamond, 200px, gold at 8%
+          opacity — floats as a background element behind the first testimonial, positioned top-left of the quote block.
+          It's decorative but not decorative: it signals "this is a quote" at a glance.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP ScrollTrigger</div>
+        <div class="spec-val">Each quote: on entry, text renders word by word, fading from
+          <code>opacity: 0.15 → 1</code>, staggered 0.025s per word. The same "illuminating inscription" effect from the
+          philosophy section — this creates thematic continuity. The attribution line fades in as a whole after the
+          quote completes.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Visual Accent</div>
+        <div class="spec-val">A gold-faint horizontal divider (1px, full content width) between each testimonial. On the
+          last testimonial's divider, the line is gold at full opacity (not faint) — it signals the section is ending
+          and the next major moment is approaching.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- SECTION 10: CTA/CONTACT -->
+    <div class="sec">
+      <div class="sec-num">Section 10</div>
+      <div class="sec-title">Contact — The Closing Invitation</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">The final section of the page. It must not feel like a form — it must feel like an open
+        door. A two-column layout: left side carries the brand statement again, the emotional close. Right side holds a
+        minimal contact form — the only form on the page.</div>
+
+      <div class="wireframe">
+        <div class="wf-label">Contact Section</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:32px 20px;">
+          <div>
+            <div
+              style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.22em;color:rgba(201,168,76,0.5);text-transform:uppercase;margin-bottom:14px;">
+              Start the conversation</div>
+            <div
+              style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:#e8dfc8;margin-bottom:10px;">
+              Tell us what you're building.</div>
+            <div style="font-size:13px;color:rgba(232,223,200,0.45);line-height:1.8;">We don't need a full brief. We
+              need to know what you believe is possible.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div>
+              <div
+                style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(201,168,76,0.6);text-transform:uppercase;margin-bottom:6px;">
+                Name</div>
+              <div style="background:#0a1214;border:1px solid #2e4248;border-radius:3px;height:36px;"></div>
+            </div>
+            <div>
+              <div
+                style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(201,168,76,0.6);text-transform:uppercase;margin-bottom:6px;">
+                Your idea, in one sentence</div>
+              <div style="background:#0a1214;border:1px solid #2e4248;border-radius:3px;height:64px;"></div>
+            </div>
+            <div
+              style="display:inline-block;background:#c9a84c;padding:9px 24px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:#0a1214;align-self:flex-start;">
+              SEND</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-row">
+        <div class="spec-key">Layout</div>
+        <div class="spec-val">Two-column, 50/50 split, 64px gap. Section background: <code>--color-abyss</code>.
+          Padding: <code>--space-10 (96px)</code> top and bottom.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Left Column</div>
+        <div class="spec-val">Cinzel overline "Start the conversation". Cormorant Garamond 42px: "Tell us what you're
+          building." EB Garamond 17px body: "We don't need a full brief. We need to know what you believe is possible.
+          Every great product started with a conversation." Below the body: a minimal list of contact channels in Cinzel
+          9px — email address and LinkedIn — separated by <code>--border-hairline</code>. Each with a right-arrow (→) on
+          hover.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Right Column — Form</div>
+        <div class="spec-val">Three fields only — Name, Email, "Your idea, in one sentence." Labels: Cinzel 9px, gold,
+          uppercase, above each input. Inputs: <code>--color-void</code> background, <code>--border-default</code>, 3px
+          radius. On focus: <code>--border-gold</code>, <code>--shadow-focus</code>. The third field ("Your idea") is a
+          textarea, min-height 120px. Below the textarea: primary gold CTA button "SEND" (full-width on mobile, auto
+          width on desktop). Loading state: a thin animated gold line replaces the button text. Success state: the form
+          fades out, replaced by "We'll be in touch." in Cormorant Garamond Italic 28px.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">GSAP ScrollTrigger</div>
+        <div class="spec-val">Left column: <code>x: -40, opacity: 0 → x: 0, opacity: 1</code>, 0.8s ease. Right column:
+          <code>x: 40, opacity: 0 → x: 0, opacity: 1</code>, 0.8s ease, 0.15s delay. They converge from opposite sides,
+          mirroring the "reaching hands" metaphor from Section 08. A gold horizontal line at 1px, 64px wide, draws from
+          left to right (<code>scaleX: 0 → 1</code>, transform-origin left) below the overline as the column enters.
         </div>
       </div>
     </div>
 
-    <div class="spec-row"><div class="spec-key">Layout</div><div class="spec-val">Two-column, 50/50 split, 64px gap. Section background: <code>--color-abyss</code>. Padding: <code>--space-10 (96px)</code> top and bottom.</div></div>
-    <div class="spec-row"><div class="spec-key">Left Column</div><div class="spec-val">Cinzel overline "Start the conversation". Cormorant Garamond 42px: "Tell us what you're building." EB Garamond 17px body: "We don't need a full brief. We need to know what you believe is possible. Every great product started with a conversation." Below the body: a minimal list of contact channels in Cinzel 9px — email address and LinkedIn — separated by <code>--border-hairline</code>. Each with a right-arrow (→) on hover.</div></div>
-    <div class="spec-row"><div class="spec-key">Right Column — Form</div><div class="spec-val">Three fields only — Name, Email, "Your idea, in one sentence." Labels: Cinzel 9px, gold, uppercase, above each input. Inputs: <code>--color-void</code> background, <code>--border-default</code>, 3px radius. On focus: <code>--border-gold</code>, <code>--shadow-focus</code>. The third field ("Your idea") is a textarea, min-height 120px. Below the textarea: primary gold CTA button "SEND" (full-width on mobile, auto width on desktop). Loading state: a thin animated gold line replaces the button text. Success state: the form fades out, replaced by "We'll be in touch." in Cormorant Garamond Italic 28px.</div></div>
-    <div class="spec-row"><div class="spec-key">GSAP ScrollTrigger</div><div class="spec-val">Left column: <code>x: -40, opacity: 0 → x: 0, opacity: 1</code>, 0.8s ease. Right column: <code>x: 40, opacity: 0 → x: 0, opacity: 1</code>, 0.8s ease, 0.15s delay. They converge from opposite sides, mirroring the "reaching hands" metaphor from Section 08. A gold horizontal line at 1px, 64px wide, draws from left to right (<code>scaleX: 0 → 1</code>, transform-origin left) below the overline as the column enters.</div></div>
+    <div class="div-faint"></div>
+
+    <!-- SECTION 11: FOOTER -->
+    <div class="sec">
+      <div class="sec-num">Section 11</div>
+      <div class="sec-title">Footer — The Final Mark</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">The footer is an architectural base plate. Dark, precise, restrained. It does not try to
+        sell anything — it anchors the page and lets the brand identity rest at the bottom of the scroll.</div>
+
+      <div class="spec-row">
+        <div class="spec-key">Layout</div>
+        <div class="spec-val">Three-column grid: (1) Brand column — logo mark, logotype, and a one-sentence brand
+          tagline in EB Garamond Italic. (2) Links column — Cinzel 9px, tracking 0.14em, muted color, four nav links
+          stacked. On hover: gold, no underline, 150ms transition. (3) Social/Legal — tiny social icon links (SVG icons,
+          16px, --color-text-muted), and at bottom: copyright line in Cinzel 8px.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Top Border</div>
+        <div class="spec-val">A 1px gold-faint horizontal rule spans the full width above the footer columns. This is
+          the final <code>--border-gold-faint</code> instance — the page ends with gold.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Background</div>
+        <div class="spec-val"><code>--color-void (#0a1214)</code> — the darkest layer. The page begins in void (hero)
+          and ends in void (footer). The journey completes its arc.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Copyright Line</div>
+        <div class="spec-val">Full-width hairline above copyright. Cinzel 7px, tracking 0.2em, gold 20% opacity: "© 2025
+          Niena Labs · ALL RIGHTS RESERVED · BUILT WITH PURPOSE". Centered. This line is the page's final word.</div>
+      </div>
+    </div>
+
+    <div class="div-faint"></div>
+
+    <!-- TYPOGRAPHY SYSTEM -->
+    <div class="sec">
+      <div class="sec-num">Typography Reference</div>
+      <div class="sec-title">Type Hierarchy — Landing Page</div>
+      <div class="sec-gold"></div>
+
+      <div class="spec-row">
+        <div class="spec-key">Hero Headline</div>
+        <div class="spec-val">Cormorant Garamond Light 300 · 72px desktop / 44px mobile · Line-height 1.05 · Parchment +
+          italic Vellum pairing</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Section Titles</div>
+        <div class="spec-val">Cormorant Garamond Light 300 · 48px desktop / 34px mobile · Line-height 1.1 · Parchment
+        </div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Sub-Headlines</div>
+        <div class="spec-val">Cormorant Garamond Light 300 · 28–36px · editorial moments, cell titles, process card
+          titles</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Overlines / Labels</div>
+        <div class="spec-val">Cinzel Regular 400 · 9px · tracking 0.26–0.32em · uppercase · Gold (#c9a84c)</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Body / Lead</div>
+        <div class="spec-val">EB Garamond Regular 400 · 17–18px · Line-height 1.85 · Vellum (#c4b898). Italic variant
+          for pull-quotes.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Small Body / Caption</div>
+        <div class="spec-val">EB Garamond Regular 400 · 14–15px · Line-height 1.9 · Stone (#7a8e92)</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Buttons / Tags</div>
+        <div class="spec-val">Cinzel Regular 400 · 9–10px · tracking 0.18em · uppercase · Never EB Garamond or Cormorant
+        </div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Stats / Numbers</div>
+        <div class="spec-val">Cormorant Garamond Light 300 · 80px · Gold (#c9a84c) · Line-height 1.0</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Testimonial Quotes</div>
+        <div class="spec-val">Cormorant Garamond Light Italic · 26–30px · Parchment · Line-height 1.5</div>
+      </div>
+    </div>
+
+    <!-- ANIMATION MASTER -->
+    <div class="sec">
+      <div class="sec-num">Animation Reference</div>
+      <div class="sec-title">GSAP Master Scroll Map</div>
+      <div class="sec-gold"></div>
+      <div class="sec-lead">All animations use GSAP with ScrollTrigger. No CSS-only animations for scroll-driven
+        effects. The following eases and principles govern all motion.</div>
+
+      <div class="spec-row">
+        <div class="spec-key">Primary Ease</div>
+        <div class="spec-val"><code>power2.out</code> for entrances. <code>power1.inOut</code> for scrub/parallax. Never
+          bounce, elastic, or spring on structural elements.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Text Reveals</div>
+        <div class="spec-val">Word-by-word: GSAP stagger on span wraps. <code>opacity: 0 → 1</code>, stagger 0.025s per
+          word. For hero headline: SplitText by chars for more drama.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Parallax Depth</div>
+        <div class="spec-val">Images move at 0.85x scroll speed. Background geometry at 0.92x. Text at 1x. This creates
+          3 depth planes.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Pinned Sections</div>
+        <div class="spec-val">Section 05 (Process): pinned with horizontal scroll. <code>scrub: 1.5</code> for smooth,
+          lag-behind feel. Duration: <code>scrollTrigger: { scrub: true, end: "+=2000" }</code>.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Line Draws</div>
+        <div class="spec-val">Gold decorative lines use <code>scaleX: 0 → 1</code> or <code>scaleY: 0 → 1</code>,
+          transform-origin start. Duration 0.5–0.8s. These punctuate section entries.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Counter Animation</div>
+        <div class="spec-val">Section 06 stats:
+          <code>gsap.to(obj, { val: targetNumber, duration: 1.5, ease: 'power2.out', onUpdate: () => el.textContent = Math.round(obj.val) })</code>.
+        </div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Reduced Motion</div>
+        <div class="spec-val">All animations must check
+          <code>window.matchMedia('(prefers-reduced-motion: reduce)')</code>. If true: skip all scroll-triggered
+          animations. Content is visible at full opacity by default. Transitions max 200ms.</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-key">Performance Rule</div>
+        <div class="spec-val">All animated properties must be <code>transform</code> or <code>opacity</code> only. Never
+          animate <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>, <code>margin</code>,
+          <code>padding</code>, or <code>background-color</code> — these trigger layout/paint.</div>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      Niena Labs · Landing Page Brand Concept · Neoclassical Dark · No arbitrary values · Built with purpose
+    </div>
+
   </div>
-
-  <div class="div-faint"></div>
-
-  <!-- SECTION 11: FOOTER -->
-  <div class="sec">
-    <div class="sec-num">Section 11</div>
-    <div class="sec-title">Footer — The Final Mark</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">The footer is an architectural base plate. Dark, precise, restrained. It does not try to sell anything — it anchors the page and lets the brand identity rest at the bottom of the scroll.</div>
-
-    <div class="spec-row"><div class="spec-key">Layout</div><div class="spec-val">Three-column grid: (1) Brand column — logo mark, logotype, and a one-sentence brand tagline in EB Garamond Italic. (2) Links column — Cinzel 9px, tracking 0.14em, muted color, four nav links stacked. On hover: gold, no underline, 150ms transition. (3) Social/Legal — tiny social icon links (SVG icons, 16px, --color-text-muted), and at bottom: copyright line in Cinzel 8px.</div></div>
-    <div class="spec-row"><div class="spec-key">Top Border</div><div class="spec-val">A 1px gold-faint horizontal rule spans the full width above the footer columns. This is the final <code>--border-gold-faint</code> instance — the page ends with gold.</div></div>
-    <div class="spec-row"><div class="spec-key">Background</div><div class="spec-val"><code>--color-void (#0a1214)</code> — the darkest layer. The page begins in void (hero) and ends in void (footer). The journey completes its arc.</div></div>
-    <div class="spec-row"><div class="spec-key">Copyright Line</div><div class="spec-val">Full-width hairline above copyright. Cinzel 7px, tracking 0.2em, gold 20% opacity: "© 2025 NIENALABS · ALL RIGHTS RESERVED · BUILT WITH PURPOSE". Centered. This line is the page's final word.</div></div>
-  </div>
-
-  <div class="div-faint"></div>
-
-  <!-- TYPOGRAPHY SYSTEM -->
-  <div class="sec">
-    <div class="sec-num">Typography Reference</div>
-    <div class="sec-title">Type Hierarchy — Landing Page</div>
-    <div class="sec-gold"></div>
-
-    <div class="spec-row"><div class="spec-key">Hero Headline</div><div class="spec-val">Cormorant Garamond Light 300 · 72px desktop / 44px mobile · Line-height 1.05 · Parchment + italic Vellum pairing</div></div>
-    <div class="spec-row"><div class="spec-key">Section Titles</div><div class="spec-val">Cormorant Garamond Light 300 · 48px desktop / 34px mobile · Line-height 1.1 · Parchment</div></div>
-    <div class="spec-row"><div class="spec-key">Sub-Headlines</div><div class="spec-val">Cormorant Garamond Light 300 · 28–36px · editorial moments, cell titles, process card titles</div></div>
-    <div class="spec-row"><div class="spec-key">Overlines / Labels</div><div class="spec-val">Cinzel Regular 400 · 9px · tracking 0.26–0.32em · uppercase · Gold (#c9a84c)</div></div>
-    <div class="spec-row"><div class="spec-key">Body / Lead</div><div class="spec-val">EB Garamond Regular 400 · 17–18px · Line-height 1.85 · Vellum (#c4b898). Italic variant for pull-quotes.</div></div>
-    <div class="spec-row"><div class="spec-key">Small Body / Caption</div><div class="spec-val">EB Garamond Regular 400 · 14–15px · Line-height 1.9 · Stone (#7a8e92)</div></div>
-    <div class="spec-row"><div class="spec-key">Buttons / Tags</div><div class="spec-val">Cinzel Regular 400 · 9–10px · tracking 0.18em · uppercase · Never EB Garamond or Cormorant</div></div>
-    <div class="spec-row"><div class="spec-key">Stats / Numbers</div><div class="spec-val">Cormorant Garamond Light 300 · 80px · Gold (#c9a84c) · Line-height 1.0</div></div>
-    <div class="spec-row"><div class="spec-key">Testimonial Quotes</div><div class="spec-val">Cormorant Garamond Light Italic · 26–30px · Parchment · Line-height 1.5</div></div>
-  </div>
-
-  <!-- ANIMATION MASTER -->
-  <div class="sec">
-    <div class="sec-num">Animation Reference</div>
-    <div class="sec-title">GSAP Master Scroll Map</div>
-    <div class="sec-gold"></div>
-    <div class="sec-lead">All animations use GSAP with ScrollTrigger. No CSS-only animations for scroll-driven effects. The following eases and principles govern all motion.</div>
-
-    <div class="spec-row"><div class="spec-key">Primary Ease</div><div class="spec-val"><code>power2.out</code> for entrances. <code>power1.inOut</code> for scrub/parallax. Never bounce, elastic, or spring on structural elements.</div></div>
-    <div class="spec-row"><div class="spec-key">Text Reveals</div><div class="spec-val">Word-by-word: GSAP stagger on span wraps. <code>opacity: 0 → 1</code>, stagger 0.025s per word. For hero headline: SplitText by chars for more drama.</div></div>
-    <div class="spec-row"><div class="spec-key">Parallax Depth</div><div class="spec-val">Images move at 0.85x scroll speed. Background geometry at 0.92x. Text at 1x. This creates 3 depth planes.</div></div>
-    <div class="spec-row"><div class="spec-key">Pinned Sections</div><div class="spec-val">Section 05 (Process): pinned with horizontal scroll. <code>scrub: 1.5</code> for smooth, lag-behind feel. Duration: <code>scrollTrigger: { scrub: true, end: "+=2000" }</code>.</div></div>
-    <div class="spec-row"><div class="spec-key">Line Draws</div><div class="spec-val">Gold decorative lines use <code>scaleX: 0 → 1</code> or <code>scaleY: 0 → 1</code>, transform-origin start. Duration 0.5–0.8s. These punctuate section entries.</div></div>
-    <div class="spec-row"><div class="spec-key">Counter Animation</div><div class="spec-val">Section 06 stats: <code>gsap.to(obj, { val: targetNumber, duration: 1.5, ease: 'power2.out', onUpdate: () => el.textContent = Math.round(obj.val) })</code>.</div></div>
-    <div class="spec-row"><div class="spec-key">Reduced Motion</div><div class="spec-val">All animations must check <code>window.matchMedia('(prefers-reduced-motion: reduce)')</code>. If true: skip all scroll-triggered animations. Content is visible at full opacity by default. Transitions max 200ms.</div></div>
-    <div class="spec-row"><div class="spec-key">Performance Rule</div><div class="spec-val">All animated properties must be <code>transform</code> or <code>opacity</code> only. Never animate <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>, <code>margin</code>, <code>padding</code>, or <code>background-color</code> — these trigger layout/paint.</div></div>
-  </div>
-
-  <div class="doc-footer">
-    Nienalabs · Landing Page Brand Concept · Neoclassical Dark · No arbitrary values · Built with purpose
-  </div>
-
-</div>
 </body>
+
 </html>

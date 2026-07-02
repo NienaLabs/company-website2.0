@@ -4,7 +4,8 @@ import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from 'next/image'
+import Image from 'next/image';
+import Link from 'next/link';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -95,7 +96,7 @@ export default function Navbar() {
           style={{ display: "flex", alignItems: "center", gap: "4px" }}
         >
 
-          <Image src="/logo-white.svg" alt="Logo" width={25} height={25} />
+          <Image src="/logo-black.svg" alt="Logo" width={25} height={25} />
 
           <span style={{
             fontFamily: "'Cinzel', serif",
@@ -127,6 +128,9 @@ export default function Navbar() {
 
         {/* Right — GitHub + CTA */}
         <div ref={ctaRef} style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <Link href="/bootcamp/courses" className="nav-link" style={{ fontSize: "10px" }}>
+            Bootcamp
+          </Link>
           {/* GitHub Community Link */}
           <a
             href="https://github.com/orgs/Niena Labs-community/repositories"

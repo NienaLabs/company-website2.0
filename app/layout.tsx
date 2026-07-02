@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/logo-white.svg", sizes: "48x48", type: "image/svg+xml" },
+      { url: "/logo-black.svg", sizes: "48x48", type: "image/svg+xml" },
     ],
   },
 };

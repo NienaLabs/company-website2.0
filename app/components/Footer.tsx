@@ -25,7 +25,7 @@ export default function Footer() {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "20px" }}>
 
-              <Image src="/logo-white.svg" alt="Logo" width={20} height={20} />
+              <Image src="/logo-black.svg" alt="Logo" width={20} height={20} />
 
               <span
                 style={{

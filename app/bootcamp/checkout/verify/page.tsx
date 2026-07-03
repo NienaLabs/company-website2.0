@@ -1,6 +1,9 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, XCircle } from 'lucide-react';
+import { courses } from '../../../../lib/courses';
+import { getWelcomeEmailHtml } from '../../../../lib/email-templates';
+import { Resend } from 'resend';
 
 export default async function VerifyPaymentPage({
   searchParams,
@@ -45,6 +48,27 @@ export default async function VerifyPaymentPage({
     if (response.ok && data.status && data.data.status === 'success') {
       isSuccess = true;
       customerEmail = data.data.customer?.email || '';
+
+      const metadata = data.data.metadata || {};
+      const courseId = metadata.courseId;
+      const firstName = metadata.firstName || '';
+
+      const course = courses.find(c => c.id === courseId);
+      const courseTitle = course ? course.title : 'Niena Labs Bootcamp';
+
+      if (customerEmail && process.env.RESEND_API_KEY) {
+        try {
+          const resend = new Resend(process.env.RESEND_API_KEY);
+          await resend.emails.send({
+            from: 'Niena Labs Bootcamp <hello@nienalabs.com>', // Fallback to resend.dev, replace with verified domain like hello@nienalabs.com
+            to: customerEmail,
+            subject: 'Welcome to the Niena Labs Bootcamp',
+            html: getWelcomeEmailHtml(firstName, courseTitle),
+          });
+        } catch (emailErr) {
+          console.error('Failed to send welcome email:', emailErr);
+        }
+      }
     } else {
       errorMsg = data.message || 'Payment verification failed.';
     }
@@ -63,15 +87,15 @@ export default async function VerifyPaymentPage({
             <XCircle color="var(--color-error)" size={40} />
           )}
         </div>
-        
+
         <h1 className="font-cormorant" style={{ fontSize: 'clamp(32px, 6vw, 42px)', color: 'var(--color-text-primary)', lineHeight: 1.1, margin: 0 }}>
           {isSuccess ? 'Payment Successful!' : 'Payment Failed'}
         </h1>
-        
+
         <p className="font-garamond" style={{ fontSize: 'clamp(16px, 3.5vw, 18px)', color: 'var(--color-text-secondary)', lineHeight: 1.6, maxWidth: '400px', width: '100%', margin: 0 }}>
           {isSuccess ? (
             <>
-              Thank you! Your payment was verified successfully. 
+              Thank you! Your payment was verified successfully.
               {customerEmail && ` A receipt has been sent to ${customerEmail}.`}
               <br /><br />
               We will add you to the exclusive WhatsApp group shortly.

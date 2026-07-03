@@ -48,7 +48,7 @@ export default function CourseCard({ course }: CourseCardProps) {
       {/* Footer */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 'var(--border-hairline)', paddingTop: 'var(--space-4)', marginTop: 'auto' }}>
         <div className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>
-          ${course.price}
+          GH₵{course.price}
         </div>
         <Link
           href={`/bootcamp/courses/${course.slug}`}

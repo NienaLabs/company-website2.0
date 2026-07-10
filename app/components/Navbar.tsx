@@ -25,6 +25,7 @@ function GitHubIcon() {
 }
 
 export default function Navbar() {
+  const [isBannerVisible, setIsBannerVisible] = useState(true);
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
@@ -82,13 +83,101 @@ export default function Navbar() {
         right: 0,
         zIndex: 100,
         backgroundColor: "rgba(10,18,20,0)",
-        padding: "20px 0",
         transition: "background-color 300ms ease",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
+      {isBannerVisible && (
+        <div style={{
+          width: "100%",
+          background: "linear-gradient(90deg, #0a1214 0%, #1c2b2e 50%, #0a1214 100%)",
+          borderBottom: "1px solid rgba(201,168,76,0.2)",
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "10px 16px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+          overflow: "hidden"
+        }}>
+          {/* Subtle gold glow behind text */}
+          <div style={{
+            position: "absolute",
+            width: "250px",
+            height: "100%",
+            background: "radial-gradient(ellipse at center, rgba(201,168,76,0.15) 0%, transparent 70%)",
+            pointerEvents: "none"
+          }} />
+
+          {/* Animated shimmering effect */}
+          <div className="shimmer-effect" style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "50%",
+            height: "100%",
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)",
+            pointerEvents: "none"
+          }} />
+
+          <Link href="/bootcamp/courses" className="banner-link" style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            textDecoration: "none",
+            zIndex: 1,
+          }}>
+        
+            <span style={{
+              fontFamily: "'Cinzel', serif",
+              fontSize: "10px",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "var(--color-text-primary)",
+              transition: "color 300ms ease"
+            }} className="banner-text">
+              Join Our Upcoming Bootcamp
+            </span>
+            <span className="banner-arrow" style={{
+              color: "var(--color-gold)",
+              fontSize: "14px",
+              transition: "transform 300ms ease",
+              lineHeight: 1
+            }}>
+              →
+            </span>
+          </Link>
+
+          <button
+            onClick={() => setIsBannerVisible(false)}
+            aria-label="Close banner"
+            style={{
+              position: "absolute",
+              right: "16px",
+              background: "transparent",
+              border: "none",
+              color: "var(--color-text-muted)",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "4px",
+              transition: "color 200ms ease"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-text-primary)"}
+            onMouseLeave={(e) => e.currentTarget.style.color = "var(--color-text-muted)"}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      )}
+
       <div
         className="section-container"
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "20px", paddingBottom: "20px", width: "100%" }}
       >
         {/* Logo */}
         <div
@@ -96,9 +185,9 @@ export default function Navbar() {
           style={{ display: "flex", alignItems: "center", gap: "4px" }}
         >
 
-          <Image src="/logo-black.svg" alt="Logo" width={25} height={25} />
+          <Image src="/logo-white.svg" alt="Logo" width={25} height={25} />
 
-          <span style={{
+          <span className="logo-text" style={{
             fontFamily: "'Cinzel', serif",
             fontSize: "18px",
             letterSpacing: "0.28em",
@@ -127,8 +216,8 @@ export default function Navbar() {
         </div>
 
         {/* Right — GitHub + CTA */}
-        <div ref={ctaRef} style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Link href="/bootcamp/courses" className="nav-link" style={{ fontSize: "10px" }}>
+        <div ref={ctaRef} className="cta-container" style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <Link href="/bootcamp/courses" className="nav-link mobile-hidden" style={{ fontSize: "10px" }}>
             Bootcamp
           </Link>
           {/* GitHub Community Link */}
@@ -138,6 +227,7 @@ export default function Navbar() {
             rel="noopener noreferrer"
             aria-label="Niena Labs GitHub Community"
             title="Niena Labs Open Source Community"
+            className="mobile-hidden"
             style={{
               color: "rgba(232,223,200,0.45)",
               display: "flex",
@@ -155,8 +245,32 @@ export default function Navbar() {
         </div>
       </div>
       <style>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-150%) skewX(-20deg); }
+          100% { transform: translateX(250%) skewX(-20deg); }
+        }
+        .shimmer-effect {
+          animation: shimmer 5s infinite;
+        }
+        .banner-link:hover .banner-text {
+          color: var(--color-gold) !important;
+        }
+        .banner-link:hover .banner-arrow {
+          transform: translateX(4px);
+        }
         @media (max-width: 768px) {
           .desktop-nav-links { display: none !important; }
+          .mobile-hidden { display: none !important; }
+          .cta-container { gap: 12px !important; }
+          .logo-text { font-size: 14px !important; letter-spacing: 0.15em !important; }
+        }
+        @media (max-width: 480px) {
+          .logo-text { font-size: 12px !important; letter-spacing: 0.1em !important; }
+          .call-btn { padding: 8px 12px !important; font-size: 8px !important; }
+          .banner-text { font-size: 8px !important; letter-spacing: 0.1em !important; }
+        }
+        @media (max-width: 360px) {
+          .logo-text { display: none !important; }
         }
       `}</style>
     </header>
@@ -177,7 +291,7 @@ function CallButton() {
       <a
         href="tel:+233556732796"
         onClick={handleCallClick}
-        className="btn-secondary"
+        className="btn-secondary call-btn"
         style={{ fontSize: "9px" }}
       >
         Book a Call

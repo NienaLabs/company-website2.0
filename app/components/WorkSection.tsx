@@ -15,7 +15,7 @@ const projects = [
     category: "High-Velocity Event Ticketing",
     title: "Atlas — The Sovereign Exchange",
     body: "A high-velocity ticketing platform engineered for the modern event landscape. Atlas serves as a primary gateway for thousands of users, facilitating seamless access to premier entertainment experiences through mission-critical infrastructure that handles high-demand releases with absolute precision.",
-    image: "/images/projects/atlas_marketplace_cover.png",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80",
     imageLeft: true,
   },
   {
@@ -23,7 +23,7 @@ const projects = [
     category: "AI-Driven Career Integration",
     title: "Niena — The Professional Catalyst",
     body: "An intelligent ecosystem redefining the professional journey. Niena leverages advanced AI to harmonize resume synthesis with real-time, high-fidelity interview simulations. By bridging the gap between talent and opportunity, it provides a sophisticated matching engine that aligns aspirations with the market's most compelling roles.",
-    image: "/images/projects/campushelper_cover.png",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80",
     imageLeft: false,
   },
 ];
@@ -125,6 +125,7 @@ export default function WorkSection() {
                 src={project.image}
                 alt={project.title}
                 fill
+                unoptimized
                 sizes="(max-width: 900px) 100vw, 58vw"
                 style={{ objectFit: "cover", filter: "sepia(15%) brightness(0.75)", display: "block" }}
               />

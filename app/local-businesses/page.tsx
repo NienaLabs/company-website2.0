@@ -48,6 +48,7 @@ export default function LocalBusinessesPage() {
                 src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=1000&q=80"
                 alt="Ellis Couture Website"
                 fill
+                unoptimized
                 sizes="(max-width: 900px) 100vw, 58vw"
                 style={{ objectFit: "cover", filter: "sepia(15%) brightness(0.75)", display: "block" }}
               />

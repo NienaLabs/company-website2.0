@@ -71,6 +71,8 @@ export default function LoadingScreen() {
         // Re-enable scroll
         document.documentElement.style.overflow = "";
         document.body.style.overflow = "";
+        // Tell SmoothScrollProvider that layout is fully settled
+        window.dispatchEvent(new CustomEvent("page-unlocked"));
       });
   }, []);
 
@@ -163,7 +165,7 @@ export default function LoadingScreen() {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "var(--color-void)",
+        background: "var(--bg)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -179,7 +181,7 @@ export default function LoadingScreen() {
           height: "600px",
           borderRadius: "50%",
           background:
-            "radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(255,176,32,0.04) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -200,13 +202,13 @@ export default function LoadingScreen() {
       >
         <span
           style={{
-            fontFamily: "'Cinzel', serif",
+            fontFamily: "var(--font-display)",
             fontWeight: 400,
             fontSize: "clamp(48px, 12vw, 120px)",
-            letterSpacing: "0.12em",
+            letterSpacing: "0.06em",
             lineHeight: 1,
             color: "transparent",
-            WebkitTextStroke: "1px rgba(201,168,76,0.12)",
+            WebkitTextStroke: "1px rgba(255,176,32,0.12)",
             textTransform: "uppercase",
           }}
         >
@@ -214,12 +216,12 @@ export default function LoadingScreen() {
         </span>
         <span
           style={{
-            fontFamily: "'Cinzel', serif",
+            fontFamily: "var(--font-display)",
             fontWeight: 400,
             fontSize: "clamp(48px, 12vw, 120px)",
-            letterSpacing: "0.12em",
+            letterSpacing: "0.06em",
             lineHeight: 1,
-            color: "rgba(201,168,76,0.07)",
+            color: "rgba(255,176,32,0.07)",
             textTransform: "uppercase",
           }}
         >
@@ -252,11 +254,11 @@ export default function LoadingScreen() {
           <span
             ref={counterRef}
             style={{
-              fontFamily: "'Cinzel', serif",
+              fontFamily: "var(--font-display)",
               fontWeight: 400,
               fontSize: "14px",
-              letterSpacing: "0.2em",
-              color: "rgba(201,168,76,0.5)",
+              letterSpacing: "0.06em",
+              color: "rgba(255,176,32,0.5)",
               fontVariantNumeric: "tabular-nums",
               minWidth: "32px",
               textAlign: "right",
@@ -266,10 +268,10 @@ export default function LoadingScreen() {
           </span>
           <span
             style={{
-              fontFamily: "'Cinzel', serif",
-              fontSize: "9px",
-              letterSpacing: "0.15em",
-              color: "rgba(201,168,76,0.3)",
+              fontFamily: "var(--font-display)",
+              fontSize: "11px", fontWeight: 600,
+              letterSpacing: "0.06em",
+              color: "rgba(255,176,32,0.3)",
             }}
           >
             %
@@ -281,7 +283,7 @@ export default function LoadingScreen() {
           style={{
             width: "100%",
             height: "1px",
-            background: "rgba(201,168,76,0.08)",
+            background: "rgba(255,176,32,0.08)",
             position: "relative",
             overflow: "hidden",
           }}
@@ -296,7 +298,7 @@ export default function LoadingScreen() {
               width: "100%",
               height: "100%",
               background:
-                "linear-gradient(90deg, rgba(201,168,76,0.15), rgba(201,168,76,0.45))",
+                "linear-gradient(90deg, rgba(255,176,32,0.15), rgba(255,176,32,0.45))",
               transformOrigin: "left",
               transform: "scaleX(0)",
             }}

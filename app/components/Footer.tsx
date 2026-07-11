@@ -6,8 +6,8 @@ export default function Footer() {
   return (
     <footer
       style={{
-        background: "var(--color-void)",
-        borderTop: "var(--border-gold-faint)",
+        background: "var(--bg)",
+        borderTop: "1px solid var(--border)",
         padding: "var(--space-9) 0 var(--space-7)",
       }}
     >
@@ -29,10 +29,10 @@ export default function Footer() {
 
               <span
                 style={{
-                  fontFamily: "'Cinzel', serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "18px",
-                  letterSpacing: "0.28em",
-                  color: "var(--color-text-primary)",
+                  letterSpacing: "0.06em",
+                  color: "var(--text-primary)",
                   textTransform: "uppercase",
                 }}
               >
@@ -41,10 +41,10 @@ export default function Footer() {
             </div>
             <p
               style={{
-                fontFamily: "'EB Garamond', serif",
+                fontFamily: "var(--font-body)",
                 fontStyle: "italic",
                 fontSize: "16px",
-                color: "var(--color-text-muted)",
+                color: "var(--text-muted)",
                 lineHeight: 1.7,
                 maxWidth: "300px",
               }}
@@ -57,10 +57,10 @@ export default function Footer() {
           <div>
             <div
               style={{
-                fontFamily: "'Cinzel', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "8px",
-                letterSpacing: "0.2em",
-                color: "rgba(201,168,76,0.4)",
+                letterSpacing: "0.06em",
+                color: "rgba(255,176,32,0.4)",
                 textTransform: "uppercase",
                 marginBottom: "20px",
               }}
@@ -73,18 +73,18 @@ export default function Footer() {
                 <div
                   style={{
                     display: "block",
-                    fontFamily: "'Cinzel', serif",
-                    fontSize: "9px",
-                    letterSpacing: "0.14em",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "11px", fontWeight: 600,
+                    letterSpacing: "0.06em",
                     textTransform: "uppercase",
-                    color: "var(--color-text-muted)",
+                    color: "var(--text-muted)",
                     marginBottom: "14px",
                     textDecoration: "none",
                     transition: "color 150ms ease",
                     cursor: "pointer",
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-gold)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--amber)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
                 >
                   {link}
                 </div>
@@ -106,10 +106,10 @@ export default function Footer() {
           <div>
             <div
               style={{
-                fontFamily: "'Cinzel', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "8px",
-                letterSpacing: "0.2em",
-                color: "rgba(201,168,76,0.4)",
+                letterSpacing: "0.06em",
+                color: "rgba(255,176,32,0.4)",
                 textTransform: "uppercase",
                 marginBottom: "20px",
               }}
@@ -126,17 +126,17 @@ export default function Footer() {
                 href={s.href}
                 style={{
                   display: "block",
-                  fontFamily: "'Cinzel', serif",
-                  fontSize: "9px",
-                  letterSpacing: "0.14em",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "11px", fontWeight: 600,
+                  letterSpacing: "0.06em",
                   textTransform: "uppercase",
-                  color: "var(--color-text-muted)",
+                  color: "var(--text-muted)",
                   marginBottom: "14px",
                   textDecoration: "none",
                   transition: "color 150ms ease",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-gold)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--amber)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
               >
                 {s.label} →
               </a>
@@ -145,9 +145,9 @@ export default function Footer() {
             <div
               style={{
                 marginTop: "48px",
-                fontFamily: "'EB Garamond', serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "14px",
-                color: "var(--color-text-muted)",
+                color: "var(--text-muted)",
                 lineHeight: 1.6,
               }}
             >
@@ -162,10 +162,10 @@ export default function Footer() {
             borderTop: "var(--border-hairline)",
             paddingTop: "24px",
             textAlign: "center",
-            fontFamily: "'Cinzel', serif",
+            fontFamily: "var(--font-display)",
             fontSize: "7px",
-            letterSpacing: "0.2em",
-            color: "rgba(201,168,76,0.4)",
+            letterSpacing: "0.06em",
+            color: "rgba(255,176,32,0.4)",
             textTransform: "uppercase",
           }}
         >

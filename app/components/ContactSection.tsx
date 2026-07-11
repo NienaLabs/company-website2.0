@@ -77,7 +77,7 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      style={{ background: "var(--color-abyss)", padding: "var(--space-10) 0" }}
+      style={{ background: "var(--bg)", padding: "var(--space-10) 0" }}
     >
       <div className="section-container">
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "start" }}>
@@ -85,21 +85,21 @@ export default function ContactSection() {
           <div ref={leftRef} style={{ opacity: 0 }}>
             <div className="overline" style={{ marginBottom: "16px" }}>Start the conversation</div>
             <h2 style={{
-              fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
-              fontSize: "clamp(28px, 4vw, 42px)", color: "var(--color-text-primary)", lineHeight: 1.1, marginBottom: "16px",
+              fontFamily: "var(--font-display)", fontWeight: 600,
+              fontSize: "clamp(28px, 4vw, 42px)", color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "16px",
             }}>
               Tell us what you&apos;re building.
             </h2>
             <div
               ref={goldRuleRef}
               style={{
-                width: "48px", height: "1px", background: "var(--color-gold)",
+                width: "48px", height: "1px", background: "var(--amber)",
                 marginBottom: "24px", transform: "scaleX(0)", transformOrigin: "left",
               }}
             />
             <p style={{
-              fontFamily: "'EB Garamond', serif", fontSize: "17px",
-              color: "var(--color-text-secondary)", lineHeight: 1.85, maxWidth: "400px", marginBottom: "40px",
+              fontFamily: "var(--font-body)", fontSize: "17px",
+              color: "var(--text-secondary)", lineHeight: 1.85, maxWidth: "400px", marginBottom: "40px",
             }}>
               We don&apos;t need a full brief. We need to know what you believe is possible. Every great product started with a conversation.
             </p>
@@ -124,9 +124,9 @@ export default function ContactSection() {
                   padding: "16px 0", borderBottom: "var(--border-hairline)",
                   display: "flex", justifyContent: "space-between", alignItems: "center",
                 }}>
-                  <span style={{ fontFamily: "'Cinzel', serif", fontSize: "9px", letterSpacing: "0.18em", color: "rgba(201,168,76,0.6)", textTransform: "uppercase" }}>{ch.label}</span>
-                  <span style={{ fontFamily: "'EB Garamond', serif", fontSize: "15px", color: ch.isPhone && copiedPhone ? "var(--color-gold)" : "var(--color-text-secondary)", transition: "color 0.2s ease" }}>{ch.value}</span>
-                  <span style={{ color: "rgba(201,168,76,0.4)", fontSize: "14px" }}>→</span>
+                  <span style={{ fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em", color: "rgba(255,176,32,0.6)", textTransform: "uppercase" }}>{ch.label}</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: ch.isPhone && copiedPhone ? "var(--amber)" : "var(--text-secondary)", transition: "color 0.2s ease" }}>{ch.value}</span>
+                  <span style={{ color: "rgba(255,176,32,0.4)", fontSize: "14px" }}>→</span>
                 </div>
               </a>
             ))}
@@ -136,7 +136,7 @@ export default function ContactSection() {
           <div ref={rightRef} style={{ opacity: 0 }}>
             {formState === "sent" ? (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "320px" }}>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontWeight: 300, fontSize: "28px", color: "var(--color-text-primary)", textAlign: "center", lineHeight: 1.4 }}>
+                <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontWeight: 600, fontSize: "28px", color: "var(--text-primary)", textAlign: "center", lineHeight: 1.4 }}>
                   We&apos;ll be in touch.
                 </p>
               </div>
@@ -149,8 +149,8 @@ export default function ContactSection() {
                 ].map((field) => (
                   <div key={field.id}>
                     <label htmlFor={field.id} style={{
-                      fontFamily: "'Cinzel', serif", fontSize: "9px", letterSpacing: "0.2em",
-                      color: "var(--color-gold)", textTransform: "uppercase", display: "block", marginBottom: "8px",
+                      fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
+                      color: "var(--amber)", textTransform: "uppercase", display: "block", marginBottom: "8px",
                     }}>
                       {field.label}
                     </label>

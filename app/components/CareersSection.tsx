@@ -36,7 +36,7 @@ export default function CareersSection() {
       ref={sectionRef}
       id="careers"
       style={{
-        background: "var(--color-abyss)",
+        background: "var(--bg)",
         padding: "var(--space-10) 0",
         borderTop: "var(--border-hairline)",
       }}
@@ -46,39 +46,39 @@ export default function CareersSection() {
         <h2
           className="careers-fade"
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
             fontSize: "clamp(32px, 5vw, 48px)",
-            color: "var(--color-text-primary)",
+            color: "var(--text-primary)",
             lineHeight: 1.1,
             marginBottom: "24px",
           }}
         >
           Open Roles
         </h2>
-        <div className="careers-fade" style={{ width: "40px", height: "1px", background: "var(--color-gold)", marginBottom: "40px" }} />
+        <div className="careers-fade" style={{ width: "40px", height: "1px", background: "var(--amber)", marginBottom: "40px" }} />
 
         <div className="careers-fade" style={{
-          background: "linear-gradient(to bottom, rgba(201,168,76,0.02), transparent)",
-          borderTop: "1px solid rgba(201,168,76,0.1)",
-          borderBottom: "1px solid rgba(201,168,76,0.1)",
+          background: "linear-gradient(to bottom, rgba(255,176,32,0.02), transparent)",
+          borderTop: "1px solid rgba(255,176,32,0.1)",
+          borderBottom: "1px solid rgba(255,176,32,0.1)",
           padding: "64px 32px",
           textAlign: "center",
         }}>
           <h3 style={{
-            fontFamily: "'Cinzel', serif",
+            fontFamily: "var(--font-display)",
             fontSize: "12px",
-            letterSpacing: "0.2em",
-            color: "var(--color-gold)",
+            letterSpacing: "0.06em",
+            color: "var(--amber)",
             textTransform: "uppercase",
             marginBottom: "20px",
           }}>
             No Current Openings
           </h3>
           <p style={{
-            fontFamily: "'EB Garamond', serif",
+            fontFamily: "var(--font-body)",
             fontSize: "17px",
-            color: "var(--color-text-secondary)",
+            color: "var(--text-secondary)",
             maxWidth: "500px",
             margin: "0 auto",
             lineHeight: 1.6,

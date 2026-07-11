@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTheme } from "next-themes";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -26,32 +27,33 @@ function GitHubIcon() {
 
 export default function Navbar() {
   const [isBannerVisible, setIsBannerVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { resolvedTheme } = useTheme();
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
+  const isLightMode = resolvedTheme === 'light';
+  const currentLogo = (isLightMode && isScrolled) ? "/logo-black.svg" : "/logo-white.svg";
+
   useGSAP(() => {
     const nav = navRef.current;
     if (!nav) return;
 
+    // Use a CSS class toggle instead of GSAP for backdrop-filter.
+    // This runs in the browser's compositor thread (zero main-thread cost).
     ScrollTrigger.create({
       start: "top+=80 top",
       onEnter: () => {
-        gsap.to(nav, {
-          backgroundColor: "rgba(10,18,20,0.92)",
-          backdropFilter: "blur(16px)",
-          duration: 0.3,
-          ease: "power1.out",
-        });
+        nav.classList.add("nav-scrolled");
+        nav.classList.remove("nav-transparent");
+        setIsScrolled(true);
       },
       onLeaveBack: () => {
-        gsap.to(nav, {
-          backgroundColor: "rgba(10,18,20,0)",
-          backdropFilter: "blur(0px)",
-          duration: 0.3,
-          ease: "power1.out",
-        });
+        nav.classList.remove("nav-scrolled");
+        nav.classList.add("nav-transparent");
+        setIsScrolled(false);
       },
     });
 
@@ -76,14 +78,17 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
+      className="nav-transparent"
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         right: 0,
         zIndex: 100,
-        backgroundColor: "rgba(10,18,20,0)",
-        transition: "background-color 300ms ease",
+        backgroundColor: "transparent",
+        transition: "background-color 300ms ease, backdrop-filter 300ms ease",
+        willChange: "transform",
+        transform: "translateZ(0)",
         display: "flex",
         flexDirection: "column",
       }}
@@ -91,22 +96,22 @@ export default function Navbar() {
       {isBannerVisible && (
         <div style={{
           width: "100%",
-          background: "linear-gradient(90deg, #0a1214 0%, #1c2b2e 50%, #0a1214 100%)",
-          borderBottom: "1px solid rgba(201,168,76,0.2)",
+          background: "linear-gradient(90deg, var(--amber-strong) 0%, var(--amber) 50%, var(--amber-strong) 100%)",
+          borderBottom: "1px solid var(--amber-deep)",
           position: "relative",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           padding: "10px 16px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
           overflow: "hidden"
         }}>
-          {/* Subtle gold glow behind text */}
+          {/* Subtle glow behind text */}
           <div style={{
             position: "absolute",
             width: "250px",
             height: "100%",
-            background: "radial-gradient(ellipse at center, rgba(201,168,76,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%)",
             pointerEvents: "none"
           }} />
 
@@ -117,7 +122,7 @@ export default function Navbar() {
             left: 0,
             width: "50%",
             height: "100%",
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)",
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
             pointerEvents: "none"
           }} />
 
@@ -130,17 +135,17 @@ export default function Navbar() {
           }}>
         
             <span style={{
-              fontFamily: "'Cinzel', serif",
-              fontSize: "10px",
-              letterSpacing: "0.2em",
+              fontFamily: "var(--font-display)",
+              fontSize: "13px", fontWeight: 600,
+              letterSpacing: "0.06em",
               textTransform: "uppercase",
-              color: "var(--color-text-primary)",
-              transition: "color 300ms ease"
+              color: "var(--on-amber)",
+              transition: "opacity 300ms ease"
             }} className="banner-text">
               Join Our Upcoming Bootcamp
             </span>
             <span className="banner-arrow" style={{
-              color: "var(--color-gold)",
+              color: "var(--on-amber)",
               fontSize: "14px",
               transition: "transform 300ms ease",
               lineHeight: 1
@@ -157,16 +162,17 @@ export default function Navbar() {
               right: "16px",
               background: "transparent",
               border: "none",
-              color: "var(--color-text-muted)",
+              color: "var(--on-amber)",
+              opacity: 0.7,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               padding: "4px",
-              transition: "color 200ms ease"
+              transition: "opacity 200ms ease"
             }}
-            onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-text-primary)"}
-            onMouseLeave={(e) => e.currentTarget.style.color = "var(--color-text-muted)"}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = "1"}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = "0.7"}
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 6L6 18M6 6l12 12" />
@@ -185,13 +191,13 @@ export default function Navbar() {
           style={{ display: "flex", alignItems: "center", gap: "4px" }}
         >
 
-          <Image src="/logo-white.svg" alt="Logo" width={25} height={25} />
+          <Image src={currentLogo} alt="Logo" width={25} height={25} />
 
           <span className="logo-text" style={{
-            fontFamily: "'Cinzel', serif",
+            fontFamily: "var(--font-display)",
             fontSize: "18px",
-            letterSpacing: "0.28em",
-            color: "var(--color-text-primary)",
+            letterSpacing: "0.06em",
+            color: "var(--text-primary)",
             textTransform: "uppercase",
           }}>
             Niena Labs
@@ -217,7 +223,7 @@ export default function Navbar() {
 
         {/* Right — GitHub + CTA */}
         <div ref={ctaRef} className="cta-container" style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Link href="/bootcamp/courses" className="nav-link mobile-hidden" style={{ fontSize: "10px" }}>
+          <Link href="/bootcamp/courses" className="nav-link mobile-hidden" style={{ fontSize: "13px", fontWeight: 600 }}>
             Bootcamp
           </Link>
           {/* GitHub Community Link */}
@@ -229,18 +235,19 @@ export default function Navbar() {
             title="Niena Labs Open Source Community"
             className="mobile-hidden"
             style={{
-              color: "rgba(232,223,200,0.45)",
+              color: "var(--text-muted)",
               display: "flex",
               alignItems: "center",
               transition: "color 200ms ease",
               lineHeight: 1,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-gold)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(232,223,200,0.45)")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--amber)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
           >
             <GitHubIcon />
           </a>
 
+          <ThemeToggle />
           <CallButton />
         </div>
       </div>
@@ -253,7 +260,7 @@ export default function Navbar() {
           animation: shimmer 5s infinite;
         }
         .banner-link:hover .banner-text {
-          color: var(--color-gold) !important;
+          opacity: 0.8 !important;
         }
         .banner-link:hover .banner-arrow {
           transform: translateX(4px);
@@ -292,7 +299,7 @@ function CallButton() {
         href="tel:+233556732796"
         onClick={handleCallClick}
         className="btn-secondary call-btn"
-        style={{ fontSize: "9px" }}
+        style={{ fontSize: "11px", fontWeight: 600 }}
       >
         Book a Call
       </a>
@@ -303,15 +310,15 @@ function CallButton() {
           left: "50%",
           transform: "translateX(-50%)",
           marginTop: "8px",
-          background: "var(--color-abyss)",
-          border: "var(--border-gold-faint)",
-          color: "var(--color-gold)",
-          fontSize: "9px",
+          background: "var(--bg)",
+          border: "1px solid var(--border)",
+          color: "var(--amber)",
+          fontSize: "11px", fontWeight: 600,
           padding: "4px 8px",
           borderRadius: "4px",
           whiteSpace: "nowrap",
-          fontFamily: "'Cinzel', serif",
-          letterSpacing: "0.1em",
+          fontFamily: "var(--font-display)",
+          letterSpacing: "0.06em",
           zIndex: 10,
           boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
         }}>
@@ -320,4 +327,65 @@ function CallButton() {
       )}
     </div>
   )
+}
+
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div style={{ width: 28, height: 28 }} />;
+  }
+
+  const isDark = resolvedTheme === 'dark';
+
+  return (
+    <button
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      aria-label="Toggle Theme"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "28px",
+        height: "28px",
+        borderRadius: "50%",
+        backgroundColor: "transparent",
+        color: "var(--text-muted)",
+        border: "1px solid var(--border)",
+        cursor: "pointer",
+        transition: "all 200ms ease",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.color = "var(--text-primary)";
+        e.currentTarget.style.borderColor = "var(--border-strong)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.color = "var(--text-muted)";
+        e.currentTarget.style.borderColor = "var(--border)";
+      }}
+    >
+      {isDark ? (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+      ) : (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      )}
+    </button>
+  );
 }

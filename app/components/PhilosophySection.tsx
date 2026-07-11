@@ -10,19 +10,19 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const philosophyParts = [
   {
     text: "We believe the world can be changed the way we found it.",
-    color: "var(--color-text-primary)",
+    color: "var(--text-primary)",
     size: "clamp(28px, 4vw, 48px)",
     italic: false,
   },
   {
     text: "Every product we build has one purpose:",
-    color: "var(--color-text-secondary)",
+    color: "var(--text-secondary)",
     size: "clamp(22px, 3vw, 36px)",
     italic: false,
   },
   {
     text: "to push humanity forward.",
-    color: "var(--color-gold)",
+    color: "var(--amber)",
     size: "clamp(28px, 4vw, 48px)",
     italic: true,
   },
@@ -72,10 +72,10 @@ function WordReveal({
     <div
       ref={containerRef}
       style={{
-        fontFamily: "'Cormorant Garamond', serif",
-        fontWeight: 300,
+        fontFamily: "var(--font-display)",
+        fontWeight: 600,
         fontSize: size,
-        fontStyle: italic ? "italic" : "normal",
+        fontStyle: "normal",
         lineHeight: 1.3,
         marginBottom: "16px",
       }}
@@ -86,7 +86,7 @@ function WordReveal({
           style={{
             display: "inline-block",
             marginRight: "0.28em",
-            color: "rgba(232,223,200,0.12)",
+            color: "var(--text-muted)",
           }}
         >
           {word}
@@ -129,7 +129,7 @@ export default function PhilosophySection() {
     <section
       ref={sectionRef}
       id="philosophy"
-      style={{ background: "var(--color-void)", padding: "var(--space-11) 0" }}
+      style={{ background: "var(--bg)", padding: "var(--space-11) 0" }}
     >
       <div className="section-container" style={{ maxWidth: "760px", margin: "0 auto", textAlign: "center" }}>
         <div ref={overlineRef} className="overline" style={{ marginBottom: "20px", opacity: 0 }}>
@@ -138,7 +138,7 @@ export default function PhilosophySection() {
         <div
           ref={goldRuleRef}
           style={{
-            width: "80px", height: "1px", background: "var(--color-gold)",
+            width: "80px", height: "1px", background: "var(--amber)",
             margin: "0 auto 48px", transformOrigin: "left", transform: "scaleX(0)",
           }}
         />
@@ -149,7 +149,7 @@ export default function PhilosophySection() {
           ref={separatorRef}
           style={{
             width: "1px", height: "64px",
-            background: "linear-gradient(to bottom, rgba(201,168,76,0.4), transparent)",
+            background: "linear-gradient(to bottom, rgba(255,176,32,0.4), transparent)",
             margin: "48px auto 0", transformOrigin: "top", transform: "scaleY(0)",
           }}
         />

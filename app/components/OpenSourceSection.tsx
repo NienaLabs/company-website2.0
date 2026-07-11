@@ -94,9 +94,9 @@ export default function OpenSourceSection() {
       ref={sectionRef}
       id="open-source"
       style={{
-        background: "var(--color-void)",
+        background: "var(--bg)",
         padding: "var(--space-10) 0",
-        borderTop: "var(--border-gold-faint)",
+        borderTop: "1px solid var(--border)",
       }}
     >
       <div className="section-container">
@@ -113,20 +113,20 @@ export default function OpenSourceSection() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                fontFamily: "'Cinzel', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "8px",
-                letterSpacing: "0.16em",
+                letterSpacing: "0.06em",
                 textTransform: "uppercase",
-                color: "var(--color-gold)",
-                background: "rgba(201,168,76,0.08)",
-                border: "var(--border-gold)",
+                color: "var(--amber)",
+                background: "rgba(255,176,32,0.08)",
+                border: "1px solid var(--amber)",
                 borderRadius: "var(--radius-tag)",
                 padding: "4px 10px",
                 textDecoration: "none",
                 transition: "background 200ms ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(201,168,76,0.15)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(201,168,76,0.08)")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,176,32,0.15)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,176,32,0.08)")}
             >
               <GitHubArrowIcon />
               Niena Labs Community
@@ -134,16 +134,16 @@ export default function OpenSourceSection() {
           </div>
 
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 300,
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
             fontSize: "clamp(32px, 5vw, 48px)",
-            color: "var(--color-text-primary)",
+            color: "var(--text-primary)",
             lineHeight: 1.1,
             marginBottom: "16px",
           }}>
             We build in public.
           </h2>
-          <div style={{ width: "40px", height: "1px", background: "var(--color-gold)" }} />
+          <div style={{ width: "40px", height: "1px", background: "var(--amber)" }} />
         </div>
 
         {/* Philosophy statement */}
@@ -156,10 +156,10 @@ export default function OpenSourceSection() {
           }}
         >
           <p style={{
-            fontFamily: "'EB Garamond', serif",
+            fontFamily: "var(--font-body)",
             fontStyle: "italic",
             fontSize: "clamp(18px, 2.2vw, 22px)",
-            color: "var(--color-text-secondary)",
+            color: "var(--text-secondary)",
             lineHeight: 1.8,
           }}>
             The best tools should be free. Everything we build internally that can
@@ -185,7 +185,7 @@ export default function OpenSourceSection() {
                 position: "relative",
                 // Chamfered top-right corner
                 clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%)",
-                borderTop: "1px solid rgba(201,168,76,0.35)",
+                borderTop: "1px solid rgba(255,176,32,0.35)",
                 display: "flex",
                 flexDirection: "column",
                 gap: "var(--space-5)",
@@ -193,11 +193,11 @@ export default function OpenSourceSection() {
             >
               {/* Tag */}
               <div style={{
-                fontFamily: "'Cinzel', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "8px",
-                letterSpacing: "0.2em",
+                letterSpacing: "0.06em",
                 textTransform: "uppercase",
-                color: "rgba(201,168,76,0.55)",
+                color: "rgba(255,176,32,0.55)",
               }}>
                 {lib.tag}
               </div>
@@ -205,20 +205,20 @@ export default function OpenSourceSection() {
               {/* Name */}
               <div>
                 <div style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontWeight: 300,
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 600,
                   fontSize: "clamp(22px, 2.8vw, 32px)",
-                  color: "var(--color-text-primary)",
+                  color: "var(--text-primary)",
                   lineHeight: 1.1,
                   marginBottom: "8px",
                 }}>
                   {lib.name}
                 </div>
                 <div style={{
-                  fontFamily: "'EB Garamond', serif",
+                  fontFamily: "var(--font-body)",
                   fontStyle: "italic",
                   fontSize: "15px",
-                  color: "var(--color-gold)",
+                  color: "var(--amber)",
                   lineHeight: 1.5,
                 }}>
                   {lib.tagline}
@@ -227,9 +227,9 @@ export default function OpenSourceSection() {
 
               {/* Description */}
               <p style={{
-                fontFamily: "'EB Garamond', serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "15px",
-                color: "var(--color-text-secondary)",
+                color: "var(--text-secondary)",
                 lineHeight: 1.85,
               }}>
                 {lib.description}
@@ -244,13 +244,13 @@ export default function OpenSourceSection() {
                       display: "flex",
                       alignItems: "flex-start",
                       gap: "10px",
-                      fontFamily: "'EB Garamond', serif",
+                      fontFamily: "var(--font-body)",
                       fontSize: "14px",
-                      color: "rgba(232,223,200,0.6)",
+                      color: "var(--text-muted)",
                       lineHeight: 1.6,
                     }}
                   >
-                    <span style={{ color: "var(--color-gold)", flexShrink: 0, marginTop: "2px" }}>—</span>
+                    <span style={{ color: "var(--amber)", flexShrink: 0, marginTop: "2px" }}>—</span>
                     {h}
                   </li>
                 ))}
@@ -266,23 +266,23 @@ export default function OpenSourceSection() {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "8px",
-                    fontFamily: "'Cinzel', serif",
-                    fontSize: "9px",
-                    letterSpacing: "0.2em",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "11px", fontWeight: 600,
+                    letterSpacing: "0.06em",
                     textTransform: "uppercase",
-                    color: "rgba(232,223,200,0.5)",
+                    color: "var(--text-muted)",
                     textDecoration: "none",
-                    borderBottom: "1px solid rgba(201,168,76,0.2)",
+                    borderBottom: "1px solid rgba(255,176,32,0.2)",
                     paddingBottom: "2px",
                     transition: "color 200ms ease, border-color 200ms ease",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "var(--color-gold)";
-                    e.currentTarget.style.borderColor = "var(--color-gold)";
+                    e.currentTarget.style.color = "var(--amber)";
+                    e.currentTarget.style.borderColor = "var(--amber)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "rgba(232,223,200,0.5)";
-                    e.currentTarget.style.borderColor = "rgba(201,168,76,0.2)";
+                    e.currentTarget.style.color = "var(--text-muted)";
+                    e.currentTarget.style.borderColor = "rgba(255,176,32,0.2)";
                   }}
                 >
                   <GitHubArrowIcon />
@@ -297,8 +297,8 @@ export default function OpenSourceSection() {
         <div style={{
           marginTop: "var(--space-8)",
           padding: "var(--space-7)",
-          background: "rgba(201,168,76,0.04)",
-          border: "var(--border-gold-faint)",
+          background: "rgba(255,176,32,0.04)",
+          border: "1px solid var(--border)",
           borderRadius: "var(--radius-cell)",
           display: "flex",
           alignItems: "center",
@@ -308,18 +308,18 @@ export default function OpenSourceSection() {
         }}>
           <div>
             <div style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: 300,
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
               fontSize: "clamp(18px, 2.5vw, 24px)",
-              color: "var(--color-text-primary)",
+              color: "var(--text-primary)",
               marginBottom: "8px",
             }}>
               Join the community.
             </div>
             <p style={{
-              fontFamily: "'EB Garamond', serif",
+              fontFamily: "var(--font-body)",
               fontSize: "15px",
-              color: "var(--color-text-secondary)",
+              color: "var(--text-secondary)",
               lineHeight: 1.7,
               maxWidth: "480px",
             }}>
@@ -332,7 +332,7 @@ export default function OpenSourceSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary"
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "9px", flexShrink: 0 }}
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "11px", fontWeight: 600, flexShrink: 0 }}
           >
             <GitHubArrowIcon />
             Explore on GitHub

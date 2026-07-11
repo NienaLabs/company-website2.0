@@ -1,273 +1,235 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(useGSAP);
 
 const newsItems = [
   {
     id: 1,
     date: "July 2026",
     title: "Nienalabs joins the moorle startup competition",
-    description: "We are proud to announce our participation in the prestigious Moorle Startup Competition, bringing our vision of enterprise-scale architecture to a global stage.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80",
+    description:
+      "We are proud to announce our participation in the prestigious Moorle Startup Competition, bringing our vision of enterprise-scale architecture to a global stage.",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80",
     link: "#",
   },
   {
     id: 2,
     date: "Summer 2026",
     title: "We'll be hosting an online summer bootcamp",
-    description: "An intensive online program designed to forge the next generation of engineers. Building scalable systems is not just theory—it is rigorous practice.",
-    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80",
+    description:
+      "An intensive online program designed to forge the next generation of engineers. Building scalable systems is not just theory—it is rigorous practice.",
+    image:
+      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80",
     link: "#",
   },
   {
     id: 3,
     date: "Coming Soon",
     title: "Our new Ecommerce platform",
-    description: "Currently in the works: a platform engineered to redefine how people order things. Built for uncompromising scale and precision.",
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80",
+    description:
+      "Currently in the works: a platform engineered to redefine how people order things. Built for uncompromising scale and precision.",
+    image:
+      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80",
     link: "#",
   },
 ];
 
-const SLIDE_COUNT = newsItems.length;
-const AUTO_PLAY_DELAY = 5; // seconds
+const AUTO_PLAY_MS = 5000;
 
 export default function RecentNewsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const activeIndexRef = useRef(0);
-  const autoPlayRef = useRef<gsap.core.Tween | null>(null);
-  const isHoveredRef = useRef(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isPausedRef = useRef(false);
 
-  // Navigate to a specific slide index — pure GSAP, zero React state
+  // ── Scroll to a slide by index ───────────────────────────────────────────
+  // We use track.scrollTo() NOT scrollIntoView().
+  // scrollIntoView() scrolls EVERY ancestor (including the page) to bring the
+  // element into view — that's why the page was jumping to the news section.
+  // track.scrollTo() only moves the track's own scrollLeft and never touches
+  // the page's vertical scroll position.
   const goToSlide = useCallback((index: number) => {
     const track = trackRef.current;
     if (!track) return;
 
-    const prevIndex = activeIndexRef.current;
     activeIndexRef.current = index;
-
-    // Animate the track
-    gsap.to(track, {
-      xPercent: -index * 100,
-      duration: 0.7,
-      ease: "power3.out",
+    track.scrollTo({
+      left: index * track.clientWidth,
+      behavior: "smooth",
     });
-
-    // Update dot indicators via direct DOM manipulation
-    const prevDot = dotsRef.current[prevIndex];
-    const nextDot = dotsRef.current[index];
-
-    if (prevDot) {
-      gsap.to(prevDot, {
-        backgroundColor: "var(--color-slate-mid)",
-        scaleX: 1,
-        duration: 0.3,
-        ease: "power1.out",
-      });
-    }
-    if (nextDot) {
-      gsap.to(nextDot, {
-        backgroundColor: "var(--color-gold)",
-        scaleX: 1.3,
-        duration: 0.3,
-        ease: "power1.out",
-      });
-    }
   }, []);
 
-  const nextSlide = useCallback(() => {
-    goToSlide((activeIndexRef.current + 1) % SLIDE_COUNT);
-  }, [goToSlide]);
-
-  const prevSlide = useCallback(() => {
-    goToSlide(activeIndexRef.current === 0 ? SLIDE_COUNT - 1 : activeIndexRef.current - 1);
-  }, [goToSlide]);
-
-  // Schedule the next auto-play tick
-  const scheduleAutoPlay = useCallback(() => {
-    // Kill any pending delayed call first
-    if (autoPlayRef.current) {
-      autoPlayRef.current.kill();
-      autoPlayRef.current = null;
-    }
-
-    if (!isHoveredRef.current) {
-      autoPlayRef.current = gsap.delayedCall(AUTO_PLAY_DELAY, () => {
-        nextSlide();
-        scheduleAutoPlay();
-      });
-    }
-  }, [nextSlide]);
-
-  const pauseAutoPlay = useCallback(() => {
-    isHoveredRef.current = true;
-    if (autoPlayRef.current) {
-      autoPlayRef.current.kill();
-      autoPlayRef.current = null;
-    }
+  // ── Dot highlight (pure DOM, no GSAP) ──
+  const updateDots = useCallback((index: number) => {
+    dotsRef.current.forEach((dot, i) => {
+      if (!dot) return;
+      if (i === index) {
+        dot.style.backgroundColor = "var(--amber)";
+        dot.style.transform = "scaleX(1.3)";
+        dot.setAttribute("aria-current", "true");
+      } else {
+        dot.style.backgroundColor = "var(--surface-2)";
+        dot.style.transform = "scaleX(1)";
+        dot.removeAttribute("aria-current");
+      }
+    });
   }, []);
 
-  const resumeAutoPlay = useCallback(() => {
-    isHoveredRef.current = false;
-    scheduleAutoPlay();
-  }, [scheduleAutoPlay]);
+  // ── Auto-play: setInterval, not GSAP.delayedCall ──
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      if (isPausedRef.current) return;
+      const next = (activeIndexRef.current + 1) % newsItems.length;
+      goToSlide(next);
+    }, AUTO_PLAY_MS);
+  }, [goToSlide]);
 
-  // Wrap navigation to also reset auto-play timer
   const handlePrev = useCallback(() => {
-    prevSlide();
-    scheduleAutoPlay();
-  }, [prevSlide, scheduleAutoPlay]);
+    const prev =
+      activeIndexRef.current === 0
+        ? newsItems.length - 1
+        : activeIndexRef.current - 1;
+    goToSlide(prev);
+    startTimer(); // reset auto-play on manual nav
+  }, [goToSlide, startTimer]);
 
   const handleNext = useCallback(() => {
-    nextSlide();
-    scheduleAutoPlay();
-  }, [nextSlide, scheduleAutoPlay]);
+    const next = (activeIndexRef.current + 1) % newsItems.length;
+    goToSlide(next);
+    startTimer();
+  }, [goToSlide, startTimer]);
 
-  const handleDotClick = useCallback((i: number) => {
-    goToSlide(i);
-    scheduleAutoPlay();
-  }, [goToSlide, scheduleAutoPlay]);
+  const handleDotClick = useCallback(
+    (i: number) => {
+      goToSlide(i);
+      startTimer();
+    },
+    [goToSlide, startTimer]
+  );
 
-  // Initialize: set first dot active + kick off auto-play
-  useGSAP(() => {
-    const firstDot = dotsRef.current[0];
-    if (firstDot) {
-      gsap.set(firstDot, {
-        backgroundColor: "var(--color-gold)",
-        scaleX: 1.3,
-      });
-    }
+  // ── IntersectionObserver: detect which slide is in view → update dots ──
+  // This replaces GSAP's onUpdate callbacks with a passive, compositor-safe API.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
 
-    scheduleAutoPlay();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            const index = Array.from(track.children).indexOf(
+              entry.target as HTMLElement
+            );
+            if (index !== -1) {
+              activeIndexRef.current = index;
+              updateDots(index);
+            }
+          }
+        }
+      },
+      {
+        root: track,
+        threshold: 0.5,
+      }
+    );
+
+    Array.from(track.children).forEach((slide) => observer.observe(slide));
+
+    // Initialise first dot
+    updateDots(0);
+
+    // Kick off auto-play
+    startTimer();
 
     return () => {
-      if (autoPlayRef.current) autoPlayRef.current.kill();
+      observer.disconnect();
+      if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, { scope: sectionRef });
+  }, [updateDots, startTimer]);
 
   return (
     <section
-      ref={sectionRef}
       style={{
-        background: "var(--color-void)",
+        background: "var(--bg)",
         padding: "var(--space-11) 0",
-        borderTop: "1px solid var(--border-gold-faint)"
+        borderTop: "1px solid rgba(255,176,32,0.12)",
       }}
     >
-      <div className="section-container" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 var(--space-6)" }}>
-
+      <div
+        className="section-container"
+        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 var(--space-6)" }}
+      >
         {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "var(--space-8)" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: "var(--space-8)",
+          }}
+        >
           <div>
-            <div className="overline" style={{ marginBottom: "12px", color: "var(--color-gold)" }}>Recent News</div>
-            <h2 style={{
-              fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
-              fontSize: "clamp(32px, 5vw, 48px)", color: "var(--color-text-primary)", lineHeight: 1.1,
-            }}>
+            <div
+              className="overline"
+              style={{ marginBottom: "12px", color: "var(--amber)" }}
+            >
+              Recent News
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(32px, 5vw, 48px)",
+                color: "var(--text-primary)",
+                lineHeight: 1.1,
+              }}
+            >
               Announcements &amp; Updates
             </h2>
           </div>
 
-          {/* Controls - Desktop */}
+          {/* Arrow controls — desktop */}
           <div className="carousel-controls" style={{ display: "flex", gap: "12px" }}>
-            <button
-              onClick={handlePrev}
-              onMouseEnter={pauseAutoPlay}
-              onMouseLeave={resumeAutoPlay}
-              style={{
-                background: "transparent",
-                border: "1px solid var(--border-subtle)",
-                borderRadius: "var(--radius-btn)",
-                color: "var(--color-text-secondary)",
-                width: "44px",
-                height: "44px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                transition: "all 0.2s ease"
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-emphasis)";
-                e.currentTarget.style.color = "var(--color-text-primary)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-subtle)";
-                e.currentTarget.style.color = "var(--color-text-secondary)";
-              }}
-            >
-              <ChevronLeft size={20} strokeWidth={1} />
-            </button>
-            <button
-              onClick={handleNext}
-              onMouseEnter={pauseAutoPlay}
-              onMouseLeave={resumeAutoPlay}
-              style={{
-                background: "transparent",
-                border: "1px solid var(--border-subtle)",
-                borderRadius: "var(--radius-btn)",
-                color: "var(--color-text-secondary)",
-                width: "44px",
-                height: "44px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                transition: "all 0.2s ease"
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-emphasis)";
-                e.currentTarget.style.color = "var(--color-text-primary)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-subtle)";
-                e.currentTarget.style.color = "var(--color-text-secondary)";
-              }}
-            >
-              <ChevronRight size={20} strokeWidth={1} />
-            </button>
+            {[{ label: "Previous slide", icon: <ChevronLeft size={20} strokeWidth={1} />, fn: handlePrev },
+              { label: "Next slide",     icon: <ChevronRight size={20} strokeWidth={1} />, fn: handleNext }
+            ].map(({ label, icon, fn }) => (
+              <button
+                key={label}
+                aria-label={label}
+                onClick={fn}
+                onMouseEnter={() => { isPausedRef.current = true; }}
+                onMouseLeave={() => { isPausedRef.current = false; }}
+                className="carousel-arrow-btn"
+              >
+                {icon}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Carousel Track */}
+        {/* ── CSS Scroll-Snap Track ─────────────────────────────────────────── */}
+        {/*
+          The overflow container hides the other slides.
+          scroll-snap-type: x mandatory makes the browser snap between slides.
+          All movement happens in the compositor thread — zero JS animation.
+        */}
         <div
-          style={{ overflow: "hidden", borderRadius: "var(--radius-cell)" }}
-          onMouseEnter={pauseAutoPlay}
-          onMouseLeave={resumeAutoPlay}
+          ref={trackRef}
+          className="news-track"
+          onMouseEnter={() => { isPausedRef.current = true; }}
+          onMouseLeave={() => { isPausedRef.current = false; }}
         >
-          <div
-            ref={trackRef}
-            style={{
-              display: "flex",
-              willChange: "transform",
-            }}
-          >
-            {newsItems.map((item) => (
-              <div
-                key={item.id}
-                style={{
-                  flex: "0 0 100%",
-                  width: "100%",
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1.2fr",
-                  background: "var(--color-slate-deep)",
-                  border: "1px solid var(--border-subtle)",
-                  borderRadius: "var(--radius-cell)",
-                  overflow: "hidden",
-                }}
-                className="news-card-layout"
-              >
-                {/* Image Area */}
-                <div style={{ position: "relative", minHeight: "400px" }} className="news-image-area">
+          {newsItems.map((item) => (
+            <div key={item.id} className="news-slide">
+              <div className="news-card-layout">
+                {/* Image */}
+                <div className="news-image-area">
                   <Image
                     src={item.image}
                     alt={item.title}
@@ -275,92 +237,196 @@ export default function RecentNewsSection() {
                     unoptimized
                     style={{ objectFit: "cover", filter: "sepia(20%) brightness(0.65)" }}
                   />
-                  <div style={{ position: "absolute", inset: 0, background: "rgba(10,18,20,0.4)" }} />
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "rgba(12,13,16,0.4)",
+                    }}
+                  />
                 </div>
 
-                {/* Text Area */}
-                <div style={{
-                  padding: "var(--space-8) var(--space-7)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  borderLeft: "1px solid var(--border-subtle)"
-                }} className="news-text-area">
-                  <div style={{
-                    fontFamily: "'Cinzel', serif", fontSize: "9px", letterSpacing: "0.14em",
-                    color: "var(--color-gold)", textTransform: "uppercase", marginBottom: "var(--space-4)"
-                  }}>
+                {/* Text */}
+                <div className="news-text-area">
+                  <div
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "11px", fontWeight: 600,
+                      letterSpacing: "0.06em",
+                      color: "var(--amber)",
+                      textTransform: "uppercase",
+                      marginBottom: "var(--space-4)",
+                    }}
+                  >
                     {item.date}
                   </div>
-                  <h3 style={{
-                    fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
-                    fontSize: "clamp(26px, 4vw, 38px)", color: "var(--color-text-primary)", lineHeight: 1.15, marginBottom: "var(--space-4)"
-                  }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 600,
+                      fontSize: "clamp(26px, 4vw, 38px)",
+                      color: "var(--text-primary)",
+                      lineHeight: 1.15,
+                      marginBottom: "var(--space-4)",
+                    }}
+                  >
                     {item.title}
                   </h3>
-                  <p style={{
-                    fontFamily: "'EB Garamond', serif", fontSize: "16px",
-                    color: "var(--color-text-secondary)", lineHeight: 1.8, marginBottom: "var(--space-6)", maxWidth: "540px"
-                  }}>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "16px",
+                      color: "var(--text-secondary)",
+                      lineHeight: 1.8,
+                      marginBottom: "var(--space-6)",
+                      maxWidth: "540px",
+                    }}
+                  >
                     {item.description}
                   </p>
-
-                  <div>
-                    <Link href={item.link} style={{
-                      display: "inline-block",
-                      background: "transparent",
-                      border: "1px solid var(--border-subtle)",
-                      color: "var(--color-text-secondary)",
-                      fontFamily: "'Cinzel', serif",
-                      fontSize: "10px",
-                      letterSpacing: "0.18em",
-                      textTransform: "uppercase",
-                      padding: "10px 24px",
-                      borderRadius: "var(--radius-btn)",
-                      cursor: "pointer",
-                      textDecoration: "none",
-                      transition: "all 0.2s ease"
-                    }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.borderColor = "var(--color-gold)";
-                      e.currentTarget.style.color = "var(--color-gold)";
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.borderColor = "var(--border-subtle)";
-                      e.currentTarget.style.color = "var(--color-text-secondary)";
-                    }}
-                    >
-                      Read Full Story
-                    </Link>
-                  </div>
+                  <Link
+                    href={item.link}
+                    className="news-read-link"
+                  >
+                    Read Full Story
+                  </Link>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
-        {/* Dots Indicator */}
-        <div style={{ display: "flex", justifyContent: "center", gap: "12px", marginTop: "var(--space-6)" }}>
+        {/* Dot indicators */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "12px",
+            marginTop: "var(--space-6)",
+          }}
+        >
           {newsItems.map((_, i) => (
             <button
               key={i}
               ref={(el) => { dotsRef.current[i] = el; }}
               onClick={() => handleDotClick(i)}
-              style={{
-                width: "48px",
-                height: "2px",
-                background: "var(--color-slate-mid)",
-                border: "none",
-                cursor: "pointer",
-                transformOrigin: "center",
-              }}
               aria-label={`Go to slide ${i + 1}`}
+              className="carousel-dot"
             />
           ))}
         </div>
       </div>
 
       <style>{`
+        /* ── Scroll-snap track ─────────────────────────────────────── */
+        .news-track {
+          display: flex;
+          overflow-x: auto;
+          overflow-y: hidden;
+          scroll-snap-type: x mandatory;
+          /* scroll-behavior: smooth handled by scrollIntoView() call in JS */
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          border-radius: var(--radius-cell);
+          /* GPU compositing layer */
+          will-change: scroll-position;
+          transform: translateZ(0);
+          /*
+            CRITICAL: contain horizontal overscroll so that swiping left/right
+            inside the carousel does NOT bubble up to the page's vertical
+            scroll — this was causing the hero-to-work snap on mobile.
+          */
+          overscroll-behavior-x: contain;
+          /*
+            Tell the browser this element handles horizontal touch panning.
+            This keeps swipe recognition in the compositor thread and prevents
+            Lenis / the page scroll handler from stealing the gesture.
+          */
+          touch-action: pan-x;
+        }
+        .news-track::-webkit-scrollbar { display: none; }
+
+        /* Each slide fills the track's visible width and snaps */
+        .news-slide {
+          flex: 0 0 100%;
+          width: 100%;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+        }
+
+        /* ── Card Layout ────────────────────────────────────────────── */
+        .news-card-layout {
+          display: grid;
+          grid-template-columns: 1fr 1.2fr;
+          background: var(--surface);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: var(--radius-cell);
+          overflow: hidden;
+        }
+        .news-image-area {
+          position: relative;
+          min-height: 400px;
+        }
+        .news-text-area {
+          padding: var(--space-8) var(--space-7);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          border-left: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* ── Read link ─────────────────────────────────────────────── */
+        .news-read-link {
+          display: inline-block;
+          background: transparent;
+          border: 1px solid rgba(255,255,255,0.1);
+          color: var(--text-secondary);
+          font-family: var(--font-display);
+          font-size: 10px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          padding: 10px 24px;
+          border-radius: var(--radius-btn);
+          cursor: pointer;
+          text-decoration: none;
+          transition: border-color 200ms ease, color 200ms ease;
+        }
+        .news-read-link:hover {
+          border-color: var(--amber);
+          color: var(--amber);
+        }
+
+        /* ── Arrow buttons ─────────────────────────────────────────── */
+        .carousel-arrow-btn {
+          background: transparent;
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: var(--radius-btn);
+          color: var(--text-secondary);
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: border-color 200ms ease, color 200ms ease;
+        }
+        .carousel-arrow-btn:hover {
+          border-color: rgba(255,255,255,0.3);
+          color: var(--text-primary);
+        }
+
+        /* ── Dot indicators ────────────────────────────────────────── */
+        .carousel-dot {
+          width: 48px;
+          height: 2px;
+          background: var(--surface-2);
+          border: none;
+          cursor: pointer;
+          transform-origin: center;
+          transition: background-color 300ms ease, transform 300ms ease;
+        }
+
+        /* ── Mobile ────────────────────────────────────────────────── */
         @media (max-width: 768px) {
           .news-card-layout {
             grid-template-columns: 1fr !important;
@@ -371,7 +437,7 @@ export default function RecentNewsSection() {
           .news-text-area {
             padding: var(--space-6) !important;
             border-left: none !important;
-            border-top: 1px solid var(--border-subtle) !important;
+            border-top: 1px solid rgba(255,255,255,0.08) !important;
           }
           .carousel-controls {
             display: none !important;

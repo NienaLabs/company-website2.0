@@ -4,6 +4,7 @@ import { useRef, type CSSProperties } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -34,7 +35,6 @@ export default function HeroSection() {
   const cellRefs = useRef<Array<HTMLDivElement | null>>([]);
   const textVeilRef = useRef<HTMLDivElement>(null);
   const wordmarkRef = useRef<HTMLDivElement>(null);
-  const overlineRef = useRef<HTMLDivElement>(null);
   const headline1Ref = useRef<HTMLDivElement>(null);
   const headline2Ref = useRef<HTMLDivElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
@@ -49,7 +49,6 @@ export default function HeroSection() {
       gsap.set(wordmarkRef.current, { opacity: 0 });
       gsap.set(
         [
-          overlineRef.current,
           ...(headline1Ref.current?.querySelectorAll(".word") ?? []),
           ...(headline2Ref.current?.querySelectorAll(".word") ?? []),
           subRef.current,
@@ -60,31 +59,26 @@ export default function HeroSection() {
       return;
     }
 
-    gsap.set(gridRef.current, { scale: 3, transformOrigin: "center center" });
+    gsap.set(gridRef.current, { scale: 3, transformOrigin: "center center", willChange: "transform" });
 
-    gsap.set(headline1Ref.current?.querySelectorAll(".word") ?? [], { y: 24, opacity: 0 });
-    gsap.set(headline2Ref.current?.querySelectorAll(".word") ?? [], { y: 24, opacity: 0 });
-    gsap.set(subRef.current, { y: 16, opacity: 0 });
-    gsap.set(ctasRef.current?.querySelectorAll("a") ?? [], { y: 16, opacity: 0 });
+    gsap.set(headline1Ref.current?.querySelectorAll(".word") ?? [], { y: 24, opacity: 0, willChange: "transform, opacity" });
+    gsap.set(headline2Ref.current?.querySelectorAll(".word") ?? [], { y: 24, opacity: 0, willChange: "transform, opacity" });
+    gsap.set(subRef.current, { y: 16, opacity: 0, willChange: "transform, opacity" });
+    gsap.set(ctasRef.current?.querySelectorAll("a") ?? [], { y: 16, opacity: 0, willChange: "transform, opacity" });
     gsap.set(textVeilRef.current, { opacity: 0 });
     gsap.set(wordmarkRef.current, { opacity: 1 });
 
     const entrance = gsap.timeline({ delay: 0.2 });
-    entrance
-      .fromTo(
-        overlineRef.current,
-        { y: 12, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" }
-      );
 
     const scrollTl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
         end: "+=125%",
-        scrub: 0.6,
+        scrub: 1.0,          // smoother than 0.6 — less rubberbanding
         pin: pinRef.current,
         pinSpacing: true,
+        anticipatePin: 1,    // prevents the layout-shift stutter on pin entry
       },
     });
 
@@ -147,7 +141,7 @@ export default function HeroSection() {
       style={{
         position: "relative",
         height: "225vh",
-        background: "var(--color-void)",
+        background: "var(--bg)",
       }}
     >
       <div
@@ -168,7 +162,7 @@ export default function HeroSection() {
             gridTemplateColumns: "repeat(3, 1fr)",
             gridTemplateRows: "repeat(3, 1fr)",
             gap: "6px",
-            background: "var(--color-void)",
+            background: "var(--bg)",
           }}
         >
           {GRID_IMAGES.map((src, i) => (
@@ -200,12 +194,12 @@ export default function HeroSection() {
                   }}
                 />
               ) : (
-                <img
+                <Image
                   src={src as string}
                   alt=""
+                  fill
+                  sizes="(max-width: 768px) 33vw, 33vw"
                   style={{
-                    width: "100%",
-                    height: "100%",
                     objectFit: "cover",
                     display: "block",
                   }}
@@ -216,7 +210,7 @@ export default function HeroSection() {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  boxShadow: "inset 0 0 0 0.5px rgba(201,168,76,0.18)",
+                  boxShadow: "inset 0 0 0 0.5px rgba(255,176,32,0.18)",
                   pointerEvents: "none",
                 }}
               />
@@ -228,7 +222,7 @@ export default function HeroSection() {
               position: "absolute",
               inset: 0,
               background:
-                "radial-gradient(60% 55% at 50% 46%, rgba(10,18,20,0.78) 0%, rgba(10,18,20,0.42) 55%, rgba(10,18,20,0.15) 100%)",
+                "radial-gradient(60% 55% at 50% 46%, rgba(12,13,16,0.78) 0%, rgba(12,13,16,0.42) 55%, rgba(12,13,16,0.15) 100%)",
               pointerEvents: "none",
             }}
           />
@@ -262,25 +256,25 @@ export default function HeroSection() {
         >
           <span
             style={{
-              fontFamily: "'Cinzel', serif",
-              fontWeight: 800,
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
               fontSize: "clamp(48px, 9vw, 128px)",
               lineHeight: 0.9,
               letterSpacing: "0.01em",
               color: "transparent",
-              WebkitTextStroke: "1.5px rgba(201,168,76,0.85)",
+              WebkitTextStroke: "1.5px var(--amber)",
             } as CSSProperties}
           >
             Niena
           </span>
           <span
             style={{
-              fontFamily: "'Cinzel', serif",
-              fontWeight: 800,
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
               fontSize: "clamp(48px, 9vw, 128px)",
               lineHeight: 0.9,
               letterSpacing: "0.01em",
-              color: "rgba(201,168,76,0.9)",
+              color: "var(--amber)",
             }}
           >
             Labs
@@ -300,30 +294,16 @@ export default function HeroSection() {
             padding: "0 var(--space-6)",
           }}
         >
-          <div style={{ maxWidth: "820px" }}>
-            <div
-              ref={overlineRef}
-              style={{
-                fontFamily: "'Cinzel', serif",
-                fontSize: "9px",
-                letterSpacing: "0.32em",
-                color: "rgba(201,168,76,0.6)",
-                textTransform: "uppercase",
-                marginBottom: "24px",
-                opacity: 0,
-              }}
-            >
-              The world is a beautiful place, but we can still do more together
-            </div>
+          <div style={{ maxWidth: "820px", marginTop: "120px" }}>
 
             <div
               ref={headline1Ref}
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 300,
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
                 fontSize: "clamp(44px, 7vw, 72px)",
                 lineHeight: 1.05,
-                color: "var(--color-text-primary)",
+                color: "#f5f3ee",
                 marginBottom: "8px",
               }}
             >
@@ -333,13 +313,12 @@ export default function HeroSection() {
             <div
               ref={headline2Ref}
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 300,
-                fontStyle: "italic",
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
                 fontSize: "clamp(44px, 7vw, 72px)",
                 lineHeight: 1.05,
-                color: "rgba(232,223,200,0.55)",
-                marginBottom: "36px",
+                color: "rgba(245,243,238,0.68)",
+                marginBottom: "24px",
               }}
             >
               {wrapWords("deserves the engineering to match.")}
@@ -348,9 +327,9 @@ export default function HeroSection() {
             <p
               ref={subRef}
               style={{
-                fontFamily: "'EB Garamond', serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "18px",
-                color: "var(--color-text-secondary)",
+                color: "rgba(245,243,238,0.68)",
                 maxWidth: "560px",
                 margin: "0 auto 48px",
                 lineHeight: 1.8,

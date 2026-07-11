@@ -59,8 +59,8 @@ function TestimonialBlock({
   return (
     <div ref={blockRef} style={{ padding: "var(--space-9) 0", position: "relative" }}>
       <blockquote style={{
-        fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontWeight: 300,
-        fontSize: "clamp(20px, 2.5vw, 28px)", color: "var(--color-text-primary)",
+        fontFamily: "var(--font-display)", fontStyle: "italic", fontWeight: 600,
+        fontSize: "clamp(20px, 2.5vw, 28px)", color: "var(--text-primary)",
         lineHeight: 1.55, maxWidth: "840px", margin: "0 0 32px",
       }}>
         {quote.split(" ").map((word, i) => (
@@ -70,8 +70,8 @@ function TestimonialBlock({
         ))}
       </blockquote>
       <div className="attribution" style={{
-        fontFamily: "'Cinzel', serif", fontSize: "9px", letterSpacing: "0.2em",
-        color: "var(--color-text-muted)", textTransform: "uppercase", opacity: 0,
+        fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
+        color: "var(--text-muted)", textTransform: "uppercase", opacity: 0,
       }}>
         — {name} · {company} · {role}
       </div>
@@ -79,7 +79,7 @@ function TestimonialBlock({
         ref={dividerRef}
         style={{
           position: "absolute", bottom: 0, left: 0, right: 0, height: "1px",
-          background: isLast ? "var(--color-gold)" : "rgba(201,168,76,0.12)",
+          background: isLast ? "var(--amber)" : "rgba(255,176,32,0.12)",
           transform: "scaleX(0)", transformOrigin: "left",
         }}
       />
@@ -89,23 +89,23 @@ function TestimonialBlock({
 
 export default function TestimonialsSection() {
   return (
-    <section id="testimonials" style={{ background: "var(--color-void)", padding: "var(--space-10) 0" }}>
+    <section id="testimonials" style={{ background: "var(--bg)", padding: "var(--space-10) 0" }}>
       <div className="section-container">
         <div style={{ marginBottom: "var(--space-8)" }}>
           <div className="overline" style={{ marginBottom: "12px" }}>Client Voices</div>
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
-            fontSize: "clamp(32px, 5vw, 48px)", color: "var(--color-text-primary)", lineHeight: 1.1,
+            fontFamily: "var(--font-display)", fontWeight: 600,
+            fontSize: "clamp(32px, 5vw, 48px)", color: "var(--text-primary)", lineHeight: 1.1,
           }}>
             What they say.
           </h2>
-          <div style={{ width: "40px", height: "1px", background: "var(--color-gold)", marginTop: "16px" }} />
+          <div style={{ width: "40px", height: "1px", background: "var(--amber)", marginTop: "16px" }} />
         </div>
         <div style={{ position: "relative" }}>
           <div aria-hidden="true" style={{
             position: "absolute", top: "-20px", left: "-40px",
-            fontFamily: "'Cormorant Garamond', serif", fontSize: "200px",
-            color: "rgba(201,168,76,0.07)", lineHeight: 1, pointerEvents: "none", userSelect: "none",
+            fontFamily: "var(--font-display)", fontSize: "200px",
+            color: "rgba(255,176,32,0.07)", lineHeight: 1, pointerEvents: "none", userSelect: "none",
           }}>
             &ldquo;
           </div>

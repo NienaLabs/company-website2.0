@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -65,18 +66,18 @@ export default function CapabilitiesSection() {
     <section
       ref={sectionRef}
       id="services"
-      style={{ background: "var(--color-abyss)", padding: "var(--space-10) 0" }}
+      style={{ background: "var(--bg)", padding: "var(--space-10) 0" }}
     >
       <div className="section-container">
         <div style={{ marginBottom: "var(--space-9)" }}>
           <div className="overline" style={{ marginBottom: "12px" }}>Capabilities</div>
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
-            fontSize: "clamp(32px, 5vw, 48px)", color: "var(--color-text-primary)", lineHeight: 1.1, marginBottom: "4px",
+            fontFamily: "var(--font-display)", fontWeight: 600,
+            fontSize: "clamp(32px, 5vw, 48px)", color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "4px",
           }}>
             What we build.
           </h2>
-          <div style={{ width: "40px", height: "1px", background: "var(--color-gold)", marginTop: "16px" }} />
+          <div style={{ width: "40px", height: "1px", background: "var(--amber)", marginTop: "16px" }} />
         </div>
 
         <div className="capabilities-grid" style={{
@@ -96,24 +97,25 @@ export default function CapabilitiesSection() {
                 overflow: "hidden",
                 opacity: 0,
                 ...(cap.featured ? {
-                  borderTop: "1px solid rgba(201,168,76,0.8)",
+                  borderTop: "1px solid rgba(255,176,32,0.8)",
                   clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)",
                 } : {}),
               }}
             >
               {cap.featured && cap.image && (
                 <>
-                  <img
+                  <Image
                     src={cap.image}
                     alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     style={{
-                      position: "absolute", inset: 0, width: "100%", height: "100%",
                       objectFit: "cover", filter: "sepia(20%) brightness(0.7)",
                     }}
                   />
                   <div style={{
                     position: "absolute", inset: 0,
-                    background: "rgba(201,168,76,0.08)", mixBlendMode: "multiply",
+                    background: "rgba(255,176,32,0.08)", mixBlendMode: "multiply",
                   }} />
                 </>
               )}
@@ -124,24 +126,24 @@ export default function CapabilitiesSection() {
                 padding: cap.featured ? "var(--space-7)" : "var(--space-6)",
               }}>
                 <div style={{
-                  fontFamily: "'Cinzel', serif", fontSize: "9px", letterSpacing: "0.2em",
-                  color: "rgba(201,168,76,0.7)", textTransform: "uppercase", marginBottom: "10px",
+                  fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
+                  color: "rgba(255,176,32,0.7)", textTransform: "uppercase", marginBottom: "10px",
                 }}>
                   {cap.label}
                 </div>
                 <div style={{
-                  fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
+                  fontFamily: "var(--font-display)", fontWeight: 600,
                   fontSize: cap.featured ? "clamp(20px, 2.5vw, 28px)" : "clamp(16px, 1.8vw, 22px)",
-                  color: "var(--color-text-primary)", lineHeight: 1.3, whiteSpace: "pre-line",
+                  color: "var(--text-primary)", lineHeight: 1.3, whiteSpace: "pre-line",
                   marginBottom: cap.featured ? "12px" : "8px",
                 }}>
                   {cap.title}
                 </div>
                 {cap.body && (
                   <p style={{
-                    fontFamily: "'EB Garamond', serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: cap.featured ? "15px" : "13px",
-                    color: "rgba(232,223,200,0.55)", lineHeight: 1.7, marginBottom: 0,
+                    color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: 0,
                   }}>
                     {cap.body}
                   </p>

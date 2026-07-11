@@ -37,10 +37,17 @@ export default function WorkSection() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
+    // Detect touch-only devices — scrub parallax causes scroll jank on mobile.
+    const isMobile = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
     projects.forEach((p, i) => {
       const imgEl = imageRefs.current[i];
       const txtEl = textRefs.current[i];
       if (!imgEl || !txtEl) return;
+
+      // Pre-promote to a GPU layer so transforms don't trigger repaints.
+      gsap.set(imgEl, { willChange: "transform" });
+      gsap.set(txtEl, { willChange: "transform, opacity" });
 
       gsap.fromTo(imgEl,
         { scale: 1.05 },
@@ -48,13 +55,21 @@ export default function WorkSection() {
           scrollTrigger: { trigger: imgEl, start: "top 80%" } }
       );
 
-      gsap.to(imgEl.querySelector("img"), {
-        y: 40, ease: "none",
-        scrollTrigger: { trigger: imgEl, start: "top bottom", end: "bottom top", scrub: true },
-      });
+      // Parallax only on desktop — too expensive on mobile.
+      if (!isMobile) {
+        gsap.to(imgEl.querySelector("img"), {
+          y: 32, ease: "none",
+          scrollTrigger: {
+            trigger: imgEl,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.5,   // smoothed scrub prevents per-frame jank
+          },
+        });
+      }
 
       gsap.fromTo(txtEl,
-        { x: p.imageLeft ? 30 : -30, opacity: 0 },
+        { x: p.imageLeft ? 24 : -24, opacity: 0 },
         { x: 0, opacity: 1, duration: 0.8, ease: "power2.out",
           scrollTrigger: { trigger: txtEl, start: "top 75%" } }
       );
@@ -65,39 +80,39 @@ export default function WorkSection() {
     <section
       ref={sectionRef}
       id="work"
-      style={{ background: "var(--color-abyss)", padding: "var(--space-10) 0" }}
+      style={{ background: "var(--bg)", padding: "var(--space-10) 0" }}
     >
       <div className="section-container">
         <div style={{ marginBottom: "var(--space-10)" }}>
           <div className="overline" style={{ marginBottom: "12px" }}>Selected Work</div>
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
-            fontSize: "clamp(32px, 5vw, 48px)", color: "var(--color-text-primary)", lineHeight: 1.1, marginBottom: "16px",
+            fontFamily: "var(--font-display)", fontWeight: 600,
+            fontSize: "clamp(32px, 5vw, 48px)", color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "16px",
           }}>
             Built with purpose.
           </h2>
-          <div style={{ width: "40px", height: "1px", background: "var(--color-gold)", marginBottom: "20px" }} />
+          <div style={{ width: "40px", height: "1px", background: "var(--amber)", marginBottom: "20px" }} />
           <p style={{
-            fontFamily: "'EB Garamond', serif", fontSize: "17px",
-            color: "var(--color-text-secondary)", maxWidth: "520px", lineHeight: 1.85,
+            fontFamily: "var(--font-body)", fontSize: "17px",
+            color: "var(--text-secondary)", maxWidth: "520px", lineHeight: 1.85,
           }}>
             A selection of products we are proud to have built. Each one started as an idea someone believed in.
           </p>
           <div style={{ marginTop: "16px", marginBottom: "40px" }}>
             <Link href="/local-businesses" style={{
               display: "inline-block",
-              fontFamily: "'Cinzel', serif", fontSize: "11px", letterSpacing: "0.15em",
-              color: "var(--color-gold)", textTransform: "uppercase", textDecoration: "none",
-              borderBottom: "1px solid rgba(201,168,76,0.3)", paddingBottom: "4px",
+              fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.06em",
+              color: "var(--amber)", textTransform: "uppercase", textDecoration: "none",
+              borderBottom: "1px solid rgba(255,176,32,0.3)", paddingBottom: "4px",
               transition: "border-color 0.3s ease, color 0.3s ease"
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--color-gold)";
+              e.currentTarget.style.borderColor = "var(--amber)";
               e.currentTarget.style.color = "#fff";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(201,168,76,0.3)";
-              e.currentTarget.style.color = "var(--color-gold)";
+              e.currentTarget.style.borderColor = "rgba(255,176,32,0.3)";
+              e.currentTarget.style.color = "var(--amber)";
             }}
             >
               Show most recent work for local businesses →
@@ -129,26 +144,26 @@ export default function WorkSection() {
                 sizes="(max-width: 900px) 100vw, 58vw"
                 style={{ objectFit: "cover", filter: "sepia(15%) brightness(0.75)", display: "block" }}
               />
-              <div style={{ position: "absolute", inset: 0, background: "rgba(201,168,76,0.06)", mixBlendMode: "multiply" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(255,176,32,0.06)", mixBlendMode: "multiply" }} />
               <div className="img-scrim" />
             </div>
 
             <div ref={(el) => { textRefs.current[i] = el; }} className="work-text-container" style={{ direction: "ltr", padding: "0 var(--space-4)" }}>
               <div style={{
-                fontFamily: "'Cinzel', serif", fontSize: "9px", letterSpacing: "0.22em",
-                color: "rgba(201,168,76,0.6)", textTransform: "uppercase", marginBottom: "16px",
+                fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
+                color: "rgba(255,176,32,0.6)", textTransform: "uppercase", marginBottom: "16px",
               }}>
                 {project.category}
               </div>
               <h3 style={{
-                fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
-                fontSize: "clamp(24px, 3vw, 36px)", color: "var(--color-text-primary)", lineHeight: 1.15, marginBottom: "20px",
+                fontFamily: "var(--font-display)", fontWeight: 600,
+                fontSize: "clamp(24px, 3vw, 36px)", color: "var(--text-primary)", lineHeight: 1.15, marginBottom: "20px",
               }}>
                 {project.title}
               </h3>
               <p style={{
-                fontFamily: "'EB Garamond', serif", fontSize: "16px",
-                color: "var(--color-text-secondary)", lineHeight: 1.85, marginBottom: "24px",
+                fontFamily: "var(--font-body)", fontSize: "16px",
+                color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "24px",
               }}>
                 {project.body}
               </p>

@@ -35,7 +35,7 @@ export default function ManifestoSection() {
       ref={sectionRef}
       id="about"
       style={{
-        background: "var(--color-abyss)", minHeight: "100vh",
+        background: "var(--bg)", minHeight: "100vh",
         display: "flex", alignItems: "center", justifyContent: "center",
         textAlign: "center", position: "relative", overflow: "hidden",
         padding: "var(--space-11) 0",
@@ -45,7 +45,7 @@ export default function ManifestoSection() {
         ref={glowRef}
         style={{
           position: "absolute", inset: 0,
-          background: "radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 65%)",
+          background: "radial-gradient(ellipse at center, rgba(255,176,32,0.08) 0%, transparent 65%)",
           pointerEvents: "none", transform: "scale(0)", opacity: 0,
         }}
       />
@@ -53,8 +53,8 @@ export default function ManifestoSection() {
         <div
           ref={overlineRef}
           style={{
-            fontFamily: "'Cinzel', serif", fontSize: "9px", letterSpacing: "0.28em",
-            color: "rgba(201,168,76,0.5)", textTransform: "uppercase",
+            fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
+            color: "rgba(255,176,32,0.5)", textTransform: "uppercase",
             marginBottom: "40px", opacity: 0,
           }}
         >
@@ -63,8 +63,8 @@ export default function ManifestoSection() {
         <div
           ref={part1Ref}
           style={{
-            fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
-            fontSize: "clamp(28px, 4.5vw, 52px)", color: "var(--color-text-primary)",
+            fontFamily: "var(--font-display)", fontWeight: 600,
+            fontSize: "clamp(28px, 4.5vw, 52px)", color: "var(--text-primary)",
             lineHeight: 1.25, marginBottom: "8px", opacity: 0,
           }}
         >
@@ -73,15 +73,15 @@ export default function ManifestoSection() {
         <div
           ref={part2Ref}
           style={{
-            fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontStyle: "italic",
-            fontSize: "clamp(28px, 4.5vw, 52px)", color: "var(--color-gold)",
+            fontFamily: "var(--font-display)", fontWeight: 600, fontStyle: "italic",
+            fontSize: "clamp(28px, 4.5vw, 52px)", color: "var(--amber)",
             lineHeight: 1.25, marginBottom: "56px", opacity: 0,
           }}
         >
           we&apos;re ready to build it with you.
         </div>
         <div ref={ctaRef} style={{ opacity: 0 }}>
-          <a href="#contact" className="btn-primary" style={{ fontSize: "10px", padding: "14px 40px" }}>
+          <a href="#contact" className="btn-primary" style={{ fontSize: "13px", fontWeight: 600, padding: "14px 40px" }}>
             Reach Out
           </a>
         </div>

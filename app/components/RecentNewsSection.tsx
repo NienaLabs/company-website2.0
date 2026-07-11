@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
 const newsItems = [
   {
@@ -38,120 +40,38 @@ const newsItems = [
   },
 ];
 
-const AUTO_PLAY_MS = 5000;
-
 export default function RecentNewsSection() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const dotsRef = useRef<(HTMLButtonElement | null)[]>([]);
-  const activeIndexRef = useRef(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const isPausedRef = useRef(false);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" }, [
+    Autoplay({ delay: 5000, stopOnInteraction: true }),
+  ]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // ── Scroll to a slide by index ───────────────────────────────────────────
-  // We use track.scrollTo() NOT scrollIntoView().
-  // scrollIntoView() scrolls EVERY ancestor (including the page) to bring the
-  // element into view — that's why the page was jumping to the news section.
-  // track.scrollTo() only moves the track's own scrollLeft and never touches
-  // the page's vertical scroll position.
-  const goToSlide = useCallback((index: number) => {
-    const track = trackRef.current;
-    if (!track) return;
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
 
-    activeIndexRef.current = index;
-    track.scrollTo({
-      left: index * track.clientWidth,
-      behavior: "smooth",
-    });
-  }, []);
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
-  // ── Dot highlight (pure DOM, no GSAP) ──
-  const updateDots = useCallback((index: number) => {
-    dotsRef.current.forEach((dot, i) => {
-      if (!dot) return;
-      if (i === index) {
-        dot.style.backgroundColor = "var(--amber)";
-        dot.style.transform = "scaleX(1.3)";
-        dot.setAttribute("aria-current", "true");
-      } else {
-        dot.style.backgroundColor = "var(--surface-2)";
-        dot.style.transform = "scaleX(1)";
-        dot.removeAttribute("aria-current");
-      }
-    });
-  }, []);
-
-  // ── Auto-play: setInterval, not GSAP.delayedCall ──
-  const startTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      if (isPausedRef.current) return;
-      const next = (activeIndexRef.current + 1) % newsItems.length;
-      goToSlide(next);
-    }, AUTO_PLAY_MS);
-  }, [goToSlide]);
-
-  const handlePrev = useCallback(() => {
-    const prev =
-      activeIndexRef.current === 0
-        ? newsItems.length - 1
-        : activeIndexRef.current - 1;
-    goToSlide(prev);
-    startTimer(); // reset auto-play on manual nav
-  }, [goToSlide, startTimer]);
-
-  const handleNext = useCallback(() => {
-    const next = (activeIndexRef.current + 1) % newsItems.length;
-    goToSlide(next);
-    startTimer();
-  }, [goToSlide, startTimer]);
-
-  const handleDotClick = useCallback(
-    (i: number) => {
-      goToSlide(i);
-      startTimer();
+  const scrollTo = useCallback(
+    (index: number) => {
+      if (emblaApi) emblaApi.scrollTo(index);
     },
-    [goToSlide, startTimer]
+    [emblaApi]
   );
 
-  // ── IntersectionObserver: detect which slide is in view → update dots ──
-  // This replaces GSAP's onUpdate callbacks with a passive, compositor-safe API.
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi, setSelectedIndex]);
+
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-            const index = Array.from(track.children).indexOf(
-              entry.target as HTMLElement
-            );
-            if (index !== -1) {
-              activeIndexRef.current = index;
-              updateDots(index);
-            }
-          }
-        }
-      },
-      {
-        root: track,
-        threshold: 0.5,
-      }
-    );
-
-    Array.from(track.children).forEach((slide) => observer.observe(slide));
-
-    // Initialise first dot
-    updateDots(0);
-
-    // Kick off auto-play
-    startTimer();
-
-    return () => {
-      observer.disconnect();
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [updateDots, startTimer]);
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+  }, [emblaApi, onSelect]);
 
   return (
     <section
@@ -192,18 +112,14 @@ export default function RecentNewsSection() {
           <div className="carousel-controls" style={{ display: "flex", gap: "12px" }}>
             <button
               aria-label="Previous slide"
-              onClick={handlePrev}
-              onMouseEnter={() => { isPausedRef.current = true; }}
-              onMouseLeave={() => { isPausedRef.current = false; }}
+              onClick={scrollPrev}
               className="carousel-arrow-btn"
             >
               <ChevronLeft size={20} strokeWidth={1} />
             </button>
             <button
               aria-label="Next slide"
-              onClick={handleNext}
-              onMouseEnter={() => { isPausedRef.current = true; }}
-              onMouseLeave={() => { isPausedRef.current = false; }}
+              onClick={scrollNext}
               className="carousel-arrow-btn"
             >
               <ChevronRight size={20} strokeWidth={1} />
@@ -211,87 +127,85 @@ export default function RecentNewsSection() {
           </div>
         </div>
 
-        {/* ── CSS Scroll-Snap Track ─────────────────────────────────────────── */}
-        {/*
-          The overflow container hides the other slides.
-          scroll-snap-type: x mandatory makes the browser snap between slides.
-          All movement happens in the compositor thread — zero JS animation.
-        */}
-        <div
-          ref={trackRef}
-          className="news-track"
-          onMouseEnter={() => { isPausedRef.current = true; }}
-          onMouseLeave={() => { isPausedRef.current = false; }}
-        >
-          {newsItems.map((item) => (
-            <div key={item.id} className="news-slide">
-              <div className="news-card-layout">
-                {/* Image */}
-                <div className="news-image-area">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    unoptimized
-                    style={{ objectFit: "cover", filter: "sepia(20%) brightness(0.65)" }}
-                  />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "rgba(12,13,16,0.4)",
-                    }}
-                  />
-                </div>
-
-                {/* Text */}
-                <div className="news-text-area">
-                  <div
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: "11px", fontWeight: 600,
-                      letterSpacing: "0.06em",
-                      color: "var(--amber)",
-                      textTransform: "uppercase",
-                      marginBottom: "var(--space-4)",
-                    }}
-                  >
-                    {item.date}
+        {/* Embla Carousel Viewport */}
+        <div className="embla" ref={emblaRef} style={{ overflow: "hidden" }}>
+          <div className="embla__container" style={{ display: "flex" }}>
+            {newsItems.map((item) => (
+              <div
+                className="embla__slide"
+                key={item.id}
+                style={{
+                  flex: "0 0 100%",
+                  minWidth: 0,
+                  paddingRight: "1px", // Small padding to prevent visual glitch on snap
+                }}
+              >
+                <div className="news-card-layout">
+                  {/* Image */}
+                  <div className="news-image-area">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      unoptimized
+                      style={{ objectFit: "cover", filter: "sepia(20%) brightness(0.65)" }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "rgba(12,13,16,0.4)",
+                      }}
+                    />
                   </div>
-                  <h3
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 600,
-                      fontSize: "clamp(26px, 4vw, 38px)",
-                      color: "var(--text-primary)",
-                      lineHeight: 1.15,
-                      marginBottom: "var(--space-4)",
-                    }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: "16px",
-                      color: "var(--text-secondary)",
-                      lineHeight: 1.8,
-                      marginBottom: "var(--space-6)",
-                      maxWidth: "540px",
-                    }}
-                  >
-                    {item.description}
-                  </p>
-                  <Link
-                    href={item.link}
-                    className="news-read-link"
-                  >
-                    Read Full Story
-                  </Link>
+
+                  {/* Text */}
+                  <div className="news-text-area">
+                    <div
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "11px",
+                        fontWeight: 600,
+                        letterSpacing: "0.06em",
+                        color: "var(--amber)",
+                        textTransform: "uppercase",
+                        marginBottom: "var(--space-4)",
+                      }}
+                    >
+                      {item.date}
+                    </div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 600,
+                        fontSize: "clamp(26px, 4vw, 38px)",
+                        color: "var(--text-primary)",
+                        lineHeight: 1.15,
+                        marginBottom: "var(--space-4)",
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: "16px",
+                        color: "var(--text-secondary)",
+                        lineHeight: 1.8,
+                        marginBottom: "var(--space-6)",
+                        maxWidth: "540px",
+                      }}
+                    >
+                      {item.description}
+                    </p>
+                    <Link href={item.link} className="news-read-link">
+                      Read Full Story
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Dot indicators */}
@@ -306,52 +220,16 @@ export default function RecentNewsSection() {
           {newsItems.map((_, i) => (
             <button
               key={i}
-              ref={(el) => { dotsRef.current[i] = el; }}
-              onClick={() => handleDotClick(i)}
+              onClick={() => scrollTo(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className="carousel-dot"
+              aria-current={i === selectedIndex ? "true" : undefined}
+              className={`carousel-dot ${i === selectedIndex ? "is-selected" : ""}`}
             />
           ))}
         </div>
       </div>
 
       <style>{`
-        /* ── Scroll-snap track ─────────────────────────────────────── */
-        .news-track {
-          display: flex;
-          overflow-x: auto;
-          overflow-y: hidden;
-          scroll-snap-type: x mandatory;
-          /* scroll-behavior: smooth handled by scrollIntoView() call in JS */
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-          border-radius: var(--radius-cell);
-          /* GPU compositing layer */
-          will-change: scroll-position;
-          transform: translateZ(0);
-          /*
-            CRITICAL: contain horizontal overscroll so that swiping left/right
-            inside the carousel does NOT bubble up to the page's vertical
-            scroll — this was causing the hero-to-work snap on mobile.
-          */
-          overscroll-behavior-x: contain;
-          /*
-            Tell the browser this element handles horizontal touch panning.
-            This keeps swipe recognition in the compositor thread and prevents
-            Lenis / the page scroll handler from stealing the gesture.
-          */
-          touch-action: pan-x;
-        }
-        .news-track::-webkit-scrollbar { display: none; }
-
-        /* Each slide fills the track's visible width and snaps */
-        .news-slide {
-          flex: 0 0 100%;
-          width: 100%;
-          scroll-snap-align: start;
-          scroll-snap-stop: always;
-        }
-
         /* ── Card Layout ────────────────────────────────────────────── */
         .news-card-layout {
           display: grid;
@@ -422,6 +300,10 @@ export default function RecentNewsSection() {
           cursor: pointer;
           transform-origin: center;
           transition: background-color 300ms ease, transform 300ms ease;
+        }
+        .carousel-dot.is-selected {
+          background: var(--amber);
+          transform: scaleX(1.3);
         }
 
         /* ── Mobile ────────────────────────────────────────────────── */

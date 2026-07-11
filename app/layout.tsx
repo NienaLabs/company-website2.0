@@ -1,6 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#d97706" },
+    { media: "(prefers-color-scheme: dark)", color: "#ffb020" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: "Niena Labs — Building the Software That Pushes Humanity Forward",

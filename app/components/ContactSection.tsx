@@ -82,8 +82,7 @@ export default function ContactSection() {
       <div className="section-container">
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "start" }}>
           {/* Left */}
-          <div ref={leftRef} style={{ opacity: 0 }}>
-            <div className="overline" style={{ marginBottom: "16px" }}>Start the conversation</div>
+          <div ref={leftRef} style={{ opacity: 0, flex: "1 1 400px" }}>
             <h2 style={{
               fontFamily: "var(--font-display)", fontWeight: 600,
               fontSize: "clamp(28px, 4vw, 42px)", color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "16px",

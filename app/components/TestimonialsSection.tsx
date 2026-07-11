@@ -91,8 +91,7 @@ export default function TestimonialsSection() {
   return (
     <section id="testimonials" style={{ background: "var(--bg)", padding: "var(--space-10) 0" }}>
       <div className="section-container">
-        <div style={{ marginBottom: "var(--space-8)" }}>
-          <div className="overline" style={{ marginBottom: "12px" }}>Client Voices</div>
+        <div style={{ marginBottom: "var(--space-10)", textAlign: "center" }}>
           <h2 style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
             fontSize: "clamp(32px, 5vw, 48px)", color: "var(--text-primary)", lineHeight: 1.1,

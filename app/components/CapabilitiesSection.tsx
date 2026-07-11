@@ -70,7 +70,6 @@ export default function CapabilitiesSection() {
     >
       <div className="section-container">
         <div style={{ marginBottom: "var(--space-9)" }}>
-          <div className="overline" style={{ marginBottom: "12px" }}>Capabilities</div>
           <h2 style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
             fontSize: "clamp(32px, 5vw, 48px)", color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "4px",

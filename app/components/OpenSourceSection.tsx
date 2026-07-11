@@ -102,8 +102,7 @@ export default function OpenSourceSection() {
       <div className="section-container">
         {/* Header */}
         <div ref={headerRef} style={{ marginBottom: "var(--space-8)", opacity: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
-            <div className="overline">Open Source</div>
+          <div style={{ maxWidth: "540px" }}>
             {/* GitHub org pill */}
             <a
               href="https://github.com/orgs/Niena Labs-community/repositories"

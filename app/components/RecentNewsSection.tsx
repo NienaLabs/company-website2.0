@@ -155,10 +155,10 @@ export default function RecentNewsSection() {
 
   return (
     <section
+      className="mt-20"
       style={{
         background: "var(--bg)",
         padding: "var(--space-11) 0",
-        borderTop: "1px solid rgba(255,176,32,0.12)",
       }}
     >
       <div
@@ -175,12 +175,6 @@ export default function RecentNewsSection() {
           }}
         >
           <div>
-            <div
-              className="overline"
-              style={{ marginBottom: "12px", color: "var(--amber)" }}
-            >
-              Recent News
-            </div>
             <h2
               style={{
                 fontFamily: "var(--font-display)",
@@ -196,20 +190,24 @@ export default function RecentNewsSection() {
 
           {/* Arrow controls — desktop */}
           <div className="carousel-controls" style={{ display: "flex", gap: "12px" }}>
-            {[{ label: "Previous slide", icon: <ChevronLeft size={20} strokeWidth={1} />, fn: handlePrev },
-              { label: "Next slide",     icon: <ChevronRight size={20} strokeWidth={1} />, fn: handleNext }
-            ].map(({ label, icon, fn }) => (
-              <button
-                key={label}
-                aria-label={label}
-                onClick={fn}
-                onMouseEnter={() => { isPausedRef.current = true; }}
-                onMouseLeave={() => { isPausedRef.current = false; }}
-                className="carousel-arrow-btn"
-              >
-                {icon}
-              </button>
-            ))}
+            <button
+              aria-label="Previous slide"
+              onClick={handlePrev}
+              onMouseEnter={() => { isPausedRef.current = true; }}
+              onMouseLeave={() => { isPausedRef.current = false; }}
+              className="carousel-arrow-btn"
+            >
+              <ChevronLeft size={20} strokeWidth={1} />
+            </button>
+            <button
+              aria-label="Next slide"
+              onClick={handleNext}
+              onMouseEnter={() => { isPausedRef.current = true; }}
+              onMouseLeave={() => { isPausedRef.current = false; }}
+              className="carousel-arrow-btn"
+            >
+              <ChevronRight size={20} strokeWidth={1} />
+            </button>
           </div>
         </div>
 

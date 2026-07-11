@@ -99,7 +99,6 @@ function WordReveal({
 export default function PhilosophySection() {
   const sectionRef = useRef<HTMLElement>(null);
   const goldRuleRef = useRef<HTMLDivElement>(null);
-  const overlineRef = useRef<HTMLDivElement>(null);
   const separatorRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -112,11 +111,7 @@ export default function PhilosophySection() {
         scrollTrigger: { trigger: goldRuleRef.current, start: "top 80%" } }
     );
 
-    gsap.fromTo(overlineRef.current,
-      { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.7, ease: "power2.out",
-        scrollTrigger: { trigger: overlineRef.current, start: "top 85%" } }
-    );
+
 
     gsap.fromTo(separatorRef.current,
       { scaleY: 0 },
@@ -132,9 +127,6 @@ export default function PhilosophySection() {
       style={{ background: "var(--bg)", padding: "var(--space-11) 0" }}
     >
       <div className="section-container" style={{ maxWidth: "760px", margin: "0 auto", textAlign: "center" }}>
-        <div ref={overlineRef} className="overline" style={{ marginBottom: "20px", opacity: 0 }}>
-          Our Philosophy
-        </div>
         <div
           ref={goldRuleRef}
           style={{

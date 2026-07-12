@@ -43,7 +43,7 @@ function WordReveal({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
+  useGSAP((_context, contextSafe) => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const container = containerRef.current;
     if (!container || prefersReducedMotion) {
@@ -53,18 +53,23 @@ function WordReveal({
       return;
     }
 
-    ScrollTrigger.create({
-      trigger: container,
-      start: "top 80%",
-      onEnter: () => {
-        gsap.to(container.querySelectorAll("span"), {
-          color,
-          duration: 0.4,
-          stagger: 0.03,
-          ease: "power2.out",
-          delay,
-        });
-      },
+    const createAnimation = contextSafe(() => {
+      gsap.to(container.querySelectorAll("span"), {
+        scrollTrigger: {
+          trigger: container,
+          start: "top 80%",
+          once: true,
+        },
+        color,
+        duration: 0.4,
+        stagger: 0.03,
+        ease: "power2.out",
+        delay,
+      });
+    });
+
+    requestAnimationFrame(() => {
+      createAnimation();
     });
   }, { scope: containerRef, dependencies: [color, delay] });
 
@@ -101,23 +106,27 @@ export default function PhilosophySection() {
   const goldRuleRef = useRef<HTMLDivElement>(null);
   const separatorRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
+  useGSAP((_context, contextSafe) => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    gsap.fromTo(goldRuleRef.current,
-      { scaleX: 0 },
-      { scaleX: 1, duration: 0.8, ease: "power2.out", transformOrigin: "left",
-        scrollTrigger: { trigger: goldRuleRef.current, start: "top 80%" } }
-    );
+    const createAnimation = contextSafe(() => {
+      gsap.fromTo(goldRuleRef.current,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.8, ease: "power2.out", transformOrigin: "left",
+          scrollTrigger: { trigger: goldRuleRef.current, start: "top 80%", once: true } }
+      );
 
+      gsap.fromTo(separatorRef.current,
+        { scaleY: 0 },
+        { scaleY: 1, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: separatorRef.current, start: "top 90%", once: true } }
+      );
+    });
 
-
-    gsap.fromTo(separatorRef.current,
-      { scaleY: 0 },
-      { scaleY: 1, duration: 0.6, ease: "power2.out",
-        scrollTrigger: { trigger: separatorRef.current, start: "top 90%" } }
-    );
+    requestAnimationFrame(() => {
+      createAnimation();
+    });
   }, { scope: sectionRef });
 
   return (

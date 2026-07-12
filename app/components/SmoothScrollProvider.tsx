@@ -18,9 +18,6 @@ export default function SmoothScrollProvider({
   useEffect(() => {
     const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
     setIsTouchOnly(isTouch);
-    if (isTouch) {
-      ScrollTrigger.config({ ignoreMobileResize: true });
-    }
   }, []);
 
   useEffect(() => {

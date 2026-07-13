@@ -313,7 +313,7 @@ export default function OpenSourceSection() {
               color: "var(--text-primary)",
               marginBottom: "8px",
             }}>
-              Join the community.
+              Join the community 🎉
             </div>
             <p style={{
               fontFamily: "var(--font-body)",

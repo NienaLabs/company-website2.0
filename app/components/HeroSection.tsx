@@ -25,8 +25,7 @@ const GRID_IMAGES = [
 // Center-cell video. Place hero.mp4 in /public and reference it as "/hero.mp4".
 const HERO_VIDEO_SRC = "/hero.mp4";
 // Optional poster shown before the video has enough data to paint a frame.
-const HERO_VIDEO_POSTER =
-  "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=crop&w=1600&q=80";
+const HERO_VIDEO_POSTER = "/images/hero/hero.png";
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);

@@ -46,6 +46,9 @@ export default function SmoothScrollProvider({
   }, []);
 
   useEffect(() => {
+    // Prevent massive layout thrashing on mobile when the URL bar hides/shows
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
     if (isTouchOnly === true) return; // Native momentum scroll handles it
 
     const update = (time: number) => {
@@ -55,15 +58,22 @@ export default function SmoothScrollProvider({
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
-    const lenis = lenisRef.current?.lenis;
-    if (lenis) {
-      lenis.on("scroll", ScrollTrigger.update);
+    // ReactLenis might not have populated the ref immediately, so we check safely
+    let lenisInst = lenisRef.current?.lenis;
+    if (lenisInst) {
+      lenisInst.on("scroll", ScrollTrigger.update);
+    } else {
+      // Fallback if ref is late
+      setTimeout(() => {
+        lenisInst = lenisRef.current?.lenis;
+        if (lenisInst) lenisInst.on("scroll", ScrollTrigger.update);
+      }, 100);
     }
 
     return () => {
       gsap.ticker.remove(update);
-      if (lenis) {
-        lenis.off("scroll", ScrollTrigger.update);
+      if (lenisInst) {
+        lenisInst.off("scroll", ScrollTrigger.update);
       }
     };
   }, [isTouchOnly]);

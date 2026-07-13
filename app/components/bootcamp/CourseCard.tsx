@@ -1,17 +1,28 @@
+'use client';
+
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { Course } from '../../../lib/courses';
+import { ArrowRight, Flame } from 'lucide-react';
+import { Course, isEarlyBird, EARLY_BIRD_DEADLINE } from '../../../lib/courses';
 
 interface CourseCardProps {
   course: Course;
 }
 
+function formatDeadline(date: Date): string {
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 export default function CourseCard({ course }: CourseCardProps) {
+  const earlyBird = isEarlyBird();
+  const activePrice = earlyBird ? course.earlyBirdPrice : course.regularPrice;
+  const crossedOutPrice =
+    !course.isBundle && earlyBird ? course.regularPrice : null;
+
   return (
     <div className="bento-cell" style={{ display: 'flex', flexDirection: 'column', padding: 'var(--space-6)' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)' }}>
-        <div className="overline">{course.category}</div>
+        <div className="overline">{course.category === 'Bundle' ? 'All Tracks' : course.category}</div>
         {course.badge && (
           <div style={{
             fontSize: '9px',
@@ -20,9 +31,9 @@ export default function CourseCard({ course }: CourseCardProps) {
             letterSpacing: '0.14em',
             padding: 'var(--space-2) var(--space-3)',
             borderRadius: 'var(--radius-tag)',
-            background: 'rgba(201,168,76,0.12)',
+            background: course.isBundle ? 'rgba(201,168,76,0.18)' : 'rgba(201,168,76,0.1)',
             border: 'var(--border-gold)',
-            color: 'var(--color-gold)'
+            color: 'var(--color-gold)',
           }}>
             {course.badge}
           </div>
@@ -37,18 +48,46 @@ export default function CourseCard({ course }: CourseCardProps) {
         <p className="font-garamond" style={{ fontSize: '14px', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)', lineHeight: 1.7 }}>
           {course.description}
         </p>
-        
+
         <div className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 'var(--space-6)' }}>
           <span>{course.duration}</span>
+          <span style={{ margin: '0 var(--space-3)' }}>·</span>
+          <span>{course.sessions} sessions</span>
           <span style={{ margin: '0 var(--space-3)' }}>·</span>
           <span>{course.level}</span>
         </div>
       </div>
 
+      {/* Early-bird notice */}
+      {earlyBird && !course.isBundle && (
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          background: 'rgba(201,168,76,0.06)',
+          border: '1px solid rgba(201,168,76,0.2)',
+          borderRadius: 'var(--radius-tag)',
+          padding: 'var(--space-2) var(--space-4)',
+          marginBottom: 'var(--space-4)',
+        }}>
+          <Flame size={11} color="var(--color-gold)" />
+          <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+            Early Bird — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
+          </span>
+        </div>
+      )}
+
       {/* Footer */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 'var(--border-hairline)', paddingTop: 'var(--space-4)', marginTop: 'auto' }}>
-        <div className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>
-          GH₵{course.price}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+          <div className="font-garamond" style={{ fontSize: '22px', color: 'var(--color-text-primary)' }}>
+            GH₵{activePrice}
+          </div>
+          {crossedOutPrice && (
+            <div className="font-garamond" style={{ fontSize: '14px', color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>
+              GH₵{crossedOutPrice}
+            </div>
+          )}
         </div>
         <Link
           href={`/bootcamp/courses/${course.slug}`}

@@ -5,8 +5,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'All Courses — Niena Labs Bootcamp',
-  description: 'Browse all bootcamp programs. Web Development, Data Science, AI, Design, Marketing, Cybersecurity and more.',
+  title: 'Software Development Bootcamp — Niena Labs',
+  description: 'Choose your track: Frontend Web, Frontend Mobile, or Backend Development. 2-month intensive bootcamp with early-bird pricing available.',
 };
 
 export default function CoursesPage() {
@@ -26,11 +26,11 @@ export default function CoursesPage() {
             <BookOpen size={12} /> All Programs
           </div>
           <h1 className="font-cormorant" style={{ fontSize: '64px', fontWeight: 300, lineHeight: 1.0, color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)' }}>
-            Find Your <span style={{ color: 'var(--color-gold)' }}>Bootcamp</span>
+            Software Development <span style={{ color: 'var(--color-gold)' }}>Bootcamp</span>
           </h1>
           <p className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)', lineHeight: 1.8, maxWidth: '620px' }}>
-            6 intensive, career-transforming programs designed by industry experts. 
-            Find the course that matches your goals.
+            Three tracks — Frontend Web, Frontend Mobile, and Backend. Pick the one that fits your goal,
+            or take all three with the Full-Stack Bundle.
           </p>
         </div>
       </div>

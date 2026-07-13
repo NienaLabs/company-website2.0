@@ -5,11 +5,11 @@ import { courses } from '../../../lib/courses';
 import CourseCard from './CourseCard';
 import { Filter } from 'lucide-react';
 
-const categories = ['All', 'Development', 'Data', 'AI', 'Design', 'Marketing', 'Security'];
-const levels = ['All Levels', 'Beginner', 'Intermediate', 'Advanced'];
+const categories = ['All', 'Web', 'Mobile', 'Backend', 'Bundle'] as const;
+type Category = typeof categories[number];
 
 export default function CoursesClient() {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState<Category>('All');
 
   const filteredCourses = courses.filter((course) => {
     if (activeCategory === 'All') return true;
@@ -23,7 +23,7 @@ export default function CoursesClient() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-6)', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
             <Filter size={14} color="var(--color-gold)" />
-            <span className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Category:</span>
+            <span className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Track:</span>
             <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
               {categories.map((cat) => (
                 <button
@@ -41,10 +41,10 @@ export default function CoursesClient() {
                     padding: 'var(--space-2) var(--space-4)',
                     borderRadius: 'var(--radius-tag)',
                     cursor: 'pointer',
-                    transition: 'all 150ms ease'
+                    transition: 'all 150ms ease',
                   }}
                 >
-                  {cat}
+                  {cat === 'Bundle' ? 'Full-Stack Bundle' : cat}
                 </button>
               ))}
             </div>
@@ -56,13 +56,13 @@ export default function CoursesClient() {
       <div className="section-container">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
           <span className="font-garamond" style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--color-text-muted)' }}>
-            {filteredCourses.length} courses found
+            {filteredCourses.length} {filteredCourses.length === 1 ? 'program' : 'programs'} found
           </span>
         </div>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: 'var(--space-6)'
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: 'var(--space-6)',
         }}>
           {filteredCourses.map((course) => (
             <CourseCard key={course.id} course={course} />

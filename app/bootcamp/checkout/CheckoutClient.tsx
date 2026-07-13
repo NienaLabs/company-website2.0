@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { courses } from '../../../lib/courses';
+import { courses, isEarlyBird } from '../../../lib/courses';
 import Link from 'next/link';
 import { ArrowLeft, Lock, Shield, CreditCard, CheckCircle, Loader2, Smartphone, Mail, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
@@ -30,8 +30,10 @@ export default function CheckoutClient() {
     );
   }
 
-  const tax = Math.round(course.price * 0.05);
-  const total = course.price + tax;
+  const earlyBird = isEarlyBird();
+  const activePrice = earlyBird ? course.earlyBirdPrice : course.regularPrice;
+  const tax = Math.round(activePrice * 0.05);
+  const total = activePrice + tax;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -269,12 +271,12 @@ export default function CheckoutClient() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', borderTop: 'var(--border-hairline)', borderBottom: 'var(--border-hairline)', padding: 'var(--space-5) 0', marginBottom: 'var(--space-5)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Course Price</span>
-                <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{course.price}</span>
+                <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{activePrice}</span>
               </div>
-              {course.originalPrice && (
+              {earlyBird && !course.isBundle && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>You Save</span>
-                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-success)' }}>-GH₵{course.originalPrice - course.price}</span>
+                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>You Save (Early Bird)</span>
+                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-success)' }}>-GH₵{course.regularPrice - course.earlyBirdPrice}</span>
                 </div>
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -291,7 +293,7 @@ export default function CheckoutClient() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <p className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '4px' }}>Includes:</p>
               {[
-                `${course.lessons} on-demand lessons`,
+                `${course.sessions} live sessions`,
                 `${course.duration} of content`,
                 'Certificate of completion',
                 'Lifetime access',

@@ -24,19 +24,22 @@ export default function ContactSection() {
 
     const st = { trigger: sectionRef.current, start: "top 70%" };
 
-    gsap.fromTo(goldRuleRef.current,
-      { scaleX: 0 },
-      { scaleX: 1, duration: 0.8, ease: "power2.out", transformOrigin: "left", scrollTrigger: st }
-    );
-    gsap.fromTo(leftRef.current,
-      { x: -40, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.8, ease: "power2.out", scrollTrigger: st }
-    );
-    gsap.fromTo(rightRef.current,
-      { x: 40, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 0.15, scrollTrigger: st }
-    );
-  }, { scope: sectionRef });
+    const timer = setTimeout(() => {
+      gsap.fromTo(goldRuleRef.current,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.8, ease: "power2.out", transformOrigin: "left", scrollTrigger: st }
+      );
+      gsap.fromTo(leftRef.current,
+        { x: -40, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, ease: "power2.out", scrollTrigger: st }
+      );
+      gsap.fromTo(rightRef.current,
+        { x: 40, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: 0.15, scrollTrigger: st }
+      );
+    }, 100);
+    return () => clearTimeout(timer);
+  }, { scope: sectionRef, dependencies: [] });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

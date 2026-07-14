@@ -68,10 +68,11 @@ function WordReveal({
       });
     });
 
-    requestAnimationFrame(() => {
+    const timer = setTimeout(() => {
       createAnimation();
-    });
-  }, { scope: containerRef, dependencies: [color, delay] });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, { scope: containerRef, dependencies: [] });
 
   return (
     <div
@@ -124,10 +125,11 @@ export default function PhilosophySection() {
       );
     });
 
-    requestAnimationFrame(() => {
+    const timer = setTimeout(() => {
       createAnimation();
-    });
-  }, { scope: sectionRef });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, { scope: sectionRef, dependencies: [] });
 
   return (
     <section

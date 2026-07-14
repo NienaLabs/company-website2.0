@@ -79,10 +79,11 @@ export default function WorkSection() {
       });
     });
 
-    requestAnimationFrame(() => {
+    const timer = setTimeout(() => {
       createAnimation();
-    });
-  }, { scope: sectionRef });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, { scope: sectionRef, dependencies: [] });
 
   return (
     <section
@@ -147,7 +148,6 @@ export default function WorkSection() {
                 src={project.image}
                 alt={project.title}
                 fill
-                unoptimized
                 sizes="(max-width: 900px) 100vw, 58vw"
                 style={{ objectFit: "cover", filter: "sepia(15%) brightness(0.75)", display: "block" }}
               />

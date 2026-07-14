@@ -92,10 +92,11 @@ export default function OpenSourceSection() {
       });
     });
 
-    requestAnimationFrame(() => {
+    const timer = setTimeout(() => {
       createAnimation();
-    });
-  }, { scope: sectionRef });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, { scope: sectionRef, dependencies: [] });
 
   return (
     <section

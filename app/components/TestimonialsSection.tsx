@@ -59,10 +59,11 @@ function TestimonialBlock({
       });
     });
 
-    requestAnimationFrame(() => {
+    const timer = setTimeout(() => {
       createAnimation();
-    });
-  }, { scope: blockRef });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, { scope: blockRef, dependencies: [] });
 
   return (
     <div ref={blockRef} style={{ padding: "var(--space-9) 0", position: "relative" }}>

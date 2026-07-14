@@ -19,16 +19,19 @@ export default function ManifestoSection() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-    });
+    const timer = setTimeout(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+      });
 
-    tl.fromTo(glowRef.current, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" })
-      .fromTo(overlineRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.5")
-      .fromTo(part1Ref.current, { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, "-=0.3")
-      .fromTo(part2Ref.current, { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, "-=0.4")
-      .fromTo(ctaRef.current, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }, "-=0.2");
-  }, { scope: sectionRef });
+      tl.fromTo(glowRef.current, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" })
+        .fromTo(overlineRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.5")
+        .fromTo(part1Ref.current, { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, "-=0.3")
+        .fromTo(part2Ref.current, { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, "-=0.4")
+        .fromTo(ctaRef.current, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }, "-=0.2");
+    }, 100);
+    return () => clearTimeout(timer);
+  }, { scope: sectionRef, dependencies: [] });
 
   return (
     <section

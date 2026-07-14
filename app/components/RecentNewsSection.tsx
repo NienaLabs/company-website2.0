@@ -172,7 +172,7 @@ export default function RecentNewsSection() {
             </p>
 
             <Link
-              href="https://startup.moolre.com"
+              href="https://startup.moolre.com/leaderboard/196"
               target="_blank"
               rel="noopener noreferrer"
               className="vote-primary-btn"

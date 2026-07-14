@@ -33,46 +33,54 @@ export default function WorkSection() {
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useGSAP(() => {
+  useGSAP((_context, contextSafe) => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
     // Detect touch-only devices — scrub parallax causes scroll jank on mobile.
     const isMobile = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
-    projects.forEach((p, i) => {
-      const imgEl = imageRefs.current[i];
-      const txtEl = textRefs.current[i];
-      if (!imgEl || !txtEl) return;
+    if (!contextSafe) return;
 
-      // Pre-promote to a GPU layer so transforms don't trigger repaints.
-      gsap.set(imgEl, { willChange: "transform" });
-      gsap.set(txtEl, { willChange: "transform, opacity" });
+    const createAnimation = contextSafe(() => {
+      projects.forEach((p, i) => {
+        const imgEl = imageRefs.current[i];
+        const txtEl = textRefs.current[i];
+        if (!imgEl || !txtEl) return;
 
-      gsap.fromTo(imgEl,
-        { scale: 1.05 },
-        { scale: 1, duration: 1.2, ease: "power2.out",
-          scrollTrigger: { trigger: imgEl, start: "top 80%" } }
-      );
+        // Pre-promote to a GPU layer so transforms don't trigger repaints.
+        gsap.set(imgEl, { willChange: "transform" });
+        gsap.set(txtEl, { willChange: "transform, opacity" });
 
-      // Parallax only on desktop — too expensive on mobile.
-      if (!isMobile) {
-        gsap.to(imgEl.querySelector("img"), {
-          y: 32, ease: "none",
-          scrollTrigger: {
-            trigger: imgEl,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5,   // smoothed scrub prevents per-frame jank
-          },
-        });
-      }
+        gsap.fromTo(imgEl,
+          { scale: 1.05 },
+          { scale: 1, duration: 1.2, ease: "power2.out",
+            scrollTrigger: { trigger: imgEl, start: "top 80%" } }
+        );
 
-      gsap.fromTo(txtEl,
-        { x: p.imageLeft ? 24 : -24, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.8, ease: "power2.out",
-          scrollTrigger: { trigger: txtEl, start: "top 75%" } }
-      );
+        // Parallax only on desktop — too expensive on mobile.
+        if (!isMobile) {
+          gsap.to(imgEl.querySelector("img"), {
+            y: 32, ease: "none",
+            scrollTrigger: {
+              trigger: imgEl,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,   // smoothed scrub prevents per-frame jank
+            },
+          });
+        }
+
+        gsap.fromTo(txtEl,
+          { x: p.imageLeft ? 24 : -24, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.8, ease: "power2.out",
+            scrollTrigger: { trigger: txtEl, start: "top 75%" } }
+        );
+      });
+    });
+
+    requestAnimationFrame(() => {
+      createAnimation();
     });
   }, { scope: sectionRef });
 

@@ -47,18 +47,26 @@ export default function CapabilitiesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cellsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useGSAP(() => {
+  useGSAP((_context, contextSafe) => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    cellsRef.current.filter(Boolean).forEach((cell, i) => {
-      gsap.fromTo(cell,
-        { y: 40, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 0.7, ease: "power2.out", delay: i * 0.15,
-          scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
-        }
-      );
+    if (!contextSafe) return;
+
+    const createAnimation = contextSafe(() => {
+      cellsRef.current.filter(Boolean).forEach((cell, i) => {
+        gsap.fromTo(cell,
+          { y: 40, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.7, ease: "power2.out", delay: i * 0.15,
+            scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
+          }
+        );
+      });
+    });
+
+    requestAnimationFrame(() => {
+      createAnimation();
     });
   }, { scope: sectionRef });
 

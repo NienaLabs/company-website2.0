@@ -30,29 +30,37 @@ function TestimonialBlock({
   const blockRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
+  useGSAP((_context, contextSafe) => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const block = blockRef.current;
     if (!block || prefersReducedMotion) return;
+    
+    if (!contextSafe) return;
 
-    const words = block.querySelectorAll(".q-word");
-    const attr = block.querySelector(".attribution");
+    const createAnimation = contextSafe(() => {
+      const words = block.querySelectorAll(".q-word");
+      const attr = block.querySelector(".attribution");
 
-    ScrollTrigger.create({
-      trigger: block,
-      start: "top 75%",
-      onEnter: () => {
-        gsap.to(words, { opacity: 1, duration: 0.4, stagger: 0.025, ease: "power2.out" });
-        if (attr) {
-          gsap.fromTo(attr, { opacity: 0 }, { opacity: 1, duration: 0.6, delay: words.length * 0.025 + 0.2 });
-        }
-        if (dividerRef.current) {
-          gsap.fromTo(dividerRef.current,
-            { scaleX: 0 },
-            { scaleX: 1, duration: 0.8, ease: "power2.out", delay: words.length * 0.025 + 0.4, transformOrigin: "left" }
-          );
-        }
-      },
+      ScrollTrigger.create({
+        trigger: block,
+        start: "top 75%",
+        onEnter: () => {
+          gsap.to(words, { opacity: 1, duration: 0.4, stagger: 0.025, ease: "power2.out" });
+          if (attr) {
+            gsap.fromTo(attr, { opacity: 0 }, { opacity: 1, duration: 0.6, delay: words.length * 0.025 + 0.2 });
+          }
+          if (dividerRef.current) {
+            gsap.fromTo(dividerRef.current,
+              { scaleX: 0 },
+              { scaleX: 1, duration: 0.8, ease: "power2.out", delay: words.length * 0.025 + 0.4, transformOrigin: "left" }
+            );
+          }
+        },
+      });
+    });
+
+    requestAnimationFrame(() => {
+      createAnimation();
     });
   }, { scope: blockRef });
 

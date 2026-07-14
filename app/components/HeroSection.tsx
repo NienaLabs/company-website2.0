@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -28,6 +28,7 @@ const HERO_VIDEO_SRC = "/hero.mp4";
 const HERO_VIDEO_POSTER = "/images/hero/hero.png";
 
 export default function HeroSection() {
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -40,6 +41,13 @@ export default function HeroSection() {
   const ctasRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    let mm = gsap.matchMedia();
+
+    mm.add("(max-width: 768px)", () => {
+      setIsMobile(true);
+      return () => setIsMobile(false);
+    });
+
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion) {
@@ -177,21 +185,36 @@ export default function HeroSection() {
               }}
             >
               {i === 4 ? (
-                <video
-                  src={HERO_VIDEO_SRC}
-                  poster={HERO_VIDEO_POSTER}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
+                isMobile ? (
+                  <Image
+                    src={HERO_VIDEO_POSTER}
+                    alt="Hero Fallback"
+                    fill
+                    quality={100}
+                    priority
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                ) : (
+                  <video
+                    src={HERO_VIDEO_SRC}
+                    poster={HERO_VIDEO_POSTER}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                )
               ) : (
                 <Image
                   src={src as string}

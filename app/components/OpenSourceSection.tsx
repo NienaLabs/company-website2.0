@@ -54,38 +54,46 @@ export default function OpenSourceSection() {
   const manifestoRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useGSAP(() => {
+  useGSAP((_context, contextSafe) => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    // Header block enter
-    gsap.fromTo(headerRef.current,
-      { y: 32, opacity: 0 },
-      {
-        y: 0, opacity: 1, duration: 0.8, ease: "power2.out",
-        scrollTrigger: { trigger: headerRef.current, start: "top 80%" },
-      }
-    );
+    if (!contextSafe) return;
 
-    // Manifesto statement
-    gsap.fromTo(manifestoRef.current,
-      { opacity: 0 },
-      {
-        opacity: 1, duration: 0.7, ease: "power2.out",
-        scrollTrigger: { trigger: manifestoRef.current, start: "top 80%" },
-      }
-    );
-
-    // Library cards
-    cardRefs.current.forEach((card, i) => {
-      if (!card) return;
-      gsap.fromTo(card,
-        { y: 48, opacity: 0 },
+    const createAnimation = contextSafe(() => {
+      // Header block enter
+      gsap.fromTo(headerRef.current,
+        { y: 32, opacity: 0 },
         {
-          y: 0, opacity: 1, duration: 0.75, ease: "power2.out", delay: i * 0.15,
-          scrollTrigger: { trigger: card, start: "top 82%" },
+          y: 0, opacity: 1, duration: 0.8, ease: "power2.out",
+          scrollTrigger: { trigger: headerRef.current, start: "top 80%" },
         }
       );
+
+      // Manifesto statement
+      gsap.fromTo(manifestoRef.current,
+        { opacity: 0 },
+        {
+          opacity: 1, duration: 0.7, ease: "power2.out",
+          scrollTrigger: { trigger: manifestoRef.current, start: "top 80%" },
+        }
+      );
+
+      // Library cards
+      cardRefs.current.forEach((card, i) => {
+        if (!card) return;
+        gsap.fromTo(card,
+          { y: 48, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.75, ease: "power2.out", delay: i * 0.15,
+            scrollTrigger: { trigger: card, start: "top 82%" },
+          }
+        );
+      });
+    });
+
+    requestAnimationFrame(() => {
+      createAnimation();
     });
   }, { scope: sectionRef });
 

@@ -45,6 +45,20 @@ export default function RecentNewsSection() {
     Autoplay({ delay: 5000, stopOnInteraction: true }),
   ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    // Defer initialization to avoid synchronous layout reads (offsetWidth) during initial render
+    const idleCallback = (window as any).requestIdleCallback || setTimeout;
+    const handle = idleCallback(() => setIsReady(true), { timeout: 2000 });
+    return () => {
+      if ((window as any).cancelIdleCallback) {
+        (window as any).cancelIdleCallback(handle);
+      } else {
+        clearTimeout(handle);
+      }
+    };
+  }, []);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -128,7 +142,7 @@ export default function RecentNewsSection() {
         </div>
 
         {/* Embla Carousel Viewport */}
-        <div className="embla" ref={emblaRef} style={{ overflow: "hidden" }}>
+        <div className="embla" ref={isReady ? emblaRef : null} style={{ overflow: "hidden" }}>
           <div className="embla__container" style={{ display: "flex" }}>
             {newsItems.map((item) => (
               <div

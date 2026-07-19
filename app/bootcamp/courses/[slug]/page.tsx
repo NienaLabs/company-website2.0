@@ -41,7 +41,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
       {/* Hero Section */}
       <div className="section-container" style={{ paddingTop: 'var(--space-9)', paddingBottom: 'var(--space-8)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 'var(--space-8)', alignItems: 'start' }}>
+        <div className="course-detail-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 'var(--space-8)', alignItems: 'start' }}>
 
           {/* Main Info */}
           <div>
@@ -242,6 +242,13 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
         </div>
       </div>
+      <style>{`
+        @media (max-width: 900px) {
+          .course-detail-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

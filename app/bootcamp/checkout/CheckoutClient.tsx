@@ -116,7 +116,7 @@ export default function CheckoutClient() {
         <ArrowLeft size={12} /> Back to Course
       </Link>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 'var(--space-8)', alignItems: 'start' }}>
+      <div className="checkout-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 'var(--space-8)', alignItems: 'start' }}>
         
         {/* Left: Checkout Form */}
         <div>
@@ -310,6 +310,13 @@ export default function CheckoutClient() {
         </div>
 
       </div>
+      <style>{`
+        @media (max-width: 900px) {
+          .checkout-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

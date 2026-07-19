@@ -29,8 +29,9 @@ export default function CoursesPage() {
             Software Development <span style={{ color: 'var(--color-gold)' }}>Bootcamp</span>
           </h1>
           <p className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)', lineHeight: 1.8, maxWidth: '620px' }}>
-            Three tracks — Frontend Web, Frontend Mobile, and Backend. Pick the one that fits your goal,
-            or take all three with the Full-Stack Bundle.
+    <b>{"//"} The only software engineering bootcamp you&apos;ll ever need.</b><br/>
+Master everything required to thrive in today&apos;s AI-powered software industry,from production-grade development and modern engineering workflows to the system design principles that separate junior developers from elite engineers.
+Choose the path which fits your need.
           </p>
         </div>
       </div>

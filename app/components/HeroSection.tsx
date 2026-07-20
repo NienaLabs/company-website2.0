@@ -187,10 +187,9 @@ export default function HeroSection() {
               {i === 4 ? (
                 isMobile ? (
                   <Image
-                    src={HERO_VIDEO_POSTER}
-                    alt="Hero Fallback"
+                    src="/images/hero/hero-mobile.png"
+                    alt="Hero"
                     fill
-                    quality={100}
                     priority
                     sizes="(max-width: 768px) 100vw, 33vw"
                     style={{

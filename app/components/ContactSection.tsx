@@ -107,7 +107,7 @@ export default function ContactSection() {
             </p>
             {[
               { label: "Book a call", value: copiedPhone ? "Number Copied!" : "+233 55 673 2796", href: "tel:+233556732796", isPhone: true },
-              { label: "Email", value: "hello@Niena Labs.com", href: "mailto:hello@Niena Labs.com" },
+              { label: "Email", value: "support@nienalabs.com", href: "mailto:support@nienalabs.com" },
               { label: "LinkedIn", value: "Niena Labs", href: "https://www.linkedin.com/company/Niena Labs" },
             ].map((ch) => (
               <a

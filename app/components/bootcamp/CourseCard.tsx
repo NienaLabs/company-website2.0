@@ -1,22 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Flame } from 'lucide-react';
-import { Course, isEarlyBird, EARLY_BIRD_DEADLINE } from '../../../lib/courses';
+import { ArrowRight } from 'lucide-react';
+import { Course } from '../../../lib/courses';
 
 interface CourseCardProps {
   course: Course;
 }
 
-function formatDeadline(date: Date): string {
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-}
-
 export default function CourseCard({ course }: CourseCardProps) {
-  const earlyBird = isEarlyBird();
-  const activePrice = earlyBird ? course.earlyBirdPrice : course.regularPrice;
-  const crossedOutPrice =
-    !course.isBundle && earlyBird ? course.regularPrice : null;
+  const activePrice = course.regularPrice;
 
   return (
     <div className="bento-cell" style={{ display: 'flex', flexDirection: 'column', padding: 'var(--space-6)' }}>
@@ -58,36 +51,12 @@ export default function CourseCard({ course }: CourseCardProps) {
         </div>
       </div>
 
-      {/* Early-bird notice */}
-      {earlyBird && !course.isBundle && (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-          background: 'rgba(201,168,76,0.06)',
-          border: '1px solid rgba(201,168,76,0.2)',
-          borderRadius: 'var(--radius-tag)',
-          padding: 'var(--space-2) var(--space-4)',
-          marginBottom: 'var(--space-4)',
-        }}>
-          <Flame size={11} color="var(--color-gold)" />
-          <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-            Early Bird — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
-          </span>
-        </div>
-      )}
-
       {/* Footer */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 'var(--border-hairline)', paddingTop: 'var(--space-4)', marginTop: 'auto' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
           <div className="font-garamond" style={{ fontSize: '22px', color: 'var(--color-text-primary)' }}>
             GH₵{activePrice}
           </div>
-          {crossedOutPrice && (
-            <div className="font-garamond" style={{ fontSize: '14px', color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>
-              GH₵{crossedOutPrice}
-            </div>
-          )}
         </div>
         <Link
           href={`/bootcamp/courses/${course.slug}`}

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { courses, isEarlyBird, EARLY_BIRD_DEADLINE } from '../../../../lib/courses';
+import { courses } from '../../../../lib/courses';
 import Link from 'next/link';
-import { ArrowLeft, Clock, BookOpen, Flame, Users } from 'lucide-react';
+import { ArrowLeft, Clock, BookOpen, Users } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -14,19 +14,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-function formatDeadline(date: Date): string {
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-}
-
 export default async function CourseDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const course = courses.find((c) => c.slug === resolvedParams.slug);
 
   if (!course) notFound();
 
-  const earlyBird = isEarlyBird();
-  const activePrice = earlyBird ? course.earlyBirdPrice : course.regularPrice;
-  const crossedOutPrice = !course.isBundle && earlyBird ? course.regularPrice : null;
+  const activePrice = course.regularPrice;
   const totalModules = course.phases.reduce((acc, p) => acc + p.modules.length, 0);
 
   return (
@@ -176,35 +170,11 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
               </div>
 
               {/* Price display */}
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: crossedOutPrice ? 'var(--space-3)' : 'var(--space-6)' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: 'var(--space-6)' }}>
                 <div className="font-cormorant" style={{ fontSize: '48px', color: 'var(--color-text-primary)', lineHeight: 1 }}>
                   GH₵{activePrice}
                 </div>
-                {crossedOutPrice && (
-                  <div className="font-garamond" style={{ fontSize: '20px', color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>
-                    GH₵{crossedOutPrice}
-                  </div>
-                )}
               </div>
-
-              {/* Early bird notice */}
-              {earlyBird && !course.isBundle && (
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'rgba(201,168,76,0.06)',
-                  border: '1px solid rgba(201,168,76,0.2)',
-                  borderRadius: 'var(--radius-tag)',
-                  padding: 'var(--space-3) var(--space-4)',
-                  marginBottom: 'var(--space-6)',
-                }}>
-                  <Flame size={12} color="var(--color-gold)" />
-                  <span className="font-garamond" style={{ fontSize: '13px', color: 'var(--color-text-secondary)', fontStyle: 'italic' }}>
-                    Early bird price — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
-                  </span>
-                </div>
-              )}
 
               {course.isBundle && (
                 <div style={{ marginBottom: 'var(--space-6)' }}>

@@ -1,20 +1,10 @@
 // ─── Pricing constants ───────────────────────────────────────────────────────
-// Early-bird period: now → August 5 2025 (23:59:59 GMT)
-export const EARLY_BIRD_DEADLINE = new Date('2025-08-05T23:59:59Z');
-export const PRICE_EARLY_BIRD = 399;   // GHS – individual track (early bird)
-export const PRICE_REGULAR = 499;      // GHS – individual track (after Aug 5)
+export const PRICE_REGULAR = 499;      // GHS – individual track
 export const PRICE_FULLSTACK = 749;    // GHS – full-stack bundle (all 3 tracks)
 
-/** Returns the currently active price for a single-track course. */
+/** Returns the price for a single-track course. */
 export function getActivePrice(): number {
-  return Date.now() < EARLY_BIRD_DEADLINE.getTime()
-    ? PRICE_EARLY_BIRD
-    : PRICE_REGULAR;
-}
-
-/** Returns true if the early-bird window is still open. */
-export function isEarlyBird(): boolean {
-  return Date.now() < EARLY_BIRD_DEADLINE.getTime();
+  return PRICE_REGULAR;
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -37,9 +27,7 @@ export interface Course {
   duration: string;
   /** Number of sessions across the 2-month program */
   sessions: number;
-  /** Early-bird price in GHS (valid until EARLY_BIRD_DEADLINE) */
-  earlyBirdPrice: number;
-  /** Regular price in GHS */
+  /** Price in GHS */
   regularPrice: number;
   instructors: { name: string; title: string; avatar: string }[];
   phases: CurriculumPhase[];
@@ -74,7 +62,6 @@ export const courses: Course[] = [
     level: 'Beginner',
     duration: '2 months',
     sessions: 24,
-    earlyBirdPrice: PRICE_EARLY_BIRD,
     regularPrice: PRICE_REGULAR,
     instructors: nienaInstructors,
     phases: [
@@ -136,7 +123,6 @@ export const courses: Course[] = [
     level: 'Beginner',
     duration: '2 months',
     sessions: 24,
-    earlyBirdPrice: PRICE_EARLY_BIRD,
     regularPrice: PRICE_REGULAR,
     instructors: nienaInstructors,
     phases: [
@@ -186,7 +172,6 @@ export const courses: Course[] = [
     level: 'Intermediate',
     duration: '2 months',
     sessions: 24,
-    earlyBirdPrice: PRICE_EARLY_BIRD,
     regularPrice: PRICE_REGULAR,
     instructors: nienaInstructors,
     phases: [
@@ -246,8 +231,7 @@ export const courses: Course[] = [
     level: 'Beginner',
     duration: '2 months',
     sessions: 24,
-    earlyBirdPrice: PRICE_FULLSTACK,
-    regularPrice: PRICE_FULLSTACK, // Bundle price does not change after the deadline
+    regularPrice: PRICE_FULLSTACK,
     instructors: nienaInstructors,
     phases: [
       {

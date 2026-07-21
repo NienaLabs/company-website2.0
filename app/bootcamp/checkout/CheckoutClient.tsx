@@ -1,9 +1,9 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { courses, isEarlyBird } from '../../../lib/courses';
+import { courses } from '../../../lib/courses';
 import Link from 'next/link';
-import { ArrowLeft, Lock, Shield, CreditCard, CheckCircle, Loader2, Smartphone, Mail, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Lock, Shield, CreditCard, CheckCircle, Loader2, Landmark, Mail, AlertCircle, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 
 export default function CheckoutClient() {
@@ -13,7 +13,7 @@ export default function CheckoutClient() {
   const course = courses.find((c) => c.id === courseId);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'paystack' | 'momo'>('paystack');
+  const [paymentMethod, setPaymentMethod] = useState<'paystack' | 'bank'>('paystack');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,9 +30,9 @@ export default function CheckoutClient() {
     );
   }
 
-  const earlyBird = isEarlyBird();
-  const activePrice = earlyBird ? course.earlyBirdPrice : course.regularPrice;
-  const tax = Math.round(activePrice * 0.05);
+  const activePrice = course.regularPrice;
+  // Paystack adds a 5% processing fee; manual bank transfer has no added charges.
+  const tax = paymentMethod === 'paystack' ? Math.round(activePrice * 0.05) : 0;
   const total = activePrice + tax;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -69,10 +69,27 @@ export default function CheckoutClient() {
         setLoading(false);
       }
     } else {
-      setTimeout(() => {
+      // Manual bank transfer: notify admin so they can verify the payment before onboarding.
+      try {
+        await fetch('/api/enroll', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            phone,
+            courseId: course.id,
+            amount: total,
+          }),
+        });
+      } catch (error) {
+        // Don't block the student's confirmation screen if the alert fails; it's logged server-side.
+        console.error('Failed to send enrollment notification:', error);
+      } finally {
         setLoading(false);
         setIsSuccess(true);
-      }, 1500);
+      }
     }
   };
 
@@ -173,12 +190,12 @@ export default function CheckoutClient() {
                 >
                   <CreditCard size={14} /> Paystack
                 </button>
-                <button 
-                  type="button" 
-                  onClick={() => setPaymentMethod('momo')}
-                  style={{ flex: 1, padding: '12px', background: paymentMethod === 'momo' ? 'rgba(201,168,76,0.1)' : 'var(--color-slate-mid)', border: paymentMethod === 'momo' ? 'var(--border-gold)' : 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', color: paymentMethod === 'momo' ? 'var(--color-gold)' : 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontFamily: "'Cinzel', serif", fontSize: '11px', letterSpacing: '0.1em', transition: 'all 200ms ease' }}
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod('bank')}
+                  style={{ flex: 1, padding: '12px', background: paymentMethod === 'bank' ? 'rgba(201,168,76,0.1)' : 'var(--color-slate-mid)', border: paymentMethod === 'bank' ? 'var(--border-gold)' : 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', color: paymentMethod === 'bank' ? 'var(--color-gold)' : 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontFamily: "'Cinzel', serif", fontSize: '11px', letterSpacing: '0.1em', transition: 'all 200ms ease' }}
                 >
-                  <Smartphone size={14} /> Mobile Money
+                  <Landmark size={14} /> Bank Transfer
                 </button>
               </div>
 
@@ -189,7 +206,7 @@ export default function CheckoutClient() {
                     <div>
                       <h3 className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)', marginBottom: '4px' }}>Secure Paystack Checkout</h3>
                       <p className="font-garamond" style={{ fontSize: '15px', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                        You will be securely redirected to Paystack's official payment gateway to complete your transaction via Card, Mobile Money, or Bank Transfer.
+                        You will be securely redirected to Paystack&apos;s official payment gateway to complete your transaction via Card, Mobile Money, or Bank Transfer. A 5% processing fee applies to this method.
                       </p>
                     </div>
                   </div>
@@ -199,32 +216,46 @@ export default function CheckoutClient() {
                   <div style={{ display: 'flex', gap: '12px', marginBottom: 'var(--space-4)' }}>
                     <AlertCircle size={20} color="var(--color-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
                     <div>
-                      <h3 className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)', marginBottom: '8px' }}>Manual Mobile Money Transfer</h3>
+                      <h3 className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)', marginBottom: '8px' }}>Manual Bank Transfer</h3>
                       <p className="font-garamond" style={{ fontSize: '15px', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                        Avoid standard gateway fees by transferring directly to our business line. Follow these steps:
+                        No processing fee — you pay exactly the course price. Transfer the amount directly to our bank account below, then confirm your payment so we can complete your enrollment.
                       </p>
                     </div>
                   </div>
 
                   <div style={{ background: 'var(--color-void)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Mobile Money Number</span>
-                      <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)', fontWeight: 600 }}>+233 55 283 7672</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
+                      <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Bank Name</span>
+                      <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)', fontWeight: 600, textAlign: 'right' }}>Guaranty Trust Bank</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
+                      <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Account Number</span>
+                      <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)', fontWeight: 600, letterSpacing: '0.05em' }}>1304001001886</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
                       <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Account Name</span>
                       <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>Adomako Yaw</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px' }}>
                       <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Amount</span>
                       <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-gold)', fontWeight: 600 }}>GH₵{total}</span>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-secondary)', padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '4px' }}>
-                    <Mail size={14} color="var(--color-text-muted)" />
+                  <p className="font-garamond" style={{ fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '12px' }}>
+                    After transferring, send us your payment confirmation (screenshot) along with your name and WhatsApp number so we can verify and onboard you:
+                  </p>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-secondary)', padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '4px', marginBottom: '8px' }}>
+                    <Mail size={14} color="var(--color-text-muted)" style={{ flexShrink: 0 }} />
                     <span className="font-garamond" style={{ fontSize: '14px' }}>
-                      Send the payment screenshot to <strong style={{ color: 'var(--color-text-primary)' }}>hello@nienalabs.com</strong>
+                      Email <strong style={{ color: 'var(--color-text-primary)' }}>support@nienalabs.com</strong>
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-secondary)', padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '4px' }}>
+                    <MessageCircle size={14} color="var(--color-text-muted)" style={{ flexShrink: 0 }} />
+                    <span className="font-garamond" style={{ fontSize: '14px' }}>
+                      WhatsApp <strong style={{ color: 'var(--color-text-primary)' }}>+233 55 283 7672</strong> or <strong style={{ color: 'var(--color-text-primary)' }}>+233 55 673 2796</strong>
                     </span>
                   </div>
                 </div>
@@ -239,7 +270,7 @@ export default function CheckoutClient() {
             ) : (
               <button type="submit" className="btn-secondary" disabled={loading} style={{ padding: '20px', fontSize: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px' }}>
                 {loading ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle size={20} />}
-                {loading ? 'Processing...' : `I have sent the email`}
+                {loading ? 'Processing...' : `I have made the transfer`}
               </button>
             )}
 
@@ -273,16 +304,17 @@ export default function CheckoutClient() {
                 <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Course Price</span>
                 <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{activePrice}</span>
               </div>
-              {earlyBird && !course.isBundle && (
+              {paymentMethod === 'paystack' ? (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>You Save (Early Bird)</span>
-                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-success)' }}>-GH₵{course.regularPrice - course.earlyBirdPrice}</span>
+                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Processing Fee (5%)</span>
+                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{tax}</span>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Processing Fee</span>
+                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-success)' }}>No charge</span>
                 </div>
               )}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Tax (5%)</span>
-                <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{tax}</span>
-              </div>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-6)' }}>

@@ -39,6 +39,8 @@ export default function HeroSection() {
   const headline2Ref = useRef<HTMLDivElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctasRef = useRef<HTMLDivElement>(null);
+  const introTextRef = useRef<HTMLDivElement>(null);
+  const heroDescRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     let mm = gsap.matchMedia();
@@ -54,6 +56,8 @@ export default function HeroSection() {
       gsap.set(gridRef.current, { scale: 1, clearProps: "transform" });
       gsap.set(textVeilRef.current, { opacity: 1 });
       gsap.set(wordmarkRef.current, { opacity: 0 });
+      gsap.set(introTextRef.current, { opacity: 1 });
+      gsap.set(heroDescRef.current, { opacity: 1 });
       gsap.set(
         [
           ...(headline1Ref.current?.querySelectorAll(".word") ?? []),
@@ -74,6 +78,8 @@ export default function HeroSection() {
     gsap.set(ctasRef.current?.querySelectorAll("a") ?? [], { y: 16, opacity: 0, willChange: "transform, opacity" });
     gsap.set(textVeilRef.current, { opacity: 0 });
     gsap.set(wordmarkRef.current, { opacity: 1 });
+    gsap.set(introTextRef.current, { opacity: 1 });
+    gsap.set(heroDescRef.current, { opacity: 1 });
 
     const entrance = gsap.timeline({ delay: 0.2 });
 
@@ -91,6 +97,16 @@ export default function HeroSection() {
 
     scrollTl
       .to(
+        introTextRef.current,
+        { opacity: 0, y: -8, duration: 0.3, ease: "power2.out" },
+        0
+      )
+      .to(
+        heroDescRef.current,
+        { opacity: 0, y: -8, duration: 0.3, ease: "power2.out" },
+        0
+      )
+      .to(
         gridRef.current,
         { scale: 1, duration: 1, ease: "power2.inOut" },
         0
@@ -99,7 +115,7 @@ export default function HeroSection() {
         wordmarkRef.current,
         { opacity: 1, y: 0 },
         { opacity: 0, y: -16, duration: 0.5, ease: "power2.out" },
-        0
+        0.05
       )
       .to(
         headline1Ref.current?.querySelectorAll(".word") ?? [],
@@ -262,6 +278,58 @@ export default function HeroSection() {
         />
 
         <div
+          ref={introTextRef}
+          className="hero-intro-text"
+          style={{
+            position: "absolute",
+            bottom: "180px",
+            left: "32px",
+            zIndex: 5,
+            pointerEvents: "none",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 500,
+              fontSize: "clamp(16px, 2vw, 24px)",
+              lineHeight: 1.2,
+              color: "#f5f3ee",
+              letterSpacing: "0.02em",
+            }}
+          >
+            &ldquo;There&apos;s always a beginning&rdquo;
+          </span>
+        </div>
+
+        <div
+          ref={heroDescRef}
+          className="hero-desc-text"
+          style={{
+            position: "absolute",
+            top: "110px",
+            right: "32px",
+            zIndex: 5,
+            maxWidth: "320px",
+            textAlign: "right",
+            pointerEvents: "none",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 400,
+              fontSize: "clamp(13px, 1.4vw, 16px)",
+              lineHeight: 1.6,
+              color: "#f5f3ee",
+              letterSpacing: "0.01em",
+            }}
+          >
+            Powering enterprises with technology that moves humanity forward
+          </span>
+        </div>
+
+        <div
           ref={wordmarkRef}
           style={{
             position: "absolute",
@@ -381,10 +449,23 @@ export default function HeroSection() {
           .hero-text-wrapper {
             padding-top: 100px !important;
           }
+          .hero-intro-text {
+            bottom: 160px !important;
+          }
+          .hero-desc-text {
+            top: 90px !important;
+            right: 16px !important;
+            max-width: 260px !important;
+          }
         }
         @media (max-width: 480px) {
           .hero-text-wrapper {
             padding-top: 90px !important;
+          }
+          .hero-desc-text {
+            top: 80px !important;
+            right: 16px !important;
+            max-width: 220px !important;
           }
         }
       `}</style>

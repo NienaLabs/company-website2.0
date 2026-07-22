@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { courses } from '../../../../lib/courses';
-import { getWelcomeEmailHtml } from '../../../../lib/email-templates';
+import { getWelcomeEmailHtml, getAdminEnrollmentEmailHtml } from '../../../../lib/email-templates';
 import { Resend } from 'resend';
 
 export default async function VerifyPaymentPage({
@@ -52,21 +52,51 @@ export default async function VerifyPaymentPage({
       const metadata = data.data.metadata || {};
       const courseId = metadata.courseId;
       const firstName = metadata.firstName || '';
+      const lastName = metadata.lastName || '';
+      const phone = metadata.phone || '';
+      // Paystack amount is in the smallest currency unit (pesewas); convert back to GHS.
+      const amountPaid = data.data.amount ? Math.round(data.data.amount) / 100 : 0;
 
       const course = courses.find(c => c.id === courseId);
       const courseTitle = course ? course.title : 'Niena Labs Bootcamp';
 
-      if (customerEmail && process.env.RESEND_API_KEY) {
+      if (process.env.RESEND_API_KEY) {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
+        // 1. Welcome email to the student (confirmed payment).
+        if (customerEmail) {
+          try {
+            await resend.emails.send({
+              from: 'Niena Labs Bootcamp <bootcamp@nienalabs.com>', // Requires a verified nienalabs.com domain in Resend
+              to: customerEmail,
+              subject: 'Welcome to the Niena Labs Bootcamp',
+              html: getWelcomeEmailHtml(firstName, courseTitle),
+            });
+          } catch (emailErr) {
+            console.error('Failed to send welcome email:', emailErr);
+          }
+        }
+
+        // 2. Admin alert for internal tracking (payment already verified via Paystack).
         try {
-          const resend = new Resend(process.env.RESEND_API_KEY);
           await resend.emails.send({
-            from: 'Niena Labs Bootcamp <hello@nienalabs.com>', // Fallback to resend.dev, replace with verified domain like hello@nienalabs.com
-            to: customerEmail,
-            subject: 'Welcome to the Niena Labs Bootcamp',
-            html: getWelcomeEmailHtml(firstName, courseTitle),
+            from: 'Niena Labs Bootcamp <enrollments@nienalabs.com>',
+            to: 'hello@nienalabs.com',
+            replyTo: customerEmail || undefined,
+            subject: `New enrollment (PAID) · ${`${firstName} ${lastName}`.trim() || customerEmail} · ${courseTitle}`,
+            html: getAdminEnrollmentEmailHtml({
+              fullName: `${firstName} ${lastName}`.trim(),
+              email: customerEmail,
+              phone,
+              courseTitle,
+              amount: amountPaid,
+              method: 'Paystack',
+              status: 'paid',
+              reference,
+            }),
           });
-        } catch (emailErr) {
-          console.error('Failed to send welcome email:', emailErr);
+        } catch (adminErr) {
+          console.error('Failed to send admin enrollment alert:', adminErr);
         }
       }
     } else {

@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Software Development Bootcamp — Niena Labs',
-  description: 'Choose your track: Frontend Web, Frontend Mobile, or Backend Development. 2-month intensive bootcamp with early-bird pricing available.',
+  description: 'Choose your track: Frontend Web, Frontend Mobile, or Backend Development. 2-month intensive virtual bootcamp running 7 September to 7 November 2026.',
 };
 
 export default function CoursesPage() {

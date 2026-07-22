@@ -176,30 +176,15 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
               </div>
 
               {/* Price display */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: crossedOutPrice ? 'var(--space-3)' : 'var(--space-6)' }}>
-                {crossedOutPrice && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div className="font-garamond" style={{ fontSize: '20px', color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>
-                      GH₵{crossedOutPrice}
-                    </div>
-                    <div style={{
-                      background: 'rgba(201,168,76,0.1)',
-                      color: 'var(--color-gold)',
-                      padding: '3px 8px',
-                      borderRadius: 'var(--radius-tag)',
-                      fontSize: '11px',
-                      fontFamily: "'Cinzel', serif",
-                      textTransform: 'uppercase',
-                      fontWeight: 'bold',
-                      letterSpacing: '0.05em'
-                    }}>
-                      20% Off
-                    </div>
-                  </div>
-                )}
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: crossedOutPrice ? 'var(--space-3)' : 'var(--space-6)' }}>
                 <div className="font-cormorant" style={{ fontSize: '48px', color: 'var(--color-text-primary)', lineHeight: 1 }}>
                   GH₵{activePrice}
                 </div>
+                {crossedOutPrice && (
+                  <div className="font-garamond" style={{ fontSize: '20px', color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>
+                    GH₵{crossedOutPrice}
+                  </div>
+                )}
               </div>
 
               {/* Early bird notice */}

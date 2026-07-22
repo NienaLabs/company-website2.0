@@ -14,9 +14,6 @@ function formatDeadline(date: Date): string {
 
 export default function CourseCard({ course }: CourseCardProps) {
   const earlyBird = isEarlyBird();
-  const activePrice = earlyBird ? course.earlyBirdPrice : course.regularPrice;
-  const crossedOutPrice =
-    !course.isBundle && earlyBird ? course.regularPrice : null;
 
   return (
     <div className="bento-cell" style={{ display: 'flex', flexDirection: 'column', padding: 'var(--space-6)' }}>
@@ -72,14 +69,13 @@ export default function CourseCard({ course }: CourseCardProps) {
         }}>
           <Flame size={11} color="var(--color-gold)" />
           <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-            20% Off Early Bird — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
+            Early Bird — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
           </span>
         </div>
       )}
 
       {/* Footer */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', borderTop: 'var(--border-hairline)', paddingTop: 'var(--space-4)', marginTop: 'auto' }}>
-
         <Link
           href={`/bootcamp/courses/${course.slug}`}
           className="btn-secondary"

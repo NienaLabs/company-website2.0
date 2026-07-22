@@ -8,6 +8,45 @@ interface ChatModalProps {
   onClose: () => void;
 }
 
+// Renders assistant text, turning markdown links [label](url) and bare URLs
+// into clickable anchors so the concierge can lead visitors straight to a page.
+function renderRichText(text: string): React.ReactNode[] {
+  const pattern = /\[([^\]]+)\]\(([^)\s]+)\)|((?:https?:\/\/|mailto:|tel:)[^\s)]+)/g;
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+
+    const label = match[1] ?? match[3];
+    const url = match[2] ?? match[3];
+    const isExternal = /^(https?:|mailto:|tel:)/.test(url);
+
+    nodes.push(
+      <a
+        key={`lnk-${key++}`}
+        href={url}
+        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        style={{ color: "#c9a84c", textDecoration: "underline", textUnderlineOffset: "2px", fontWeight: 600 }}
+      >
+        {label}
+      </a>
+    );
+
+    lastIndex = pattern.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes;
+}
+
 export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
   const { messages, status, sendMessage } = useChat();
   const [localInput, setLocalInput] = useState("");
@@ -115,7 +154,7 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
           >
             {message.parts.map((part, i) => (
               part.type === "text" || part.type === "reasoning" ? (
-                <span key={i}>{part.text}</span>
+                <span key={i}>{message.role === "assistant" ? renderRichText(part.text) : part.text}</span>
               ) : null
             ))}
           </div>

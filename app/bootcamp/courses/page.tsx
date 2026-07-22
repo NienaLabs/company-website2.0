@@ -29,15 +29,14 @@ export default function CoursesPage() {
             Software Development <span style={{ color: 'var(--color-gold)' }}>Bootcamp</span>
           </h1>
           <p className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-secondary)', lineHeight: 1.8, maxWidth: '620px' }}>
-           
+
           </p>
 
-&quot;Ever found yourself halfway through a 3-hour YouTube tutorial only to quit because it just wasn&apos;t getting anywhere? You&apos;re not alone.
-
-Today&apos;s developers are becoming too dependent on AI, copying code they don&apos;t fully understand. But when it&apos;s time for a technical interview or to solve a real-world problem, prompts won&apos;t save you,your knowledge will.
-
-That&apos;s why we built this bootcamp. We don&apos;t just teach you how to write code; we teach you how to think like a software engineer. From rock-solid fundamentals to advanced concepts, you&apos;ll gain the skills, confidence, and experience that separate average developers from the ones companies fight to hire.The stuff
-you won&apos;t even find in youtube tutorials or other bootcamps&quot;
+          &quot;Ever found yourself halfway through a 3-hour YouTube tutorial only to quit because it just wasn&apos;t getting anywhere? You want to be a word class developer who builds
+          real world projects that people actually use but you just don&apos;t know where to start, you just keep jumping from one video to another. We&apos;ve all been there,
+          that&apos;s why we created this bootcamp. We don&apos;t just teach you how to write code; we teach you how to think like a software engineer. From rock-solid fundamentals to
+          advanced concepts, you&apos;ll gain the skills, confidence, and experience that separate average developers from the ones companies fight to hire.The stuff
+          you won&apos;t even find in youtube tutorials or other bootcamps&quot;
 
         </div>
       </div>

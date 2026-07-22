@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { courses, isEarlyBird, EARLY_BIRD_DEADLINE } from '../../../../lib/courses';
 import Link from 'next/link';
-import { ArrowLeft, Clock, BookOpen, Flame, Users } from 'lucide-react';
+import { ArrowLeft, Clock, BookOpen, Flame, Users, ChevronRight, CheckCircle2 } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -50,11 +50,11 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
               <div className="overline" style={{ color: 'var(--color-text-muted)' }}>{course.level}</div>
             </div>
 
-            <h1 className="font-cormorant" style={{ fontSize: '56px', fontWeight: 300, lineHeight: 1.1, color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)' }}>
+            <h1 className="font-display" style={{ fontSize: '56px', fontWeight: 300, lineHeight: 1.1, color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)' }}>
               {course.title}
             </h1>
 
-            <p className="font-garamond" style={{ fontSize: '20px', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-8)' }}>
+            <p className="font-body" style={{ fontSize: '20px', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-8)' }}>
               {course.longDescription}
             </p>
 
@@ -63,29 +63,29 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <Clock size={18} color="var(--color-gold)" />
                 <div>
-                  <div className="font-cinzel" style={{ fontSize: '9px', letterSpacing: '0.1em', color: 'var(--color-text-muted)' }}>Duration</div>
-                  <div className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>{course.duration}</div>
+                  <div className="font-mono" style={{ fontSize: '9px', letterSpacing: '0.1em', color: 'var(--color-text-muted)' }}>Duration</div>
+                  <div className="font-body" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>{course.duration}</div>
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <BookOpen size={18} color="var(--color-gold)" />
                 <div>
-                  <div className="font-cinzel" style={{ fontSize: '9px', letterSpacing: '0.1em', color: 'var(--color-text-muted)' }}>Modules</div>
-                  <div className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>{totalModules} topics</div>
+                  <div className="font-mono" style={{ fontSize: '9px', letterSpacing: '0.1em', color: 'var(--color-text-muted)' }}>Modules</div>
+                  <div className="font-body" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>{totalModules} topics</div>
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <Users size={18} color="var(--color-gold)" />
                 <div>
-                  <div className="font-cinzel" style={{ fontSize: '9px', letterSpacing: '0.1em', color: 'var(--color-text-muted)' }}>Sessions</div>
-                  <div className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>{course.sessions}× per program</div>
+                  <div className="font-mono" style={{ fontSize: '9px', letterSpacing: '0.1em', color: 'var(--color-text-muted)' }}>Sessions</div>
+                  <div className="font-body" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>{course.sessions}× per program</div>
                 </div>
               </div>
             </div>
 
             {/* Skills */}
             <div style={{ marginBottom: 'var(--space-8)' }}>
-              <div className="font-cinzel" style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 'var(--space-4)' }}>
+              <div className="font-mono" style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 'var(--space-4)' }}>
                 Skills You&apos;ll Gain
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
@@ -93,7 +93,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                   <span
                     key={skill}
                     style={{
-                      fontFamily: "'Cinzel', serif",
+                      fontFamily: "var(--font-mono)",
                       fontSize: '9px',
                       letterSpacing: '0.12em',
                       textTransform: 'uppercase',
@@ -111,17 +111,17 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
             </div>
 
             {/* Curriculum by Phase */}
-            <h2 className="font-cormorant" style={{ fontSize: '32px', fontWeight: 300, color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)' }}>
+            <h2 className="font-display" style={{ fontSize: '32px', fontWeight: 300, color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)' }}>
               Curriculum
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
               {course.phases.map((phase) => (
                 <div key={phase.phase} className="bento-cell" style={{ padding: 'var(--space-6)' }}>
                   <div style={{ marginBottom: 'var(--space-4)' }}>
-                    <div className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 'var(--space-2)' }}>
+                    <div className="font-mono" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 'var(--space-2)' }}>
                       {phase.phase}
                     </div>
-                    <p className="font-garamond" style={{ fontSize: '14px', color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
+                    <p className="font-body" style={{ fontSize: '14px', color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
                       {phase.description}
                     </p>
                   </div>
@@ -129,7 +129,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                     {phase.modules.map((mod, i) => (
                       <li
                         key={i}
-                        className="font-garamond"
+                        className="font-body"
                         style={{
                           fontSize: '15px',
                           color: 'var(--color-text-secondary)',
@@ -140,7 +140,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                           borderBottom: i < phase.modules.length - 1 ? 'var(--border-hairline)' : 'none',
                         }}
                       >
-                        <span style={{ color: 'var(--color-gold)', fontSize: '12px', flexShrink: 0 }}>—</span>
+                        <ChevronRight size={14} color="var(--color-gold)" style={{ flexShrink: 0 }} />
                         <span>
                           {mod.title}
                           {mod.note && (
@@ -150,12 +150,12 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                           )}
                         </span>
                         {mod.shared && (
-                          <span className="font-cinzel" style={{ fontSize: '8px', color: 'var(--color-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', flexShrink: 0 }}>
+                          <span className="font-mono" style={{ fontSize: '8px', color: 'var(--color-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', flexShrink: 0 }}>
                             Shared
                           </span>
                         )}
                         {mod.isNew && (
-                          <span className="font-cinzel" style={{ fontSize: '8px', color: 'var(--color-gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', flexShrink: 0 }}>
+                          <span className="font-mono" style={{ fontSize: '8px', color: 'var(--color-gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginLeft: 'auto', flexShrink: 0 }}>
                             New
                           </span>
                         )}
@@ -171,17 +171,17 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
           <div style={{ position: 'sticky', top: '100px' }}>
             <div className="bento-cell" style={{ padding: 'var(--space-6)', border: 'var(--border-gold-faint)', boxShadow: 'var(--shadow-3)' }}>
 
-              <div className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.18em', marginBottom: 'var(--space-4)' }}>
+              <div className="font-mono" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.18em', marginBottom: 'var(--space-4)' }}>
                 Enroll Now
               </div>
 
               {/* Price display */}
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: crossedOutPrice ? 'var(--space-3)' : 'var(--space-6)' }}>
-                <div className="font-cormorant" style={{ fontSize: '48px', color: 'var(--color-text-primary)', lineHeight: 1 }}>
+                <div className="font-display" style={{ fontSize: '48px', color: 'var(--color-text-primary)', lineHeight: 1 }}>
                   GH₵{activePrice}
                 </div>
                 {crossedOutPrice && (
-                  <div className="font-garamond" style={{ fontSize: '20px', color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>
+                  <div className="font-body" style={{ fontSize: '20px', color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>
                     GH₵{crossedOutPrice}
                   </div>
                 )}
@@ -200,7 +200,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                   marginBottom: 'var(--space-6)',
                 }}>
                   <Flame size={12} color="var(--color-gold)" />
-                  <span className="font-garamond" style={{ fontSize: '13px', color: 'var(--color-text-secondary)', fontStyle: 'italic' }}>
+                  <span className="font-body" style={{ fontSize: '13px', color: 'var(--color-text-secondary)', fontStyle: 'italic' }}>
                     Early bird price — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
                   </span>
                 </div>
@@ -208,7 +208,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
               {course.isBundle && (
                 <div style={{ marginBottom: 'var(--space-6)' }}>
-                  <p className="font-garamond" style={{ fontSize: '13px', color: 'var(--color-text-secondary)', fontStyle: 'italic', lineHeight: 1.6 }}>
+                  <p className="font-body" style={{ fontSize: '13px', color: 'var(--color-text-secondary)', fontStyle: 'italic', lineHeight: 1.6 }}>
                     Fixed price — includes all three tracks (Web, Mobile & Backend).
                   </p>
                 </div>
@@ -231,8 +231,8 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                   'AI-native workflow training',
                 ].map((point) => (
                   <div key={point} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ color: 'var(--color-gold)', fontSize: '14px' }}>—</span>
-                    <span className="font-garamond" style={{ fontSize: '13px', color: 'var(--color-text-secondary)' }}>{point}</span>
+                    <CheckCircle2 size={14} color="var(--color-gold)" style={{ flexShrink: 0 }} />
+                    <span className="font-body" style={{ fontSize: '13px', color: 'var(--color-text-secondary)' }}>{point}</span>
                   </div>
                 ))}
               </div>

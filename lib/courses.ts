@@ -3,7 +3,7 @@
 export const EARLY_BIRD_DEADLINE = new Date('2026-08-22T23:59:59Z');
 export const PRICE_EARLY_BIRD = 399;   // GHS – individual track (early bird)
 export const PRICE_REGULAR = 499;      // GHS – individual track (after Aug 5)
-export const PRICE_FULLSTACK = 749;    // GHS – full-stack bundle (all 3 tracks)
+export const PRICE_FULLSTACK = 800;    // GHS – full-stack bundle (all 3 tracks)
 
 /** Returns the currently active price for a single-track course. */
 export function getActivePrice(): number {
@@ -36,7 +36,7 @@ export interface Course {
   level: 'Beginner' | 'Intermediate' | 'Advanced';
   duration: string;
   /** Number of sessions across the 2-month program */
-  sessions: number;
+  sessions: number | string;
   /** Early-bird price in GHS (valid until EARLY_BIRD_DEADLINE) */
   earlyBirdPrice: number;
   /** Regular price in GHS */
@@ -67,13 +67,13 @@ export const courses: Course[] = [
     title: 'Frontend Web Development',
     shortTitle: 'Frontend (Web)',
     description:
-      'Build production-ready web apps with React, Next.js, TypeScript, and modern animation libraries — from HTML basics to full deployment.',
+      'Build production web apps with React, Next.js, and TypeScript. Master advanced animations, backend-for-frontend architecture, modern databases, and AI workflows.',
     longDescription:
-      'This track takes you from the ground up. You start with the core web languages, move into the React ecosystem — Zustand, Tanstack Query, Vite — then level up with Next.js, advanced animations using GSAP and Framer Motion, and production deployment strategies. You\'ll also learn how to use AI tools effectively in your dev workflow. The program closes with a one-month team capstone project.',
+      'This track takes you from the ground up. You start with the core web languages, move into the React ecosystem — Zustand, Tanstack Query, Vite — then level up with Next.js, backend-for-frontend architecture using Next.js API routes, advanced animations using GSAP and Framer Motion, and production deployment strategies. You\'ll also learn how to use AI tools effectively in your dev workflow. The program closes with a one-month team capstone project.',
     category: 'Web',
     level: 'Beginner',
     duration: '2 months',
-    sessions: 24,
+    sessions: '27-29',
     earlyBirdPrice: PRICE_EARLY_BIRD,
     regularPrice: PRICE_REGULAR,
     instructors: nienaInstructors,
@@ -105,10 +105,13 @@ export const courses: Course[] = [
       },
       {
         phase: 'Phase 3 — Advanced & Production-Ready',
-        description: 'Frameworks, performance, AI workflow, and shipping.',
+        description: 'Frameworks, backend-for-frontend, performance, AI workflow, and shipping.',
         modules: [
           { title: 'Web Animations', note: 'CSS + GSAP / Framer Motion' },
           { title: 'Next.js & Tanstack Start' },
+          { title: 'Backend-for-Frontend with Next.js API Routes' },
+          { title: 'ORM & Hosted Databases (Drizzle/Prisma + Neon/Supabase)' },
+          { title: 'Authentication with an Auth Library' },
           { title: 'Website Deployment' },
           { title: 'Frontend System Design & Optimization' },
           { title: 'Prompt Engineering & Token Optimization with AI' },
@@ -117,7 +120,7 @@ export const courses: Course[] = [
         ],
       },
     ],
-    skills: ['HTML/CSS', 'React', 'Next.js', 'TypeScript', 'Zustand', 'Tanstack Query', 'GSAP', 'Vercel'],
+    skills: ['HTML/CSS', 'React', 'Next.js', 'TypeScript', 'Zustand', 'Tanstack Query', 'GSAP', 'API Routes', 'ORM (Drizzle/Prisma)', 'Hosted Databases (Neon/Supabase)', 'Vercel'],
     badge: 'Most Popular',
     featured: true,
   },
@@ -129,13 +132,13 @@ export const courses: Course[] = [
     title: 'Frontend Mobile Development',
     shortTitle: 'Frontend (Mobile)',
     description:
-      'Ship cross-platform mobile apps with React Native and Expo — device APIs, animations with Reanimated, and production builds to the App Store & Play Store.',
+      'Ship cross-platform apps with React Native and Expo. Master device APIs, backend-for-frontend, modern databases, Reanimated, and AI-native dev workflows.',
     longDescription:
-      'Build real mobile apps from day one. You\'ll start with React Native and CSS essentials, then dive into Nativewind for styling, the shared JavaScript & TypeScript foundations, and then jump straight into Expo — device APIs, third-party data libraries, and smooth animations with Reanimated. The program wraps with production builds and a month-long team capstone.',
+      'Build real mobile apps from day one. You\'ll start with React Native and CSS essentials, then dive into Nativewind for styling, the shared JavaScript & TypeScript foundations, and then jump straight into Expo — device APIs, backend-for-frontend architecture with API routes, data fetching, global state management, and smooth animations with Reanimated. The program wraps with production builds and a month-long team capstone.',
     category: 'Mobile',
     level: 'Beginner',
     duration: '2 months',
-    sessions: 24,
+    sessions: '25-27',
     earlyBirdPrice: PRICE_EARLY_BIRD,
     regularPrice: PRICE_REGULAR,
     instructors: nienaInstructors,
@@ -155,11 +158,15 @@ export const courses: Course[] = [
       },
       {
         phase: 'Phase 2 — Build & Ship',
-        description: 'Device APIs, data, animation, and release builds.',
+        description: 'Device APIs, backend-for-frontend, data, state, animation, and release builds.',
         modules: [
           { title: 'Introduction to Expo' },
           { title: 'Expo APIs for Device Component Access' },
-          { title: '3rd-Party Libraries for Data Fetching & State' },
+          { title: 'Backend-for-Frontend with Expo API Routes' },
+          { title: 'ORM & Hosted Databases (Drizzle/Prisma + Neon/Supabase)' },
+          { title: 'Authentication with an Auth Library' },
+          { title: '3rd-Party Libraries for Data Fetching' },
+          { title: 'Global State Management with Zustand' },
           { title: 'Mobile Animations with Reanimated' },
           { title: 'Development & Production Builds' },
           { title: 'Frontend System Design & Mobile Optimization' },
@@ -167,7 +174,7 @@ export const courses: Course[] = [
         ],
       },
     ],
-    skills: ['React Native', 'Expo', 'Nativewind', 'TypeScript', 'Reanimated', 'App Store', 'Play Store'],
+    skills: ['React Native', 'Expo', 'Nativewind', 'TypeScript', 'Reanimated', 'API Routes', 'ORM (Drizzle/Prisma)', 'Hosted Databases (Neon/Supabase)', 'Zustand', 'App Store', 'Play Store'],
     badge: 'Hands-On',
     featured: true,
   },
@@ -179,7 +186,7 @@ export const courses: Course[] = [
     title: 'Backend Development',
     shortTitle: 'Backend',
     description:
-      'Design and ship scalable server-side systems — Node.js, NestJS, SQL/NoSQL databases, REST & GraphQL APIs, Docker, and cloud deployment on AWS.',
+      'Design scalable systems with Node.js and NestJS. Master database design, Prisma ORM, REST & GraphQL APIs, Docker, AWS deployment, and AI-assisted workflows.',
     longDescription:
       'Become the engineer who keeps things running. Starting with the JS/TS foundations you\'ll build backend systems from scratch using Node.js and Express, then move into database design with Prisma, REST & GraphQL API design, testing with Jest and Vitest, dependency injection with NestJS, message queues, Docker, and cloud deployment on AWS Free Tier. Prompt engineering and AI-assisted debugging are woven throughout.',
     category: 'Backend',
@@ -239,7 +246,7 @@ export const courses: Course[] = [
     title: 'Full-Stack Developer Bundle',
     shortTitle: 'Full-Stack (All Tracks)',
     description:
-      'All three tracks — Web, Mobile, and Backend — in one program. The most comprehensive path to becoming a full-stack developer.',
+      'All three tracks — Web, Mobile, and Backend. Master the complete stack including UI, backend-for-frontend, APIs, databases, and AI-native development workflows.',
     longDescription:
       'Get access to all three bootcamp tracks: Frontend Web, Frontend Mobile, and Backend Development. You\'ll cover the complete stack — from pixel-perfect UIs and cross-platform mobile apps to scalable server-side systems, databases, and cloud infrastructure. This is the bundle for those who want to be able to build anything.',
     category: 'Bundle',
@@ -254,8 +261,8 @@ export const courses: Course[] = [
         phase: 'All Tracks Included',
         description: 'Everything in Web, Mobile, and Backend — all in one.',
         modules: [
-          { title: 'Frontend (Web) — all 20 modules' },
-          { title: 'Frontend (Mobile) — all 14 modules' },
+          { title: 'Frontend (Web) — all 23 modules' },
+          { title: 'Frontend (Mobile) — all 18 modules' },
           { title: 'Backend — all 18 modules' },
         ],
       },

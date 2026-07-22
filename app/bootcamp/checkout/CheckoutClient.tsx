@@ -22,7 +22,7 @@ export default function CheckoutClient() {
   if (!course) {
     return (
       <div className="section-container" style={{ paddingTop: 'var(--space-10)', textAlign: 'center' }}>
-        <h1 className="font-cormorant" style={{ fontSize: '48px', color: 'var(--color-text-primary)' }}>Course Not Found</h1>
+        <h1 className="font-display" style={{ fontSize: '48px', color: 'var(--color-text-primary)' }}>Course Not Found</h1>
         <Link href="/bootcamp/courses" className="btn-secondary" style={{ marginTop: 'var(--space-6)', display: 'inline-block' }}>
           Back to Programs
         </Link>
@@ -102,20 +102,20 @@ export default function CheckoutClient() {
             <CheckCircle color="var(--color-gold)" size={40} />
           </div>
           
-          <h1 className="font-cormorant" style={{ fontSize: 'clamp(32px, 6vw, 42px)', color: 'var(--color-text-primary)', lineHeight: 1.1, margin: 0 }}>
+          <h1 className="font-display" style={{ fontSize: 'clamp(32px, 6vw, 42px)', color: 'var(--color-text-primary)', lineHeight: 1.1, margin: 0 }}>
             Enrollment Received!
           </h1>
           
-          <p className="font-garamond" style={{ fontSize: 'clamp(16px, 3.5vw, 18px)', color: 'var(--color-text-secondary)', lineHeight: 1.6, maxWidth: '400px', width: '100%', margin: 0 }}>
+          <p className="font-body" style={{ fontSize: 'clamp(16px, 3.5vw, 18px)', color: 'var(--color-text-secondary)', lineHeight: 1.6, maxWidth: '400px', width: '100%', margin: 0 }}>
             Thank you for enrolling in <strong style={{ color: 'var(--color-text-primary)' }}>{course.title}</strong>. 
             We are verifying your payment details now. Once confirmed, we will add you to the exclusive WhatsApp group using the number you provided.
           </p>
 
           <div style={{ background: 'var(--color-void)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: 'clamp(16px, 4vw, var(--space-4))', width: '100%', marginTop: 'clamp(8px, 2vw, var(--space-4))', boxSizing: 'border-box' }}>
-            <p className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '8px', margin: 0, paddingBottom: '8px' }}>
+            <p className="font-mono" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '8px', margin: 0, paddingBottom: '8px' }}>
               What happens next?
             </p>
-            <p className="font-garamond" style={{ fontSize: 'clamp(14px, 3vw, 15px)', color: 'var(--color-text-secondary)', margin: 0 }}>
+            <p className="font-body" style={{ fontSize: 'clamp(14px, 3vw, 15px)', color: 'var(--color-text-secondary)', margin: 0 }}>
               Keep an eye on your WhatsApp. Our team will reach out to you within 24 hours with your onboarding details and course access links.
             </p>
           </div>
@@ -142,7 +142,7 @@ export default function CheckoutClient() {
             <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(201,168,76,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Lock color="var(--color-gold)" size={24} />
             </div>
-            <h1 className="font-cormorant" style={{ fontSize: '48px', color: 'var(--color-text-primary)', lineHeight: 1 }}>
+            <h1 className="font-display" style={{ fontSize: '48px', color: 'var(--color-text-primary)', lineHeight: 1 }}>
               Secure Checkout
             </h1>
           </div>
@@ -151,35 +151,35 @@ export default function CheckoutClient() {
             
             {/* Step 1: Account */}
             <div className="bento-cell" style={{ padding: 'var(--space-6)' }}>
-              <h2 className="font-cormorant" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-5)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span className="font-cinzel" style={{ fontSize: '14px', color: 'var(--color-gold)', letterSpacing: '0.1em' }}>01</span> 
+              <h2 className="font-display" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-5)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span className="font-mono" style={{ fontSize: '14px', color: 'var(--color-gold)', letterSpacing: '0.1em' }}>01</span> 
                 Your Details
               </h2>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>First Name</label>
+                  <label className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>First Name</label>
                   <input type="text" required placeholder="John" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Last Name</label>
+                  <label className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Last Name</label>
                   <input type="text" required placeholder="Doe" value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none' }} />
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: 'var(--space-4)' }}>
-                <label className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Email Address</label>
+                <label className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Email Address</label>
                 <input type="email" required placeholder="john@example.com" value={email} onChange={(e) => setEmail(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none', width: '100%' }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>WhatsApp Number</label>
+                <label className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>WhatsApp Number</label>
                 <input type="tel" required placeholder="+233 55 000 0000" value={phone} onChange={(e) => setPhone(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none', width: '100%' }} />
               </div>
             </div>
 
             {/* Step 2: Payment */}
             <div className="bento-cell" style={{ padding: 'var(--space-6)' }}>
-              <h2 className="font-cormorant" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-5)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span className="font-cinzel" style={{ fontSize: '14px', color: 'var(--color-gold)', letterSpacing: '0.1em' }}>02</span> 
+              <h2 className="font-display" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-5)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span className="font-mono" style={{ fontSize: '14px', color: 'var(--color-gold)', letterSpacing: '0.1em' }}>02</span> 
                 Payment Method
               </h2>
 
@@ -187,14 +187,14 @@ export default function CheckoutClient() {
                 <button 
                   type="button" 
                   onClick={() => setPaymentMethod('paystack')}
-                  style={{ flex: 1, padding: '12px', background: paymentMethod === 'paystack' ? 'rgba(201,168,76,0.1)' : 'var(--color-slate-mid)', border: paymentMethod === 'paystack' ? 'var(--border-gold)' : 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', color: paymentMethod === 'paystack' ? 'var(--color-gold)' : 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontFamily: "'Cinzel', serif", fontSize: '11px', letterSpacing: '0.1em', transition: 'all 200ms ease' }}
+                  style={{ flex: 1, padding: '12px', background: paymentMethod === 'paystack' ? 'rgba(201,168,76,0.1)' : 'var(--color-slate-mid)', border: paymentMethod === 'paystack' ? 'var(--border-gold)' : 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', color: paymentMethod === 'paystack' ? 'var(--color-gold)' : 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontFamily: "var(--font-mono)", fontSize: '11px', letterSpacing: '0.1em', transition: 'all 200ms ease' }}
                 >
                   <CreditCard size={14} /> Paystack
                 </button>
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('bank')}
-                  style={{ flex: 1, padding: '12px', background: paymentMethod === 'bank' ? 'rgba(201,168,76,0.1)' : 'var(--color-slate-mid)', border: paymentMethod === 'bank' ? 'var(--border-gold)' : 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', color: paymentMethod === 'bank' ? 'var(--color-gold)' : 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontFamily: "'Cinzel', serif", fontSize: '11px', letterSpacing: '0.1em', transition: 'all 200ms ease' }}
+                  style={{ flex: 1, padding: '12px', background: paymentMethod === 'bank' ? 'rgba(201,168,76,0.1)' : 'var(--color-slate-mid)', border: paymentMethod === 'bank' ? 'var(--border-gold)' : 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', color: paymentMethod === 'bank' ? 'var(--color-gold)' : 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontFamily: "var(--font-mono)", fontSize: '11px', letterSpacing: '0.1em', transition: 'all 200ms ease' }}
                 >
                   <Landmark size={14} /> Bank Transfer
                 </button>
@@ -205,8 +205,8 @@ export default function CheckoutClient() {
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <Shield size={24} color="var(--color-gold)" style={{ flexShrink: 0 }} />
                     <div>
-                      <h3 className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)', marginBottom: '4px' }}>Secure Paystack Checkout</h3>
-                      <p className="font-garamond" style={{ fontSize: '15px', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+                      <h3 className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-primary)', marginBottom: '4px' }}>Secure Paystack Checkout</h3>
+                      <p className="font-body" style={{ fontSize: '15px', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
                         You will be securely redirected to Paystack&apos;s official payment gateway to complete your transaction via Card, Mobile Money, or Bank Transfer. A 5% processing fee applies to this method.
                       </p>
                     </div>
@@ -217,8 +217,8 @@ export default function CheckoutClient() {
                   <div style={{ display: 'flex', gap: '12px', marginBottom: 'var(--space-4)' }}>
                     <AlertCircle size={20} color="var(--color-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
                     <div>
-                      <h3 className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)', marginBottom: '8px' }}>Manual Bank Transfer</h3>
-                      <p className="font-garamond" style={{ fontSize: '15px', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+                      <h3 className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-primary)', marginBottom: '8px' }}>Manual Bank Transfer</h3>
+                      <p className="font-body" style={{ fontSize: '15px', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
                         No processing fee — you pay exactly the course price. Transfer the amount directly to our bank account below, then confirm your payment so we can complete your enrollment.
                       </p>
                     </div>
@@ -226,36 +226,36 @@ export default function CheckoutClient() {
 
                   <div style={{ background: 'var(--color-void)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
-                      <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Bank Name</span>
-                      <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)', fontWeight: 600, textAlign: 'right' }}>Guaranty Trust Bank</span>
+                      <span className="font-mono" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Bank Name</span>
+                      <span className="font-body" style={{ fontSize: '16px', color: 'var(--color-text-primary)', fontWeight: 600, textAlign: 'right' }}>Guaranty Trust Bank</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
-                      <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Account Number</span>
-                      <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)', fontWeight: 600, letterSpacing: '0.05em' }}>1304001001886</span>
+                      <span className="font-mono" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Account Number</span>
+                      <span className="font-body" style={{ fontSize: '16px', color: 'var(--color-text-primary)', fontWeight: 600, letterSpacing: '0.05em' }}>1304001001886</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
-                      <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Account Name</span>
-                      <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>Adomako Yaw</span>
+                      <span className="font-mono" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Account Name</span>
+                      <span className="font-body" style={{ fontSize: '16px', color: 'var(--color-text-primary)' }}>Adomako Yaw</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px' }}>
-                      <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Amount</span>
-                      <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-gold)', fontWeight: 600 }}>GH₵{total}</span>
+                      <span className="font-mono" style={{ fontSize: '9px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>Amount</span>
+                      <span className="font-body" style={{ fontSize: '16px', color: 'var(--color-gold)', fontWeight: 600 }}>GH₵{total}</span>
                     </div>
                   </div>
 
-                  <p className="font-garamond" style={{ fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '12px' }}>
+                  <p className="font-body" style={{ fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '12px' }}>
                     After transferring, send us your payment confirmation (screenshot) along with your name and WhatsApp number so we can verify and onboard you:
                   </p>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-secondary)', padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '4px', marginBottom: '8px' }}>
                     <Mail size={14} color="var(--color-text-muted)" style={{ flexShrink: 0 }} />
-                    <span className="font-garamond" style={{ fontSize: '14px' }}>
+                    <span className="font-body" style={{ fontSize: '14px' }}>
                       Email <strong style={{ color: 'var(--color-text-primary)' }}>support@nienalabs.com</strong>
                     </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-secondary)', padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '4px' }}>
                     <MessageCircle size={14} color="var(--color-text-muted)" style={{ flexShrink: 0 }} />
-                    <span className="font-garamond" style={{ fontSize: '14px' }}>
+                    <span className="font-body" style={{ fontSize: '14px' }}>
                       WhatsApp <strong style={{ color: 'var(--color-text-primary)' }}>+233 55 283 7672</strong> or <strong style={{ color: 'var(--color-text-primary)' }}>+233 55 673 2796</strong>
                     </span>
                   </div>
@@ -276,7 +276,7 @@ export default function CheckoutClient() {
             )}
 
             <div style={{ textAlign: 'center', color: 'var(--color-text-muted)' }}>
-              <span className="font-garamond" style={{ fontSize: '14px', fontStyle: 'italic', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+              <span className="font-body" style={{ fontSize: '14px', fontStyle: 'italic', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                 <CheckCircle size={12} color="var(--color-success)" /> 14-day money-back guarantee · No hidden fees
               </span>
             </div>
@@ -286,45 +286,45 @@ export default function CheckoutClient() {
         {/* Right: Order Summary */}
         <div style={{ position: 'sticky', top: '100px' }}>
           <div className="bento-cell" style={{ padding: 'var(--space-6)', border: 'var(--border-gold-faint)' }}>
-            <h2 className="font-cormorant" style={{ fontSize: '32px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)', borderBottom: 'var(--border-hairline)', paddingBottom: 'var(--space-4)' }}>
+            <h2 className="font-display" style={{ fontSize: '32px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)', borderBottom: 'var(--border-hairline)', paddingBottom: 'var(--space-4)' }}>
               Order Summary
             </h2>
 
             <div style={{ display: 'flex', gap: '16px', marginBottom: 'var(--space-6)' }}>
-              <div style={{ width: '60px', height: '60px', borderRadius: 'var(--radius-cell)', background: 'rgba(201,168,76,0.1)', border: 'var(--border-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-gold)', fontFamily: "'Cinzel', serif", fontSize: '24px' }}>
+              <div style={{ width: '60px', height: '60px', borderRadius: 'var(--radius-cell)', background: 'rgba(201,168,76,0.1)', border: 'var(--border-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-gold)', fontFamily: "var(--font-mono)", fontSize: '24px' }}>
                 {course.title.charAt(0)}
               </div>
               <div>
-                <div className="font-garamond" style={{ fontSize: '20px', color: 'var(--color-text-primary)', lineHeight: 1.2, marginBottom: '4px' }}>{course.title}</div>
-                <div className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>{course.level} · {course.duration}</div>
+                <div className="font-body" style={{ fontSize: '20px', color: 'var(--color-text-primary)', lineHeight: 1.2, marginBottom: '4px' }}>{course.title}</div>
+                <div className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}>{course.level} · {course.duration}</div>
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', borderTop: 'var(--border-hairline)', borderBottom: 'var(--border-hairline)', padding: 'var(--space-5) 0', marginBottom: 'var(--space-5)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Course Price</span>
-                <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{activePrice}</span>
+                <span className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Course Price</span>
+                <span className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{activePrice}</span>
               </div>
               {paymentMethod === 'paystack' ? (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Processing Fee (5%)</span>
-                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{tax}</span>
+                  <span className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Processing Fee (5%)</span>
+                  <span className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>GH₵{tax}</span>
                 </div>
               ) : (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Processing Fee</span>
-                  <span className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-success)' }}>No charge</span>
+                  <span className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-secondary)' }}>Processing Fee</span>
+                  <span className="font-body" style={{ fontSize: '18px', color: 'var(--color-success)' }}>No charge</span>
                 </div>
               )}
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-6)' }}>
-              <span className="font-cinzel" style={{ fontSize: '14px', color: 'var(--color-text-primary)', letterSpacing: '0.1em' }}>Total</span>
-              <span className="font-cormorant" style={{ fontSize: '42px', color: 'var(--color-text-primary)', lineHeight: 1 }}>GH₵{total}</span>
+              <span className="font-mono" style={{ fontSize: '14px', color: 'var(--color-text-primary)', letterSpacing: '0.1em' }}>Total</span>
+              <span className="font-display" style={{ fontSize: '42px', color: 'var(--color-text-primary)', lineHeight: 1 }}>GH₵{total}</span>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <p className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '4px' }}>Includes:</p>
+              <p className="font-mono" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '4px' }}>Includes:</p>
               {[
                 `${course.sessions} live sessions`,
                 `${course.duration} of content`,
@@ -334,7 +334,7 @@ export default function CheckoutClient() {
               ].map(item => (
                 <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <CheckCircle size={14} color="var(--color-gold)" />
-                  <span className="font-garamond" style={{ fontSize: '16px', color: 'var(--color-text-secondary)' }}>{item}</span>
+                  <span className="font-body" style={{ fontSize: '16px', color: 'var(--color-text-secondary)' }}>{item}</span>
                 </div>
               ))}
             </div>

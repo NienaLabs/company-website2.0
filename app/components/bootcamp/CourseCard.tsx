@@ -23,7 +23,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         {course.badge && (
           <div style={{
             fontSize: '9px',
-            fontFamily: "'Cinzel', serif",
+            fontFamily: "var(--font-mono)",
             textTransform: 'uppercase',
             letterSpacing: '0.14em',
             padding: 'var(--space-2) var(--space-3)',
@@ -39,17 +39,19 @@ export default function CourseCard({ course }: CourseCardProps) {
 
       {/* Content */}
       <div style={{ flex: 1 }}>
-        <h3 className="font-cormorant" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)', lineHeight: 1.2 }}>
+        <h3 className="font-display" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)', lineHeight: 1.2 }}>
           {course.title}
         </h3>
-        <p className="font-garamond" style={{ fontSize: '14px', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)', lineHeight: 1.7 }}>
+        <p className="font-body" style={{ fontSize: '14px', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)', lineHeight: 1.7 }}>
           {course.description}
         </p>
 
-        <div className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 'var(--space-6)' }}>
+        <div className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 'var(--space-6)' }}>
           <span>{course.duration}</span>
           <span style={{ margin: '0 var(--space-3)' }}>·</span>
           <span>{course.sessions} sessions</span>
+          <span style={{ margin: '0 var(--space-3)' }}>·</span>
+          <span>{course.phases.reduce((acc, p) => acc + p.modules.length, 0)} topics</span>
           <span style={{ margin: '0 var(--space-3)' }}>·</span>
           <span>{course.level}</span>
         </div>
@@ -68,7 +70,7 @@ export default function CourseCard({ course }: CourseCardProps) {
           marginBottom: 'var(--space-4)',
         }}>
           <Flame size={11} color="var(--color-gold)" />
-          <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+          <span className="font-mono" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
             Early Bird — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
           </span>
         </div>

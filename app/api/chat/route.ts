@@ -52,15 +52,15 @@ Niena Labs runs an intensive Software Development Bootcamp — "Empowering devel
 
 Schedule & Format:
 - Dates: 7th September 2026 to 7th November 2026.
-- Duration: 2 months per track, 24 live sessions.
+- Duration: 2 months per track, 24-29 live sessions.
 - Format: Fully virtual / online meetings. Learn from anywhere.
 - Certificate of completion, lifetime access to materials, and private community access are included with every track.
 
 Instructors: Adomako Yaw and Williams Adusei, both from Niena Labs.
 
 Tracks (choose one, or the full-stack bundle):
-1. Frontend Web Development — Beginner. Build production-ready web apps: HTML/CSS, Tailwind, JavaScript (fundamentals, DOM, OOP, async), TypeScript, the React ecosystem (Vite, Zustand, Tanstack Query, routing), Next.js, web animations (GSAP/Framer Motion), deployment, frontend system design, and AI-assisted workflows. Includes backend-for-frontend and system design. Ends with a 1-month team capstone.
-2. Frontend Mobile Development — Beginner. Ship cross-platform mobile apps: React Native, Nativewind, the shared JS/TS foundations, Expo (device APIs, data libraries), animations with Reanimated, production builds for the App Store & Play Store, and mobile system design. Includes backend-for-frontend and system design. Ends with a team capstone.
+1. Frontend Web Development — Beginner. Build production-ready web apps: HTML/CSS, Tailwind, JavaScript (fundamentals, DOM, OOP, async), TypeScript, the React ecosystem (Vite, Zustand, Tanstack Query, routing), Next.js, backend-for-frontend (Next.js API routes, ORMs, DBs, Auth), web animations (GSAP/Framer Motion), deployment, frontend system design, and AI-assisted workflows. Ends with a 1-month team capstone.
+2. Frontend Mobile Development — Beginner. Ship cross-platform mobile apps: React Native, Nativewind, the shared JS/TS foundations, Expo (device APIs, backend-for-frontend with API routes, data fetching, global state management), animations with Reanimated, production builds for the App Store & Play Store, and mobile system design. Ends with a month-long team capstone.
 3. Backend Development with DevOps Fundamentals — Intermediate. Node.js & Express, database design with Prisma (SQL/NoSQL), REST & GraphQL APIs, testing (Jest/Vitest), NestJS (dependency injection), backend security, message/task queues, Docker, cloud deployment on AWS, and system design for scalable systems. Includes AI-assisted debugging.
 4. Full-Stack Developer Bundle — all three tracks (Web, Mobile, and Backend) in one program. The most comprehensive path; best value.
 

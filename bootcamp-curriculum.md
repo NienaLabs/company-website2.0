@@ -15,8 +15,8 @@ This document is the source of truth for the bootcamp curriculum content. It cov
 
 | Track | Modules | Phases |
 |---|---|---|
-| Frontend (Web) | 20 | Foundations → React Ecosystem → Advanced & Production-Ready |
-| Frontend (Mobile) | 14 | Foundations → Build & Ship |
+| Frontend (Web) | 23 | Foundations → React Ecosystem → Advanced & Production-Ready |
+| Frontend (Mobile) | 18 | Foundations → Build & Ship |
 | Backend | 18 | Foundations & Architecture → Architecture & Quality → DevOps, AI Workflow & Scale |
 
 ---
@@ -45,15 +45,18 @@ Building real UIs with React and its tooling.
 6. **Milestone Project** — applied checkpoint
 
 ### Phase 3 — Advanced & Production-Ready
-Frameworks, performance, AI workflow, and shipping.
+Frameworks, backend-for-frontend, performance, AI workflow, and shipping.
 
 1. Web Animations — CSS + GSAP / Framer Motion
 2. Next.js & Tanstack Start
-3. Website Deployment
-4. Frontend System Design & Optimization
-5. Prompt Engineering & Token Optimization with AI
-6. Debugging with Breakpoints & AI-Assisted Strategies
-7. **Final Team Project** — 1-month capstone
+3. Backend-for-Frontend with Next.js API Routes
+4. ORM & Hosted Databases (Drizzle/Prisma + Neon/Supabase)
+5. Authentication with an Auth Library
+6. Website Deployment
+7. Frontend System Design & Optimization
+8. Prompt Engineering & Token Optimization with AI
+9. Debugging with Breakpoints & AI-Assisted Strategies
+10. **Final Team Project** — 1-month capstone
 
 ---
 
@@ -71,15 +74,19 @@ React Native fundamentals and core JS/TS.
 7. TypeScript Essentials *(shared)*
 
 ### Phase 2 — Build & Ship
-Device APIs, data, animation, and release builds.
+Device APIs, backend-for-frontend, data, state, animation, and release builds.
 
 1. Introduction to Expo
 2. Expo APIs for Device Component Access
-3. 3rd-Party Libraries for Data Fetching & State
-4. Mobile Animations with Reanimated
-5. Development & Production Builds
-6. Frontend System Design & Mobile Optimization
-7. **Final Team Project**
+3. Backend-for-Frontend with Expo API Routes
+4. ORM & Hosted Databases (Drizzle/Prisma + Neon/Supabase)
+5. Authentication with an Auth Library
+6. 3rd-Party Libraries for Data Fetching
+7. Global State Management with Zustand
+8. Mobile Animations with Reanimated
+9. Development & Production Builds
+10. Frontend System Design & Mobile Optimization
+11. **Final Team Project**
 
 ---
 
@@ -150,7 +157,7 @@ Shipping, cloud infrastructure and system design.
     {
       "id": "frontend-web",
       "name": "Frontend (Web)",
-      "moduleCount": 20,
+      "moduleCount": 23,
       "phases": [
         {
           "name": "Foundations",
@@ -179,10 +186,13 @@ Shipping, cloud infrastructure and system design.
         },
         {
           "name": "Advanced & Production-Ready",
-          "description": "Frameworks, performance, AI workflow, and shipping",
+          "description": "Frameworks, backend-for-frontend, performance, AI workflow, and shipping",
           "modules": [
             { "title": "Web Animations", "note": "CSS + GSAP / Framer Motion" },
             { "title": "Next.js & Tanstack Start" },
+            { "title": "Backend-for-Frontend with Next.js API Routes" },
+            { "title": "ORM & Hosted Databases (Drizzle/Prisma + Neon/Supabase)" },
+            { "title": "Authentication with an Auth Library" },
             { "title": "Website Deployment" },
             { "title": "Frontend System Design & Optimization" },
             { "title": "Prompt Engineering & Token Optimization with AI" },
@@ -195,7 +205,7 @@ Shipping, cloud infrastructure and system design.
     {
       "id": "frontend-mobile",
       "name": "Frontend (Mobile)",
-      "moduleCount": 14,
+      "moduleCount": 18,
       "phases": [
         {
           "name": "Foundations",
@@ -212,11 +222,15 @@ Shipping, cloud infrastructure and system design.
         },
         {
           "name": "Build & Ship",
-          "description": "Device APIs, data, animation, and release builds",
+          "description": "Device APIs, backend-for-frontend, data, state, animation, and release builds",
           "modules": [
             { "title": "Introduction to Expo" },
             { "title": "Expo APIs for Device Component Access" },
-            { "title": "3rd-Party Libraries for Data Fetching & State" },
+            { "title": "Backend-for-Frontend with Expo API Routes" },
+            { "title": "ORM & Hosted Databases (Drizzle/Prisma + Neon/Supabase)" },
+            { "title": "Authentication with an Auth Library" },
+            { "title": "3rd-Party Libraries for Data Fetching" },
+            { "title": "Global State Management with Zustand" },
             { "title": "Mobile Animations with Reanimated" },
             { "title": "Development & Production Builds" },
             { "title": "Frontend System Design & Mobile Optimization" },

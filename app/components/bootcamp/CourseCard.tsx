@@ -72,23 +72,14 @@ export default function CourseCard({ course }: CourseCardProps) {
         }}>
           <Flame size={11} color="var(--color-gold)" />
           <span className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-            Early Bird — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
+            20% Off Early Bird — ends {formatDeadline(EARLY_BIRD_DEADLINE)}
           </span>
         </div>
       )}
 
       {/* Footer */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 'var(--border-hairline)', paddingTop: 'var(--space-4)', marginTop: 'auto' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-          <div className="font-garamond" style={{ fontSize: '22px', color: 'var(--color-text-primary)' }}>
-            GH₵{activePrice}
-          </div>
-          {crossedOutPrice && (
-            <div className="font-garamond" style={{ fontSize: '14px', color: 'var(--color-text-muted)', textDecoration: 'line-through' }}>
-              GH₵{crossedOutPrice}
-            </div>
-          )}
-        </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', borderTop: 'var(--border-hairline)', paddingTop: 'var(--space-4)', marginTop: 'auto' }}>
+
         <Link
           href={`/bootcamp/courses/${course.slug}`}
           className="btn-secondary"

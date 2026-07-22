@@ -12,11 +12,13 @@ import Footer from "./components/Footer";
 import FloatingWidget from "./components/FloatingWidget";
 import CapabilitiesSection from "./components/CapabilitiesSection";
 import LoadingScreen from "./components/LoadingScreen";
+import BootcampPopup from "./components/BootcampPopup";
 
 export default function Home() {
   return (
     <SmoothScrollProvider>
       <LoadingScreen />
+      <BootcampPopup />
       <Navbar />
       <main>
         {/* Section 01 — Hero: The Manifesto */}

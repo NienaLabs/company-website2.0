@@ -1,6 +1,6 @@
 // ─── Pricing constants ───────────────────────────────────────────────────────
-// Early-bird period: now → August 5 2025 (23:59:59 GMT)
-export const EARLY_BIRD_DEADLINE = new Date('2025-08-05T23:59:59Z');
+// Early-bird period: now → August 22 2026 (23:59:59 GMT)
+export const EARLY_BIRD_DEADLINE = new Date('2026-08-22T23:59:59Z');
 export const PRICE_EARLY_BIRD = 399;   // GHS – individual track (early bird)
 export const PRICE_REGULAR = 499;      // GHS – individual track (after Aug 5)
 export const PRICE_FULLSTACK = 749;    // GHS – full-stack bundle (all 3 tracks)

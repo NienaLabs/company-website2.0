@@ -142,7 +142,7 @@ export default function CheckoutClient() {
             <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(201,168,76,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Lock color="var(--color-gold)" size={24} />
             </div>
-            <h1 className="font-display" style={{ fontSize: '48px', color: 'var(--color-text-primary)', lineHeight: 1 }}>
+            <h1 className="font-display checkout-title" style={{ fontSize: '48px', color: 'var(--color-text-primary)', lineHeight: 1 }}>
               Secure Checkout
             </h1>
           </div>
@@ -150,40 +150,40 @@ export default function CheckoutClient() {
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
             
             {/* Step 1: Account */}
-            <div className="bento-cell" style={{ padding: 'var(--space-6)' }}>
-              <h2 className="font-display" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-5)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="bento-cell bento-cell-responsive" style={{ padding: 'var(--space-6)' }}>
+              <h2 className="font-display step-title" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-5)', display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <span className="font-mono" style={{ fontSize: '14px', color: 'var(--color-gold)', letterSpacing: '0.1em' }}>01</span> 
                 Your Details
               </h2>
               
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
+              <div className="name-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>First Name</label>
-                  <input type="text" required placeholder="John" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none' }} />
+                  <input type="text" required placeholder="John" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Last Name</label>
-                  <input type="text" required placeholder="Doe" value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none' }} />
+                  <input type="text" required placeholder="Doe" value={lastName} onChange={(e) => setLastName(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none', width: '100%', boxSizing: 'border-box' }} />
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: 'var(--space-4)' }}>
                 <label className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Email Address</label>
-                <input type="email" required placeholder="john@example.com" value={email} onChange={(e) => setEmail(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none', width: '100%' }} />
+                <input type="email" required placeholder="john@example.com" value={email} onChange={(e) => setEmail(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none', width: '100%', boxSizing: 'border-box' }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>WhatsApp Number</label>
-                <input type="tel" required placeholder="+233 55 000 0000" value={phone} onChange={(e) => setPhone(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none', width: '100%' }} />
+                <input type="tel" required placeholder="+233 55 000 0000" value={phone} onChange={(e) => setPhone(e.target.value)} style={{ background: 'var(--color-slate-mid)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: '12px 16px', color: 'var(--color-text-primary)', fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', outline: 'none', width: '100%', boxSizing: 'border-box' }} />
               </div>
             </div>
 
             {/* Step 2: Payment */}
-            <div className="bento-cell" style={{ padding: 'var(--space-6)' }}>
-              <h2 className="font-display" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-5)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="bento-cell bento-cell-responsive" style={{ padding: 'var(--space-6)' }}>
+              <h2 className="font-display step-title" style={{ fontSize: '28px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-5)', display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <span className="font-mono" style={{ fontSize: '14px', color: 'var(--color-gold)', letterSpacing: '0.1em' }}>02</span> 
                 Payment Method
               </h2>
 
-              <div style={{ display: 'flex', gap: '16px', marginBottom: 'var(--space-5)' }}>
+              <div className="payment-methods" style={{ display: 'flex', gap: '16px', marginBottom: 'var(--space-5)' }}>
                 <button 
                   type="button" 
                   onClick={() => setPaymentMethod('paystack')}
@@ -285,8 +285,8 @@ export default function CheckoutClient() {
 
         {/* Right: Order Summary */}
         <div style={{ position: 'sticky', top: '100px' }}>
-          <div className="bento-cell" style={{ padding: 'var(--space-6)', border: 'var(--border-gold-faint)' }}>
-            <h2 className="font-display" style={{ fontSize: '32px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)', borderBottom: 'var(--border-hairline)', paddingBottom: 'var(--space-4)' }}>
+          <div className="bento-cell bento-cell-responsive" style={{ padding: 'var(--space-6)', border: 'var(--border-gold-faint)' }}>
+            <h2 className="font-display summary-title" style={{ fontSize: '32px', color: 'var(--color-text-primary)', marginBottom: 'var(--space-6)', borderBottom: 'var(--border-hairline)', paddingBottom: 'var(--space-4)' }}>
               Order Summary
             </h2>
 
@@ -347,6 +347,26 @@ export default function CheckoutClient() {
         @media (max-width: 900px) {
           .checkout-grid {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .name-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .payment-methods {
+            flex-direction: column !important;
+          }
+          .checkout-title {
+            font-size: 32px !important;
+          }
+          .step-title {
+            font-size: 24px !important;
+          }
+          .summary-title {
+            font-size: 24px !important;
+          }
+          .bento-cell-responsive {
+            padding: var(--space-4) !important;
           }
         }
       `}</style>

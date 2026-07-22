@@ -36,7 +36,8 @@ export default function CoursesPage() {
 
 Today&apos;s developers are becoming too dependent on AI, copying code they don&apos;t fully understand. But when it&apos;s time for a technical interview or to solve a real-world problem, prompts won&apos;t save you,your knowledge will.
 
-That&apos;s why we built this bootcamp. We don&apos;t just teach you how to write code; we teach you how to think like a software engineer. From rock-solid fundamentals to advanced concepts, you&apos;ll gain the skills, confidence, and experience that separate average developers from the ones companies fight to hire.&quot;
+That&apos;s why we built this bootcamp. We don&apos;t just teach you how to write code; we teach you how to think like a software engineer. From rock-solid fundamentals to advanced concepts, you&apos;ll gain the skills, confidence, and experience that separate average developers from the ones companies fight to hire.The stuff
+you won&apos;t even find in youtube tutorials or other bootcamps&quot;
 
         </div>
       </div>

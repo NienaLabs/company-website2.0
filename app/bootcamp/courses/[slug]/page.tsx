@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { courses, isEarlyBird, EARLY_BIRD_DEADLINE } from '../../../../lib/courses';
 import Link from 'next/link';
-import { ArrowLeft, Clock, BookOpen, Flame, Users, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Clock, BookOpen, Flame, Users, ChevronRight, CheckCircle2, Award } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -164,6 +164,28 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                   </ul>
                 </div>
               ))}
+
+              {/* Certificate Card */}
+              <div className="bento-cell" style={{ padding: 'var(--space-6)', background: 'rgba(201,168,76,0.03)', borderColor: 'var(--border-gold-faint)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(201,168,76,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Award size={24} color="var(--color-gold)" />
+                  </div>
+                  <div>
+                    <div className="font-mono" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '4px' }}>
+                      End of Bootcamp
+                    </div>
+                    <p className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-primary)' }}>
+                      Certificate of Completion
+                    </p>
+                  </div>
+                </div>
+                <div style={{ marginTop: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: 'var(--border-hairline)' }}>
+                  <p className="font-body" style={{ fontSize: '15px', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+                    Upon successfully completing the program and your final team project, you will be awarded a verified certificate to showcase your new skills and practical experience to employers.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 

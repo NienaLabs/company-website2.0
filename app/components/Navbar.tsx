@@ -210,7 +210,7 @@ export default function Navbar() {
           className="desktop-nav-links"
           style={{ display: "flex", gap: "36px", alignItems: "center" }}
         >
-          {["Services", "Work", "Open Source", "About"].map((link) => (
+          {["Services", "Vision", "Open Source", "About"].map((link) => (
             <a
               key={link}
               href={`#${link.toLowerCase().replace(" ", "-")}`}

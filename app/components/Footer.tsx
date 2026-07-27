@@ -1,242 +1,150 @@
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useTheme } from "next-themes";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-const FOOTER_LINKS = [
-  { label: "Terms", href: "/terms" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "Careers", href: "/careers" },
-  { label: "Bootcamp", href: "/bootcamp/courses" },
-  { label: "Contact", href: "#contact" },
-  { label: "Local Businesses", href: "/local-businesses" },
-];
+import { FiMail as Mail, FiLinkedin as Linkedin, FiGithub as Github, FiTwitter as Twitter, FiSun as Sun } from "react-icons/fi";
 
 export default function Footer() {
-  const { resolvedTheme } = useTheme();
-  const sectionRef = useRef<HTMLElement>(null);
-  const brandRef = useRef<HTMLDivElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
-  const copyrightRef = useRef<HTMLDivElement>(null);
+  const [time, setTime] = useState("");
+  const [mounted, setMounted] = useState(false);
 
-  const isDark = resolvedTheme === "dark";
-  const logoSrc = isDark ? "/logo-white.svg" : "/logo-black.svg";
-
-  useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReducedMotion) return;
-
-    const timer = setTimeout(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-        },
-      });
-
-      tl.fromTo(
-        brandRef.current,
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, ease: "back.out(1.4)" }
-      )
-        .fromTo(
-          linksRef.current,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
-          "-=0.5"
-        )
-        .fromTo(
-          copyrightRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.6, ease: "power2.out" },
-          "-=0.3"
-        );
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, { scope: sectionRef, dependencies: [] });
+  useEffect(() => {
+    setMounted(true);
+    const updateTime = () => {
+      const now = new Date();
+      setTime(now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true }));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <footer
-      ref={sectionRef}
       style={{
         position: "relative",
-        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "var(--bg)",
+        background: "var(--amber)",
+        color: "var(--bg)", // ensures contrast on the amber background
+        padding: "clamp(var(--space-5), 5vw, var(--space-8))",
         overflow: "hidden",
       }}
     >
-      {/* Ambient glow */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "radial-gradient(ellipse 70% 50% at 50% 60%, rgba(255,176,32,0.06) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-          padding: "0 var(--space-5)",
-          width: "100%",
-          maxWidth: "1280px",
-        }}
-      >
-        {/* Brand: Logo + Wordmark */}
-        <div
-          ref={brandRef}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "clamp(8px, 1vw, 14px)",
-            marginBottom: "clamp(16px, 2vw, 28px)",
-            opacity: 0,
-            willChange: "transform",
-          }}
-        >
-          <Image
-            src={logoSrc}
-            alt="Niena Labs"
-            width={56}
-            height={56}
-            priority
-            style={{ display: "block", flexShrink: 0 }}
-          />
-          <div
-            className="footer-wordmark"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(52px, 10vw, 120px)",
-              lineHeight: 1,
-              letterSpacing: "-0.02em",
-              background:
-                "linear-gradient(135deg, var(--amber) 0%, #ffc65c 40%, var(--amber) 70%, var(--amber-strong) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            nienalabs
+      {/* Top Section */}
+      <div className="flex flex-col sm:flex-row justify-between w-full z-10 gap-6" style={{ 
+        fontFamily: "var(--font-mono)", 
+        fontSize: "clamp(10px, 1.5vw, 12px)", 
+        letterSpacing: "0.05em", 
+        textTransform: "uppercase",
+      }}>
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-[var(--space-6)]">
+          <Link href="/careers" style={{ fontWeight: 600, textDecoration: "none", color: "inherit", transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "0.7"} onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}>Careers</Link>
+          <Link href="/terms" style={{ fontWeight: 600, textDecoration: "none", color: "inherit", transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "0.7"} onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}>Terms & Conditions</Link>
+        </div>
+        <div className="text-left sm:text-right">
+          <div style={{ opacity: 0.7, marginBottom: "var(--space-1)" }}>CURRENTLY</div>
+          <div className="flex items-center gap-2 justify-start sm:justify-end" style={{ fontWeight: 600 }}>
+            <Sun size={14} /> Accra, Ghana, {mounted ? time : "11:02 AM"}
           </div>
         </div>
+      </div>
 
-        {/* Tagline */}
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "clamp(14px, 1.6vw, 18px)",
-            color: "var(--text-muted)",
-            lineHeight: 1.6,
-            maxWidth: "420px",
-            marginBottom: "clamp(40px, 6vh, 72px)",
-          }}
-        >
-          Building the software that pushes humanity forward.
-        </p>
-
-        {/* Links */}
-        <div
-          ref={linksRef}
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "clamp(16px, 2vw, 32px)",
-            marginBottom: "clamp(40px, 6vh, 72px)",
-            opacity: 0,
-          }}
-        >
-          {FOOTER_LINKS.map((link) =>
-            link.href.startsWith("/") ? (
-              <Link
-                key={link.label}
-                href={link.href}
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "12px",
-                  fontWeight: 600,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  color: "var(--text-muted)",
-                  textDecoration: "none",
-                  transition: "color 150ms ease",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "var(--amber)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "var(--text-muted)")
-                }
-              >
-                {link.label}
-              </Link>
-            ) : (
-              <a
-                key={link.label}
-                href={link.href}
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "12px",
-                  fontWeight: 600,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  color: "var(--text-muted)",
-                  textDecoration: "none",
-                  transition: "color 150ms ease",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "var(--amber)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "var(--text-muted)")
-                }
-              >
-                {link.label}
-              </a>
-            )
-          )}
+      {/* Center Note Card */}
+      <div style={{
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "clamp(20px, 4vw, 40px) 0 clamp(60px, 12vw, 120px) 0",
+        zIndex: 5
+      }}>
+        <div style={{
+          background: "var(--surface)",
+          color: "var(--text-primary)",
+          padding: "clamp(var(--space-5), 5vw, var(--space-8)) clamp(var(--space-6), 6vw, var(--space-9))",
+          borderRadius: "var(--radius-lg)",
+          transform: "rotate(-2.5deg)",
+          maxWidth: "680px",
+          width: "100%",
+          boxShadow: "var(--shadow-panel)"
+        }}>
+          <div style={{ 
+            fontFamily: "var(--font-mono)", 
+            fontSize: "clamp(10px, 1.5vw, 11px)", 
+            letterSpacing: "0.05em", 
+            opacity: 0.6, 
+            marginBottom: "var(--space-5)", 
+            textTransform: "uppercase" 
+          }}>
+            NOTE FROM NIENALABS
+          </div>
+          
+          <div style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(18px, 3vw, 26px)",
+            lineHeight: 1.8,
+            fontWeight: 500
+          }}>
+            <div style={{ borderBottom: "1.5px dashed var(--border-strong)", paddingBottom: "12px", marginBottom: "12px" }}>Hi, thank you for being here &lt;3</div>
+            <div style={{ borderBottom: "1.5px dashed var(--border-strong)", paddingBottom: "12px", marginBottom: "12px" }}>Software engineering, to me, is care and intentionality.</div>
+            <div style={{ borderBottom: "1.5px dashed var(--border-strong)", paddingBottom: "12px", marginBottom: "12px" }}>If something here stayed with you,</div>
+            <div style={{ borderBottom: "1.5px dashed var(--border-strong)", paddingBottom: "12px" }}>say hello@nienalabs.com!</div>
+          </div>
         </div>
       </div>
 
-      {/* Copyright */}
-      <div
-        ref={copyrightRef}
-        style={{
-          position: "absolute",
-          bottom: "clamp(24px, 4vh, 48px)",
-          fontFamily: "var(--font-display)",
-          fontSize: "11px",
-          fontWeight: 600,
-          letterSpacing: "0.06em",
-          color: "var(--text-muted)",
-          textTransform: "uppercase",
-          opacity: 0,
-        }}
-      >
-        © {new Date().getFullYear()} Niena Labs · All Rights Reserved
+      {/* Bottom Social Icons */}
+      <div style={{
+        position: "absolute",
+        bottom: "clamp(-20px, -4vw, -40px)",
+        left: "50%",
+        transform: "translateX(-50%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 20
+      }}>
+        {[
+          { Icon: Mail, rotation: -12, href: "mailto:hello@nienalabs.com" },
+          { Icon: Linkedin, rotation: -4, href: "#" },
+          { Icon: Github, rotation: 6, href: "#" },
+          { Icon: Twitter, rotation: 14, href: "#" }
+        ].map((item, i) => (
+          <a
+            key={i}
+            href={item.href}
+            style={{
+              width: "clamp(80px, 18vw, 160px)",
+              height: "clamp(80px, 18vw, 160px)",
+              background: "var(--amber)",
+              borderRadius: "clamp(16px, 4vw, 32px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transform: `rotate(${item.rotation}deg)`,
+              marginLeft: i !== 0 ? "clamp(-20px, -4vw, -40px)" : "0",
+              border: "clamp(4px, 1vw, 8px) solid var(--bg)",
+              color: "var(--bg)",
+              transition: "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0s",
+              position: "relative",
+              zIndex: i + 1
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = `rotate(${item.rotation}deg) translateY(-15px) scale(1.05)`;
+              e.currentTarget.style.zIndex = "50";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = `rotate(${item.rotation}deg)`;
+              e.currentTarget.style.zIndex = (i + 1).toString();
+            }}
+          >
+            <item.Icon style={{ width: "45%", height: "45%" }} strokeWidth={2.5} />
+          </a>
+        ))}
       </div>
+
+
     </footer>
   );
 }

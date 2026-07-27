@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import RecentNewsSection from "./components/RecentNewsSection";
 import PhilosophySection from "./components/PhilosophySection";
-import WorkSection from "./components/WorkSection";
+import VisionSection from "./components/VisionSection";
 import OpenSourceSection from "./components/OpenSourceSection";
 import ManifestoSection from "./components/ManifestoSection";
 import TestimonialsSection from "./components/TestimonialsSection";
@@ -36,8 +36,8 @@ export default function Home() {
      
 
         
-        {/* Section 06 — Selected Work */}
-        <WorkSection />
+        {/* Section 06 — Vision (Replaces Selected Work) */}
+        <VisionSection />
 
         {/* Section 07 — Open Source */}
         <OpenSourceSection />

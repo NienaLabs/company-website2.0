@@ -228,7 +228,7 @@ export default function Navbar() {
           </Link>
           {/* GitHub Community Link */}
           <a
-            href="https://github.com/orgs/Niena Labs-community/repositories"
+            href="https://github.com/orgs/Nienalabs-community/repositories"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Niena Labs GitHub Community"

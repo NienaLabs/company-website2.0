@@ -183,6 +183,7 @@ export default function ContactSection() {
                   type="submit"
                   className="btn-primary"
                   disabled={formState === "sending"}
+                  style={{ marginBottom: "24px" }}
                 >
                   {formState === "sending" ? "Sending..." : "Send"}
                 </button>

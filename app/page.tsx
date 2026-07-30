@@ -36,17 +36,14 @@ export default function Home() {
      
 
         
-        {/* Section 06 — Vision (Replaces Selected Work) */}
+        {/* Section 06 — Vision & Testimonials (Perspective Transition) */}
         <VisionSection />
 
-        {/* Section 07 — Open Source */}
+        {/* Section 08 — Open Source */}
         <OpenSourceSection />
 
-        {/* Section 08 — Manifesto Interlude */}
+        {/* Section 09 — Manifesto Interlude */}
         <ManifestoSection />
-
-        {/* Section 08 — Testimonials: Voices in Stone */}
-        <TestimonialsSection />
 
         {/* Section 09 — Contact: The Closing Invitation */}
         <ContactSection />

@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import TestimonialsSection from "./TestimonialsSection";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -74,7 +75,7 @@ export default function VisionSection() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
-        end: "+=150%", // Extended scroll distance for full effect
+        end: "+=250%", // Extended scroll distance for full effect + zoom out
         scrub: 1,
         pin: true,
       },
@@ -103,7 +104,37 @@ export default function VisionSection() {
       autoAlpha: 1,
       fontSize: "clamp(2.5rem, 8vw, 7rem)",
       stagger: 0.2,
-    }, "-=1");
+    }, "-=1")
+    
+    // Fade out static text before zooming
+    .to(".section-container", {
+      opacity: 0,
+      duration: 0.5,
+    }, "-=0.5")
+    
+    // Zoom into the text to reveal what's underneath
+    .to(".animated-words-container", {
+      scale: 30, // massive scale to zoom past the text
+      opacity: 0, // fade out eventually
+      duration: 2,
+      ease: "power2.in",
+      force3D: false, // Forces the browser to re-rasterize the vectors sharply instead of stretching a bitmap
+    }, "+=0.5")
+    
+    // Fade out the solid background of Vision to reveal Testimonials behind it
+    .to(".vision-bg", {
+      opacity: 0,
+      duration: 1.5,
+      ease: "power2.inOut",
+    }, "<0.5")
+    
+    // Scale up and fade in Testimonials from behind
+    .to(".testimonials-scale-wrapper", {
+      scale: 1,
+      opacity: 1,
+      duration: 2,
+      ease: "power2.out",
+    }, "<");
 
     return () => {
       window.removeEventListener("resize", setupMatch);
@@ -125,6 +156,14 @@ export default function VisionSection() {
         overflow: "hidden" 
       }}
     >
+      {/* Testimonials Section rendered absolutely behind */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <TestimonialsSection />
+      </div>
+
+      {/* Vision Background Layer */}
+      <div className="vision-bg" style={{ position: "absolute", inset: 0, background: "var(--bg)", zIndex: 1 }} />
+
       <div className="section-container" style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", position: "relative", zIndex: 2 }}>
         {/* Centered Text */}
         <div style={{ padding: "var(--space-4)", maxWidth: "800px" }}>
@@ -150,7 +189,7 @@ export default function VisionSection() {
         position: "absolute", inset: 0, pointerEvents: "none", zIndex: 10,
         display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "16px",
         fontFamily: "var(--font-display)", fontWeight: 600, color: "var(--amber)",
-        padding: "0 var(--space-4)"
+        padding: "0 var(--space-4)", transformOrigin: "center center"
       }}>
         <span style={{ display: "flex", alignItems: "baseline" }}>
           <span ref={imagineAnimatedRef} style={{ visibility: "hidden", display: "inline-block", lineHeight: 1.6, fontSize: "clamp(24px, 3vw, 32px)", fontFamily: "var(--font-body)", color: "var(--amber)", fontWeight: 400 }}>imagine</span>

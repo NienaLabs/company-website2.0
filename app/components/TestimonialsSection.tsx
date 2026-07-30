@@ -1,12 +1,5 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
 const testimonials = [
   {
     quote: "They did not build what we asked for. They built what we needed — which turned out to be a far harder and more valuable thing. Niena Labs understood our problem before we fully did.",
@@ -22,105 +15,148 @@ const testimonials = [
   },
 ];
 
-function TestimonialBlock({
-  quote, name, company, role, isLast,
-}: {
-  quote: string; name: string; company: string; role: string; isLast: boolean;
-}) {
-  const blockRef = useRef<HTMLDivElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP((_context, contextSafe) => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const block = blockRef.current;
-    if (!block || prefersReducedMotion) return;
-    
-    if (!contextSafe) return;
-
-    const createAnimation = contextSafe(() => {
-      const words = block.querySelectorAll(".q-word");
-      const attr = block.querySelector(".attribution");
-
-      ScrollTrigger.create({
-        trigger: block,
-        start: "top 75%",
-        onEnter: () => {
-          gsap.to(words, { opacity: 1, duration: 0.4, stagger: 0.025, ease: "power2.out" });
-          if (attr) {
-            gsap.fromTo(attr, { opacity: 0 }, { opacity: 1, duration: 0.6, delay: words.length * 0.025 + 0.2 });
-          }
-          if (dividerRef.current) {
-            gsap.fromTo(dividerRef.current,
-              { scaleX: 0 },
-              { scaleX: 1, duration: 0.8, ease: "power2.out", delay: words.length * 0.025 + 0.4, transformOrigin: "left" }
-            );
-          }
-        },
-      });
-    });
-
-    const timer = setTimeout(() => {
-      createAnimation();
-    }, 100);
-    return () => clearTimeout(timer);
-  }, { scope: blockRef, dependencies: [] });
-
-  return (
-    <div ref={blockRef} style={{ padding: "var(--space-9) 0", position: "relative" }}>
-      <blockquote style={{
-        fontFamily: "var(--font-display)", fontStyle: "italic", fontWeight: 600,
-        fontSize: "clamp(20px, 2.5vw, 28px)", color: "var(--text-primary)",
-        lineHeight: 1.55, maxWidth: "840px", margin: "0 0 32px",
-      }}>
-        {quote.split(" ").map((word, i) => (
-          <span key={i} className="q-word" style={{ display: "inline-block", marginRight: "0.28em", opacity: 0.12 }}>
-            {word}
-          </span>
-        ))}
-      </blockquote>
-      <div className="attribution" style={{
-        fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
-        color: "var(--text-muted)", textTransform: "uppercase", opacity: 0,
-      }}>
-        — {name} · {company} · {role}
-      </div>
-      <div
-        ref={dividerRef}
-        style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: "1px",
-          background: isLast ? "var(--amber)" : "rgba(255,176,32,0.12)",
-          transform: "scaleX(0)", transformOrigin: "left",
-        }}
-      />
-    </div>
-  );
-}
+// Duplicate for infinite scroll to work smoothly
+const infiniteTestimonials = [...testimonials, ...testimonials];
 
 export default function TestimonialsSection() {
   return (
-    <section id="testimonials" style={{ background: "var(--bg)", padding: "var(--space-10) 0" }}>
-      <div className="section-container">
-        <div style={{ marginBottom: "var(--space-10)", textAlign: "center" }}>
-          <h2 style={{
-            fontFamily: "var(--font-display)", fontWeight: 600,
-            fontSize: "clamp(32px, 5vw, 48px)", color: "var(--text-primary)", lineHeight: 1.1,
-          }}>
-            What they say.
-          </h2>
-          <div style={{ width: "40px", height: "1px", background: "var(--amber)", marginTop: "16px" }} />
-        </div>
-        <div style={{ position: "relative" }}>
-          <div aria-hidden="true" style={{
-            position: "absolute", top: "-20px", left: "-40px",
-            fontFamily: "var(--font-display)", fontSize: "200px",
-            color: "rgba(255,176,32,0.07)", lineHeight: 1, pointerEvents: "none", userSelect: "none",
-          }}>
-            &ldquo;
+    <section id="testimonials" style={{ background: "transparent", padding: "var(--space-10) 0", overflow: "hidden", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div className="testimonials-scale-wrapper" style={{ transformOrigin: "center center", willChange: "transform, opacity", opacity: 0, transform: "scale(0.5)" }}>
+        
+        {/* Header */}
+        <div className="section-container">
+          <div style={{ marginBottom: "var(--space-10)", textAlign: "center" }}>
+            <h2 style={{
+              fontFamily: "var(--font-display)", fontWeight: 600,
+              fontSize: "clamp(32px, 5vw, 48px)", color: "var(--text-primary)", lineHeight: 1.1,
+            }}>
+              What they say.
+            </h2>
+            <div style={{ width: "40px", height: "1px", background: "var(--amber)", marginTop: "16px", marginLeft: "auto", marginRight: "auto" }} />
           </div>
-          {testimonials.map((t, i) => (
-            <TestimonialBlock key={i} {...t} isLast={i === testimonials.length - 1} />
-          ))}
         </div>
+
+        {/* Carousel */}
+        <div className="carousel-wrapper" style={{ position: "relative", width: "100%", overflow: "hidden", padding: "var(--space-4) 0" }}>
+          <div className="carousel-track">
+            {/* Group 1 */}
+            <div className="carousel-group">
+              {infiniteTestimonials.map((t, i) => (
+                <div key={`g1-${i}`} className="testimonial-card">
+                  <div style={{
+                    fontFamily: "var(--font-display)", fontSize: "40px",
+                    color: "rgba(255,176,32,0.2)", lineHeight: 1, marginBottom: "16px"
+                  }}>
+                    &ldquo;
+                  </div>
+                  <blockquote style={{
+                    fontFamily: "var(--font-body)", fontSize: "16px", color: "var(--text-secondary)",
+                    lineHeight: 1.6, flexGrow: 1, marginBottom: "24px"
+                  }}>
+                    {t.quote}
+                  </blockquote>
+                  <div>
+                    <div style={{
+                      fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
+                      color: "var(--text-primary)", textTransform: "uppercase",
+                    }}>
+                      {t.name}
+                    </div>
+                    <div style={{
+                      fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.06em",
+                      color: "var(--text-muted)", textTransform: "uppercase", marginTop: "4px"
+                    }}>
+                      {t.role} · {t.company}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Group 2 (Duplicate for seamless loop) */}
+            <div className="carousel-group" aria-hidden="true">
+              {infiniteTestimonials.map((t, i) => (
+                <div key={`g2-${i}`} className="testimonial-card">
+                  <div style={{
+                    fontFamily: "var(--font-display)", fontSize: "40px",
+                    color: "rgba(255,176,32,0.2)", lineHeight: 1, marginBottom: "16px"
+                  }}>
+                    &ldquo;
+                  </div>
+                  <blockquote style={{
+                    fontFamily: "var(--font-body)", fontSize: "16px", color: "var(--text-secondary)",
+                    lineHeight: 1.6, flexGrow: 1, marginBottom: "24px"
+                  }}>
+                    {t.quote}
+                  </blockquote>
+                  <div>
+                    <div style={{
+                      fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
+                      color: "var(--text-primary)", textTransform: "uppercase",
+                    }}>
+                      {t.name}
+                    </div>
+                    <div style={{
+                      fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.06em",
+                      color: "var(--text-muted)", textTransform: "uppercase", marginTop: "4px"
+                    }}>
+                      {t.role} · {t.company}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <style>{`
+          .carousel-track {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            padding: 0 var(--space-4);
+          }
+
+          .carousel-group {
+            display: flex;
+            gap: 24px;
+            animation: scrollLeft 40s linear infinite;
+          }
+
+          .carousel-track:hover .carousel-group {
+            animation-play-state: paused;
+          }
+
+          @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-100% - 24px)); }
+          }
+
+          .testimonial-card {
+            flex: 0 0 380px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: var(--space-6);
+            transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
+            cursor: default;
+          }
+
+          .testimonial-card:hover {
+            box-shadow: 0 0 0 4px var(--amber-glow);
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.04);
+          }
+
+          /* Responsive adjustments */
+          @media (max-width: 768px) {
+            .testimonial-card {
+              flex: 0 0 300px;
+              padding: var(--space-5);
+            }
+          }
+        `}</style>
       </div>
     </section>
   );

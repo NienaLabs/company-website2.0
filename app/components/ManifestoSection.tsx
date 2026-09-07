@@ -71,7 +71,7 @@ export default function ManifestoSection() {
             lineHeight: 1.25, marginBottom: "8px", opacity: 0,
           }}
         >
-          If you believe your idea could make a huge impact on the world —
+          If you believe your idea could make a huge impact on the world 
         </div>
         <div
           ref={part2Ref}

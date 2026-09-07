@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Check } from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -20,7 +21,7 @@ const libraries = [
       "Accessible by default with keyboard and screen reader support",
       "Tree-shakeable, < 4kb gzipped",
     ],
-    href: "https://github.com/orgs/Niena Labs-community/repositories",
+    href: "https://github.com/orgs/Nienalabs-community/repositories",
     tag: "Library",
   },
   {
@@ -35,7 +36,7 @@ const libraries = [
       "Choose your ORM: Prisma or Drizzle — fully configured",
       "Environment scaffolding, typed routes, and project structure included",
     ],
-    href: "https://github.com/orgs/Niena Labs-community/repositories",
+    href: "https://github.com/orgs/Nienalabs-community/repositories",
     tag: "CLI Tool",
   },
 ];
@@ -258,7 +259,9 @@ export default function OpenSourceSection() {
                       lineHeight: 1.6,
                     }}
                   >
-                    <span style={{ color: "var(--amber)", flexShrink: 0, marginTop: "2px" }}>—</span>
+                    <span style={{ color: "var(--amber)", flexShrink: 0, marginTop: "2px" }}>
+                      <Check size={16} strokeWidth={2.5} />
+                    </span>
                     {h}
                   </li>
                 ))}
@@ -336,7 +339,7 @@ export default function OpenSourceSection() {
             </p>
           </div>
           <a
-            href="https://github.com/orgs/Niena Labs-community/repositories"
+            href="https://github.com/orgs/Nienalabs-community/repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary"

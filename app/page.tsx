@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import RecentNewsSection from "./components/RecentNewsSection";
 import PhilosophySection from "./components/PhilosophySection";
-import WorkSection from "./components/WorkSection";
+import VisionSection from "./components/VisionSection";
 import OpenSourceSection from "./components/OpenSourceSection";
 import ManifestoSection from "./components/ManifestoSection";
 import TestimonialsSection from "./components/TestimonialsSection";
@@ -12,11 +12,13 @@ import Footer from "./components/Footer";
 import FloatingWidget from "./components/FloatingWidget";
 import CapabilitiesSection from "./components/CapabilitiesSection";
 import LoadingScreen from "./components/LoadingScreen";
+import BootcampPopup from "./components/BootcampPopup";
 
 export default function Home() {
   return (
     <SmoothScrollProvider>
       <LoadingScreen />
+      <BootcampPopup />
       <Navbar />
       <main>
         {/* Section 01 — Hero: The Manifesto */}
@@ -34,17 +36,14 @@ export default function Home() {
      
 
         
-        {/* Section 06 — Selected Work */}
-        <WorkSection />
+        {/* Section 06 — Vision & Testimonials (Perspective Transition) */}
+        <VisionSection />
 
-        {/* Section 07 — Open Source */}
+        {/* Section 08 — Open Source */}
         <OpenSourceSection />
 
-        {/* Section 08 — Manifesto Interlude */}
+        {/* Section 09 — Manifesto Interlude */}
         <ManifestoSection />
-
-        {/* Section 08 — Testimonials: Voices in Stone */}
-        <TestimonialsSection />
 
         {/* Section 09 — Contact: The Closing Invitation */}
         <ContactSection />

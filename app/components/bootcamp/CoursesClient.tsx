@@ -23,7 +23,7 @@ export default function CoursesClient() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-6)', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
             <Filter size={14} color="var(--color-gold)" />
-            <span className="font-cinzel" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Track:</span>
+            <span className="font-mono" style={{ fontSize: '10px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Track:</span>
             <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
               {categories.map((cat) => (
                 <button
@@ -34,7 +34,7 @@ export default function CoursesClient() {
                     background: cat === activeCategory ? 'rgba(201,168,76,0.1)' : 'transparent',
                     border: cat === activeCategory ? 'var(--border-gold)' : 'var(--border-subtle)',
                     color: cat === activeCategory ? 'var(--color-gold)' : 'var(--color-text-secondary)',
-                    fontFamily: "'Cinzel', serif",
+                    fontFamily: "var(--font-mono)",
                     fontSize: '9px',
                     letterSpacing: '0.14em',
                     textTransform: 'uppercase',
@@ -55,7 +55,7 @@ export default function CoursesClient() {
       {/* Course Grid */}
       <div className="section-container">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
-          <span className="font-garamond" style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--color-text-muted)' }}>
+          <span className="font-body" style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--color-text-muted)' }}>
             {filteredCourses.length} {filteredCourses.length === 1 ? 'program' : 'programs'} found
           </span>
         </div>

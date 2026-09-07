@@ -22,8 +22,8 @@ export default async function VerifyPaymentPage({
     return (
       <div className="section-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 140px)', padding: 'var(--space-4)' }}>
         <div className="bento-cell" style={{ maxWidth: '600px', width: '100%', padding: 'clamp(24px, 5vw, var(--space-8))', textAlign: 'center' }}>
-          <h1 className="font-cormorant" style={{ fontSize: '32px', color: 'var(--color-error)' }}>Configuration Error</h1>
-          <p className="font-garamond" style={{ fontSize: '18px', color: 'var(--color-text-secondary)', marginTop: '16px' }}>Payment gateway is not configured properly.</p>
+          <h1 className="font-display" style={{ fontSize: '32px', color: 'var(--color-error)' }}>Configuration Error</h1>
+          <p className="font-body" style={{ fontSize: '18px', color: 'var(--color-text-secondary)', marginTop: '16px' }}>Payment gateway is not configured properly.</p>
         </div>
       </div>
     );
@@ -118,11 +118,11 @@ export default async function VerifyPaymentPage({
           )}
         </div>
 
-        <h1 className="font-cormorant" style={{ fontSize: 'clamp(32px, 6vw, 42px)', color: 'var(--color-text-primary)', lineHeight: 1.1, margin: 0 }}>
+        <h1 className="font-display" style={{ fontSize: 'clamp(32px, 6vw, 42px)', color: 'var(--color-text-primary)', lineHeight: 1.1, margin: 0 }}>
           {isSuccess ? 'Payment Successful!' : 'Payment Failed'}
         </h1>
 
-        <p className="font-garamond" style={{ fontSize: 'clamp(16px, 3.5vw, 18px)', color: 'var(--color-text-secondary)', lineHeight: 1.6, maxWidth: '400px', width: '100%', margin: 0 }}>
+        <p className="font-body" style={{ fontSize: 'clamp(16px, 3.5vw, 18px)', color: 'var(--color-text-secondary)', lineHeight: 1.6, maxWidth: '400px', width: '100%', margin: 0 }}>
           {isSuccess ? (
             <>
               Thank you! Your payment was verified successfully.
@@ -139,10 +139,10 @@ export default async function VerifyPaymentPage({
 
         {isSuccess && (
           <div style={{ background: 'var(--color-void)', border: 'var(--border-subtle)', borderRadius: 'var(--radius-cell)', padding: 'clamp(16px, 4vw, var(--space-4))', width: '100%', marginTop: 'clamp(8px, 2vw, var(--space-4))', boxSizing: 'border-box' }}>
-            <p className="font-cinzel" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '8px', margin: 0, paddingBottom: '8px' }}>
+            <p className="font-mono" style={{ fontSize: '9px', color: 'var(--color-gold)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '8px', margin: 0, paddingBottom: '8px' }}>
               What happens next?
             </p>
-            <p className="font-garamond" style={{ fontSize: 'clamp(14px, 3vw, 15px)', color: 'var(--color-text-secondary)', margin: 0 }}>
+            <p className="font-body" style={{ fontSize: 'clamp(14px, 3vw, 15px)', color: 'var(--color-text-secondary)', margin: 0 }}>
               Keep an eye on your WhatsApp. Our team will reach out to you within 24 hours with your onboarding details and course access links.
             </p>
           </div>

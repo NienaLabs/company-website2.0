@@ -133,7 +133,7 @@ export default function Navbar() {
             textDecoration: "none",
             zIndex: 1,
           }}>
-        
+
             <span style={{
               fontFamily: "var(--font-display)",
               fontSize: "13px", fontWeight: 600,
@@ -210,7 +210,7 @@ export default function Navbar() {
           className="desktop-nav-links"
           style={{ display: "flex", gap: "36px", alignItems: "center" }}
         >
-          {["Services", "Work", "Projects", "Open Source", "About"].map((link) => (
+          {["Services", "Vision", "Projects", "Open Source", "About"].map((link) => (
             <Link
               key={link}
               href={link === "Projects" ? "/projects" : `/#${link.toLowerCase().replace(" ", "-")}`}
@@ -228,7 +228,7 @@ export default function Navbar() {
           </Link>
           {/* GitHub Community Link */}
           <a
-            href="https://github.com/orgs/Niena Labs-community/repositories"
+            href="https://github.com/orgs/Nienalabs-community/repositories"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Niena Labs GitHub Community"

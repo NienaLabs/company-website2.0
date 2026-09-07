@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
-import { courses } from '../../../lib/courses';
+import { courses, isEarlyBird } from '../../../lib/courses';
 import { getAdminEnrollmentEmailHtml, getEnrollmentReceivedEmailHtml } from '../../../lib/email-templates';
 
 // Inbox that receives admin enrollment alerts for internal tracking.
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const resolvedAmount = Number(amount) || (course ? course.regularPrice : 0);
+    const resolvedAmount = Number(amount) || (course ? (isEarlyBird() ? course.earlyBirdPrice : course.regularPrice) : 0);
 
     // 1. Admin alert for internal tracking + payment verification.
     const { error: adminError } = await resend.emails.send({

@@ -12,7 +12,7 @@ export default function CheckoutPage() {
     <div style={{ background: 'var(--color-void)', minHeight: '100vh' }}>
       <Suspense fallback={
         <div className="section-container" style={{ paddingTop: 'var(--space-10)', textAlign: 'center' }}>
-          <h1 className="font-cormorant" style={{ fontSize: '48px', color: 'var(--color-text-primary)' }}>Loading Checkout...</h1>
+          <h1 className="font-display" style={{ fontSize: '48px', color: 'var(--color-text-primary)' }}>Loading Checkout...</h1>
         </div>
       }>
         <CheckoutClient />

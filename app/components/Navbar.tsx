@@ -210,14 +210,14 @@ export default function Navbar() {
           className="desktop-nav-links"
           style={{ display: "flex", gap: "36px", alignItems: "center" }}
         >
-          {["Services", "Work", "Open Source", "About"].map((link) => (
-            <a
+          {["Services", "Work", "Projects", "Open Source", "About"].map((link) => (
+            <Link
               key={link}
-              href={`#${link.toLowerCase().replace(" ", "-")}`}
+              href={link === "Projects" ? "/projects" : `/#${link.toLowerCase().replace(" ", "-")}`}
               className="nav-link"
             >
               {link}
-            </a>
+            </Link>
           ))}
         </div>
 

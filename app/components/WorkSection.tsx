@@ -16,6 +16,7 @@ const projects = [
     title: "Atlas — The Sovereign Exchange",
     body: "A high-velocity ticketing platform engineered for the modern event landscape. Atlas serves as a primary gateway for thousands of users, facilitating seamless access to premier entertainment experiences through mission-critical infrastructure that handles high-demand releases with absolute precision.",
     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80",
+    link: "#",
     imageLeft: true,
   },
   {
@@ -24,7 +25,17 @@ const projects = [
     title: "Niena — The Professional Catalyst",
     body: "An intelligent ecosystem redefining the professional journey. Niena leverages advanced AI to harmonize resume synthesis with real-time, high-fidelity interview simulations. By bridging the gap between talent and opportunity, it provides a sophisticated matching engine that aligns aspirations with the market's most compelling roles.",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80",
+    link: "#",
     imageLeft: false,
+  },
+  {
+    id: "famlink",
+    category: "Family Connection Platform",
+    title: "Famlink — Bridging the Gap",
+    body: "A dedicated platform designed to bring families closer together. Famlink provides a secure, intuitive environment for sharing memories, coordinating events, and staying connected across generations. Built with a focus on privacy and ease of use, it ensures that distance never gets in the way of family bonds.",
+    image: "/images/projects/icon-512.png",
+    link: "https://famlink-e2lfb9vmd-evans-projects-67622ddd.vercel.app/",
+    imageLeft: true,
   },
 ];
 
@@ -148,6 +159,7 @@ export default function WorkSection() {
                 src={project.image}
                 alt={project.title}
                 fill
+                unoptimized={project.image.startsWith('/')}
                 sizes="(max-width: 900px) 100vw, 58vw"
                 style={{ objectFit: "cover", filter: "sepia(15%) brightness(0.75)", display: "block" }}
               />
@@ -174,7 +186,15 @@ export default function WorkSection() {
               }}>
                 {project.body}
               </p>
-              <a href="#contact" className="btn-ghost" style={{ marginTop: "8px" }}>Start a similar project →</a>
+              {project.link !== "#" ? (
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ marginTop: "8px", display: "inline-block" }}>
+                  Check it out
+                </a>
+              ) : (
+                <a href="#contact" className="btn-ghost" style={{ marginTop: "8px", display: "inline-block" }}>
+                  Start a similar project →
+                </a>
+              )}
             </div>
           </div>
         ))}

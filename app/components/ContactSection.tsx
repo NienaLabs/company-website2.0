@@ -80,7 +80,7 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      style={{ background: "var(--bg)", padding: "var(--space-10) 0" }}
+      style={{ background: "var(--bg)", padding: "160px 0" }}
     >
       <div className="section-container">
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "start" }}>
@@ -92,13 +92,7 @@ export default function ContactSection() {
             }}>
               Tell us what you&apos;re building.
             </h2>
-            <div
-              ref={goldRuleRef}
-              style={{
-                width: "48px", height: "1px", background: "var(--amber)",
-                marginBottom: "24px", transform: "scaleX(0)", transformOrigin: "left",
-              }}
-            />
+
             <p style={{
               fontFamily: "var(--font-body)", fontSize: "17px",
               color: "var(--text-secondary)", lineHeight: 1.85, maxWidth: "400px", marginBottom: "40px",
@@ -138,7 +132,7 @@ export default function ContactSection() {
           <div ref={rightRef} style={{ opacity: 0 }}>
             {formState === "sent" ? (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "320px" }}>
-                <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontWeight: 600, fontSize: "28px", color: "var(--text-primary)", textAlign: "center", lineHeight: 1.4 }}>
+                <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "28px", color: "var(--text-primary)", textAlign: "center", lineHeight: 1.4 }}>
                   We&apos;ll be in touch.
                 </p>
               </div>

@@ -6,9 +6,72 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useTheme } from "next-themes";
+import { Globe, Smartphone, Brain, Cloud, Monitor, ChevronDown, RefreshCw, Users, Compass } from "lucide-react";
+
+import { Card } from './ui/Card';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+const servicesData = [
+  {
+    title: "Enterprise Web",
+    description: "End-to-end web platforms engineered to grow with your business, from 100 users to 10 million.",
+    tags: ["SCALABLE ARCHITECTURE", "WEB PLATFORMS", "HIGH PERFORMANCE"],
+    icon: Globe,
+    dynamicColor: "2" as const
+  },
+  {
+    title: "Mobile",
+    description: "Cross-platform applications that feel native on every device, delivering performance users expect.",
+    tags: ["IOS & ANDROID", "NATIVE PERFORMANCE", "CROSS-PLATFORM"],
+    icon: Smartphone,
+    dynamicColor: "1" as const
+  },
+  {
+    title: "AI-Driven",
+    description: "AI systems integrated at the architecture level, not afterthoughts, but load-bearing pillars.",
+    tags: ["EMBEDDED INTELLIGENCE", "AI ARCHITECTURE", "MACHINE LEARNING"],
+    icon: Brain,
+    dynamicColor: "4" as const
+  },
+  {
+    title: "Cloud",
+    description: "Cloud architecture so reliable and invisible that your team only thinks about the product.",
+    tags: ["CLOUD INFRASTRUCTURE", "RELIABILITY", "DEVOPS"],
+    icon: Cloud,
+    dynamicColor: "3" as const
+  },
+  {
+    title: "Desktop",
+    description: "High-performance desktop applications for professionals who demand more from their tools.",
+    tags: ["HIGH PERFORMANCE", "NATIVE DESKTOP", "PROFESSIONAL TOOLS"],
+    icon: Monitor,
+    dynamicColor: "2" as const
+  },
+  {
+    title: "Team augmentation",
+    description: "Senior engineers embedded alongside your team.",
+    tags: ["EMBEDDED ENGINEERS", "SENIOR TEAM EXTENSION", "FLEXIBLE SCALING", "DELIVERY SUPPORT"],
+    icon: Users,
+    dynamicColor: "4" as const
+  },
+  {
+    title: "Consulting & advisory",
+    description: "Audits, architecture reviews and technical guidance.",
+    tags: ["TECHNICAL AUDITS", "ARCHITECTURE REVIEWS", "TECH CONSULTING", "WORKSHOPS & UPSKILLING"],
+    icon: Compass,
+    dynamicColor: "3" as const
+  },
+  {
+    title: "App modernization & optimization",
+    description: "Faster, healthier apps - upgrades, migrations and performance.",
+    tags: ["PERFORMANCE OPTIMIZATION", "ARCHITECTURE MIGRATIONS", "BROWNFIELD INTEGRATION", "RN UPGRADES"],
+    icon: RefreshCw,
+    dynamicColor: "1" as const
+  }
+];
 
 // Inline GitHub SVG — no icon library needed
 function GitHubIcon() {
@@ -26,34 +89,31 @@ function GitHubIcon() {
 }
 
 export default function Navbar() {
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const { resolvedTheme } = useTheme();
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+  
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   const isLightMode = resolvedTheme === 'light';
-  const currentLogo = (isLightMode && isScrolled) ? "/logo-black.svg" : "/logo-white.svg";
+  const currentLogo = isLightMode ? "/logo-black.svg" : "/logo-white.svg";
 
   useGSAP(() => {
     const nav = navRef.current;
     if (!nav) return;
 
-    // Use a CSS class toggle instead of GSAP for backdrop-filter.
-    // This runs in the browser's compositor thread (zero main-thread cost).
     ScrollTrigger.create({
-      start: "top+=80 top",
-      onEnter: () => {
-        nav.classList.add("nav-scrolled");
-        nav.classList.remove("nav-transparent");
-        setIsScrolled(true);
-      },
-      onLeaveBack: () => {
-        nav.classList.remove("nav-scrolled");
-        nav.classList.add("nav-transparent");
-        setIsScrolled(false);
+      start: "top top-=" + 80,
+      onUpdate: (self) => {
+        if (self.direction === 1) {
+          gsap.to(nav, { yPercent: -100, duration: 0.3, ease: "power2.out", overwrite: true });
+        } else {
+          gsap.to(nav, { yPercent: 0, duration: 0.3, ease: "power2.out", overwrite: true });
+        }
       },
     });
 
@@ -78,7 +138,7 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className="nav-transparent"
+      className="nav-scrolled"
       style={{
         position: "fixed",
         top: 0,
@@ -92,96 +152,7 @@ export default function Navbar() {
         display: "flex",
         flexDirection: "column",
       }}
-    >
-      {isBannerVisible && (
-        <div style={{
-          width: "100%",
-          background: "linear-gradient(90deg, var(--amber-strong) 0%, var(--amber) 50%, var(--amber-strong) 100%)",
-          borderBottom: "1px solid var(--amber-deep)",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "10px 16px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-          overflow: "hidden"
-        }}>
-          {/* Subtle glow behind text */}
-          <div style={{
-            position: "absolute",
-            width: "250px",
-            height: "100%",
-            background: "radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%)",
-            pointerEvents: "none"
-          }} />
-
-          {/* Animated shimmering effect */}
-          <div className="shimmer-effect" style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "50%",
-            height: "100%",
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-            pointerEvents: "none"
-          }} />
-
-          <Link href="/bootcamp/courses" className="banner-link" style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "12px",
-            textDecoration: "none",
-            zIndex: 1,
-          }}>
-        
-            <span style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "13px", fontWeight: 600,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              color: "var(--on-amber)",
-              transition: "opacity 300ms ease"
-            }} className="banner-text">
-              Join Our Upcoming Bootcamp
-            </span>
-            <span className="banner-arrow" style={{
-              color: "var(--on-amber)",
-              fontSize: "14px",
-              transition: "transform 300ms ease",
-              lineHeight: 1
-            }}>
-              →
-            </span>
-          </Link>
-
-          <button
-            onClick={() => setIsBannerVisible(false)}
-            aria-label="Close banner"
-            style={{
-              position: "absolute",
-              right: "16px",
-              background: "transparent",
-              border: "none",
-              color: "var(--on-amber)",
-              opacity: 0.7,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "4px",
-              transition: "opacity 200ms ease"
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.opacity = "1"}
-            onMouseLeave={(e) => e.currentTarget.style.opacity = "0.7"}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      )}
-
-      <div
+    >      <div
         className="section-container"
         style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "20px", paddingBottom: "20px", width: "100%" }}
       >
@@ -210,15 +181,94 @@ export default function Navbar() {
           className="desktop-nav-links"
           style={{ display: "flex", gap: "36px", alignItems: "center" }}
         >
-          {["Services", "Vision", "Open Source", "About"].map((link) => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase().replace(" ", "-")}`}
-              className="nav-link"
+          {/* Services with Mega Menu */}
+          <div 
+            onMouseEnter={() => setIsServicesOpen(true)}
+            onMouseLeave={() => setIsServicesOpen(false)}
+            style={{ padding: '20px 0', margin: '-20px 0', display: 'flex', alignItems: 'center', position: 'static' }}
+          >
+            <span 
+              className={`nav-link ${isServicesOpen ? 'active' : ''}`}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
             >
-              {link}
-            </a>
-          ))}
+              Services 
+              <ChevronDown 
+                size={14} 
+                style={{ 
+                  transform: isServicesOpen ? 'rotate(180deg)' : 'none', 
+                  transition: 'transform 200ms ease' 
+                }} 
+              />
+            </span>
+
+            {/* Mega Menu Dropdown */}
+            <div
+              className="absolute left-0 w-full"
+              style={{
+                top: '100%',
+                background: 'var(--surface)',
+                borderTop: '1px solid var(--border)',
+                borderBottom: '1px solid var(--border)',
+                opacity: isServicesOpen ? 1 : 0,
+                visibility: isServicesOpen ? 'visible' : 'hidden',
+                transition: 'opacity 200ms ease, visibility 200ms ease',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+              }}
+            >
+              <div className="section-container" style={{ padding: '40px var(--space-8)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '40px' }}>
+                  {servicesData.map((service, idx) => (
+                    <a key={idx} href="#services" style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', textDecoration: 'none', cursor: 'pointer' }} className="group">
+                      {/* Icon Box */}
+                      <Card 
+                        variant="dynamic"
+                        dynamicColor={service.dynamicColor}
+                        className="w-14 h-14 shrink-0 transition-transform duration-200 group-hover:scale-110 group-hover:shadow-lg [&_.natural-card]:!p-0 [&_.natural-card]:items-center [&_.natural-card]:justify-center"
+                      >
+                        <service.icon size={24} color="#ffffff" />
+                      </Card>
+                      
+                      {/* Content */}
+                      <div>
+                        <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontWeight: 600, color: 'var(--color-fg)', marginBottom: '8px', marginTop: 0, transition: 'color 200ms ease' }}>
+                          {service.title}
+                        </h4>
+                        <p style={{ fontSize: '14px', color: 'var(--color-fg-muted)', marginBottom: '16px' }}>
+                          {service.description}
+                        </p>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', rowGap: '4px' }}>
+                          {service.tags.map((tag, tIdx) => (
+                            <span key={tIdx} style={{ 
+                              fontSize: '10px', 
+                              fontWeight: 600, 
+                              color: 'var(--color-fg-subtle)', 
+                              letterSpacing: '0.05em',
+                              textTransform: 'uppercase',
+                              display: 'flex',
+                              alignItems: 'center'
+                            }}>
+                              {tag}
+                              {tIdx < service.tags.length - 1 && <span style={{ margin: '0 6px', width: '3px', height: '3px', borderRadius: '50%', backgroundColor: 'var(--border)' }}></span>}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <Link href="/products" className="nav-link">
+            Products
+          </Link>
+          <Link href="/careers" className="nav-link">
+            Careers
+          </Link>
+          <Link href="/blog" className="nav-link">
+            Blog
+          </Link>
         </div>
 
         {/* Right — GitHub + CTA */}
@@ -259,12 +309,6 @@ export default function Navbar() {
         .shimmer-effect {
           animation: shimmer 5s infinite;
         }
-        .banner-link:hover .banner-text {
-          opacity: 0.8 !important;
-        }
-        .banner-link:hover .banner-arrow {
-          transform: translateX(4px);
-        }
         @media (max-width: 768px) {
           .desktop-nav-links { display: none !important; }
           .mobile-hidden { display: none !important; }
@@ -274,7 +318,6 @@ export default function Navbar() {
         @media (max-width: 480px) {
           .logo-text { font-size: 12px !important; letter-spacing: 0.1em !important; }
           .call-btn { padding: 8px 12px !important; font-size: 8px !important; }
-          .banner-text { font-size: 8px !important; letter-spacing: 0.1em !important; }
         }
         @media (max-width: 360px) {
           .logo-text { display: none !important; }

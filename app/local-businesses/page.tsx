@@ -34,7 +34,7 @@ export default function LocalBusinessesPage() {
               color: "var(--color-text-secondary)", maxWidth: "600px", lineHeight: 1.85,
             }}>
               We believe great engineering isn&apos;t just for global enterprises. We partner with local 
-              businesses — from restaurants to fashion brands — to craft premium digital experiences 
+              businesses from restaurants to fashion brands — to craft premium digital experiences 
               that elevate their brand and drive real growth.
             </p>
           </div>

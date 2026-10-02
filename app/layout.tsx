@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import SmoothScrollProvider from "./components/SmoothScrollProvider";
 
 export const viewport: Viewport = {
   themeColor: [
@@ -66,7 +69,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SmoothScrollProvider>
+            <Navbar />
+            <main className="flex-grow min-h-screen flex flex-col">
+              {children}
+            </main>
+            <Footer />
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>

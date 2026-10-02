@@ -1,233 +1,106 @@
-# Design System v2.0 — Confident Minimalism
+# Natural Design System
 
-A replacement for the previous neoclassical system, built for product/SaaS UI. Bold amber used generously instead of rationed, high-contrast text instead of muted opacity, and one repeated signature — the amber glow — instead of static ornament. Both dark and light themes are first-class.
+**Concept:** Based around nature. Nature photos look good because different colors are at play.
 
----
+## Color System
+- **Primary Color:** Golden-yellow (`#e0d12e`, HSL ~54°). Sourced directly from our design tokens (`tokens.css` / `tokens.json`).
+- **Alternating Secondary Colors:** We use 4 secondary colors derived from color harmony relationships with the primary:
+  1. **Alt-1 — Analogous (Warm Green, ~84°):** `--color-alt-1` / `--color-secondary-a-*`
+  2. **Alt-2 — Complementary (Blue-Violet, ~234°):** `--color-alt-2` / `--color-secondary-b-*`
+  3. **Alt-3 — Triadic (Teal, ~174°):** `--color-alt-3` / `--color-secondary-c-*`
+  4. **Alt-4 — Split-Complementary (Purple, ~264°):** `--color-alt-4` / `--color-secondary-d-*`
+- **Usage:** These 4 colors alternate in rotating UI patterns. For example, in a carousel, the focused card cycles through `--color-alt-1` → `--color-alt-2` → `--color-alt-3` → `--color-alt-4` → repeat.
+- Each alternating color has `-hover`, `-subtle`, and `-fg` semantic variants for both light and dark themes.
 
-## Philosophy
+## Component-Based Architecture
+- **Strict Reusability:** Everything must be a reusable component to keep the UI consistent.
+- **NO INLINE STYLES OR INLINE UTILITIES:** Styles and colors not defined in the design system under no circumstance should ever be injected directly as inline CSS (`style={{}}`) or as arbitrary inline Tailwind utilities (e.g., `text-[14px]`, `bg-[#123456]`). 
+- **Abstraction:** If an element requires specific styling or layout, it MUST be built as a reusable React component (e.g. `<Typography variant="display">`, `<GridOverlay>`). You don't style components directly in pages.
+- **Creation Rules:** Components are only created if they don't already exist.
 
-**Confidence Over Restraint**
-Neoclassical treated color as a rare resource. This system spends it. Amber isn't a punctuation mark capped at 5% — it's the primary signal for anything interactive. If it does something, it can glow.
+## Iconography
+- **System Icons:** We use `react-icons` for standard system icons.
+- **Product Icons:** Do not use system icons as an alternative for product icons. Product icons are explicitly 3D icons (usually available as pictures in `assets` or `public` folder). If a product icon is necessary, you must ask the user for it.
+- **File Format Icons:** Similar to product icons, file format icons are 3D. They won't usually be necessary, but if they are, ask for them.
+- *Reference:* Follow Microsoft's Fluent 2 Design Iconography principles (https://fluent2.microsoft.design/iconography).
 
-**Warm, Not Loud**
-Engaging doesn't mean noisy. The palette stays to one accent family (amber) plus functional semantic color. Energy comes from contrast and motion, not from adding more hues.
+## Typography, Icons & Borders
+- **Semantic Typography Ramp:** Follows Fluent 2 structures with semantic tokens (e.g. `--typography-display-font`, `--typography-body1-size`, `--typography-caption1-line-height`).
+- **Font Weights:** `--font-weight-regular` (400), `--font-weight-medium` (500), `--font-weight-semibold` (600), `--font-weight-bold` (700).
+- **Icon Sizes:** Ramps from 12px to 48px (`--icon-size-12` through `--icon-size-48`).
+- **Stroke Widths:** `--stroke-width-thin` (1px), `--stroke-width-thick` (2px), `--stroke-width-thicker` (4px), `--stroke-width-thickest` (6px).
 
-**Type With a Pulse**
-Space Grotesk carries personality in headlines without becoming decorative. Inter does the quiet, dense work of a real product UI. Nothing is italic-serif-for-elegance; every face earns its place at product scale.
+## Elevation, Materials & Z-Index
+- **Elevation:** Make things look real using shadows, depth, and light. Uses shadows (`--shadow-sm` through `--shadow-2xl`).
+- **Surface Materials (Glassmorphism):** Foreground surfaces placed over dynamic/rotating backgrounds must use translucent materials (e.g. `--color-surface-glass-base`) and backdrop blur tokens (`--backdrop-blur-sm` through `-xl`) so the vibrant background colors naturally bleed through.
+- **Z-Index Ramp:** Uses a fixed ramp for stacking (`--z-index-base`, `--z-index-elevated`, `--z-index-sticky`, `--z-index-overlay`, `--z-index-drawer`, `--z-index-modal`, `--z-index-popover`, `--z-index-tooltip`).
+- **Opacity (Alpha):** Transparent alphas follow `--alpha-transparent` (0) through `--alpha-90` (0.9), and `--alpha-opaque` (1).
 
-**Glow Is the Signature**
-Every interactive element responds with a soft amber glow on hover, focus, or active state. It's the one motif repeated everywhere — buttons, cards, nav, inputs — so the whole product feels alive, not just the marketing page.
+## Interactive States & Accessibility
+- **Semantic Component States:** Use strict tokens for specific UI conditions rather than manual shades:
+  - **Hover/Active:** `alt` colors use explicitly mapped hover (`-hover`) and pressed/active (`-active`) variants.
+  - **Focus-Visible:** All focusable elements MUST use the standardized `--focus-outline-width` (2px) and `--focus-outline-offset` (2px) with `--focus-outline-color`.
+  - **Disabled & Inverted:** Use dedicated semantic tokens for disabled surfaces/text (`--color-bg-disabled`) and inverted contexts where high-contrast is required (`--color-bg-inverted`).
 
-**Density Is Allowed**
-SaaS UIs hold tables, forms, and dashboards, not empty stone plazas. Spacing is generous where it aids scanning, tight where density helps — not expensive for its own sake.
+## Motion Choreography
+- **Semantic Motion:** Animations must use intent-based semantic motion tokens mapped to the `prefers-reduced-motion` utility:
+  - `--motion-expressive-enter` / `-exit` for large layout shifts or hero animations.
+  - `--motion-productive-shift` for cards rotating through the alternating colors.
+  - `--motion-micro-feedback` for fast, snappy interactions like button clicks or hovers.
 
-**One Soft Shape**
-Cards and buttons stay crisp (8–12px radius). Pills are reserved for badges, avatars, and toggles — a single deliberate soft accent against an otherwise precise geometry.
+## Layout & Semantic Spacing
+- Follow Fluent 2 Design Layout guidelines (https://fluent2.microsoft.design/layout).
+- **Breakpoints:** Responsive grids map to standard Fluent web breakpoints: Mobile (0px), Tablet (768px), Desktop (1024px), Large (1366px), XLarge (1920px).
+- **Base Scale:** We use an **8px base spacing scale** (`--spacing-1` = 8px, `--spacing-2` = 16px, etc.).
+- **Semantic Density:** Avoid raw spacing numbers when possible; use anatomical tokens like `--spacing-container-padding`, `--spacing-element-gap`, and `--spacing-section-gap`.
 
----
+## Semantic Shape & Corner Radius
+- **Organic Geometry:** The Natural Design System favors organic, rounded shapes over harsh right angles.
+- **Component Shape Mapping:**
+  - **Interactive Elements (Buttons, Pills, Badges):** Must be fully rounded (`--radius-full`) to invite interaction.
+  - **Containers (Cards, Dialogs, Flyouts):** Use larger, softer radiuses (`--radius-2xl` or `--radius-3xl`) for large structural boundaries.
+  - **Inner Elements (Images within cards, small inputs):** Use medium radiuses (`--radius-md` or `--radius-lg`) depending on nested constraints.
 
-## Color
+## Voice and Tone (Content Guidelines)
+- **Calm, Human, and Clear:** Content should sound like a helpful human, never a robot.
+- **No Jargon:** Avoid overly technical terms in user-facing UI (e.g., say "We couldn't find that page" instead of "404 Error: Not Found").
+- **Action-Oriented:** Button labels and prompts should start with strong, clear verbs (e.g., "Save changes" instead of "Submit").
 
-Amber is the workhorse of this system — it marks anything the user can act on. Unlike the old 5% ceiling, there's no cap: primary buttons, active nav, focus rings, and glows all draw from the same family.
+## Touch Targets & Usability
+- **Minimum Interactive Size:** Following Material 3 standards, all interactive elements (buttons, links, icons) MUST have a minimum touch target area of **48x48px**. Even if the visual icon is 16x16px, the invisible clickable padding must extend to 48px to prevent frustrating mis-taps on mobile devices.
 
-### Dark theme
+## Dark Mode Elevation
+- **Color Over Shadow:** Shadows are virtually invisible on dark backgrounds. In Dark Mode, elevation is communicated by making the surface color *lighter*.
+- **Implementation:** Elevated components (like modals or dropdowns) must use `--color-surface-raised` instead of `--color-surface` in dark mode to physically separate them from the background canvas.
 
-| Token | Hex / Value | Use |
-|---|---|---|
-| `--bg` | `#0c0d10` | Page background |
-| `--surface` | `#16181d` | Cards, panels, sidebar |
-| `--surface-2` | `#1e2128` | Nested surfaces, hover backgrounds |
-| `--surface-3` | `#262a33` | Deepest nested surface |
-| `--border` | `rgba(255,255,255,0.08)` | Default dividers, card edges |
-| `--border-strong` | `rgba(255,255,255,0.16)` | Emphasized borders |
-| `--text-primary` | `#f5f3ee` | Headings, primary body text |
-| `--text-secondary` | `rgba(245,243,238,0.68)` | Supporting copy |
-| `--text-muted` | `rgba(245,243,238,0.42)` | Captions, disabled, helper text |
-| `--amber` | `#ffb020` | Primary accent — buttons, active states, links |
-| `--amber-strong` | `#ffc65c` | Amber on hover / brighter emphasis |
-| `--amber-deep` | `#d98c0f` | Amber pressed state |
-| `--amber-glow` | `rgba(255,176,32,0.35)` | Interaction glow (box-shadow) |
-| `--amber-wash` | `rgba(255,176,32,0.14)` | Amber-tinted backgrounds |
-| `--success` | `#34d399` | Positive states |
-| `--error` | `#fb7185` | Destructive / invalid states |
-| `--info` | `#38bdf8` | Neutral informational states |
-| `--on-amber` | `#1a1204` | Text/icon color on solid amber fills |
+## Component Anatomy Patterns
+- **Primary Actions:** Always positioned consistently (e.g., primary confirmation buttons go on the right, destructive/cancel actions on the left).
+- **Z-Pattern Scanning:** Layouts should anticipate the user's natural F-pattern or Z-pattern reading behavior, placing high-importance information on the top-left and actions on the bottom-right.
+- *Note:* For detailed structural anatomy of individual components (Buttons, Cards, Inputs, etc.), refer to the separate `components.md` specification.
 
-### Light theme
+## Grid & Layout Systems
+- **12-Column Grid:** Desktop layouts must align to a standard 12-column grid. Tablet layouts use an 8-column grid, and Mobile uses a 4-column grid.
+- **Max Widths:** Content should rarely stretch infinitely. Use a standard `max-w-7xl` (1280px) or `max-w-screen-2xl` container to ensure line-lengths for reading stay within the optimal 60-80 character limit.
+- **Fluid Scaling:** Spacing and typography should scale smoothly between breakpoints to prevent jarring jumps on resize.
+- **Grid vs Carousel:** If the content of cards is going to be numerous in a grid layout, a Carousel component should be used instead. This ensures cards have space to breathe and prevents the UI from feeling overcrowded or overflowing.
 
-| Token | Hex / Value | Use |
-|---|---|---|
-| `--bg` | `#faf8f4` | Page background (warm off-white, not stark white) |
-| `--surface` | `#ffffff` | Cards, panels, sidebar |
-| `--surface-2` | `#f2efe8` | Nested surfaces, hover backgrounds |
-| `--surface-3` | `#e9e4d9` | Deepest nested surface |
-| `--border` | `rgba(20,16,8,0.10)` | Default dividers, card edges |
-| `--border-strong` | `rgba(20,16,8,0.20)` | Emphasized borders |
-| `--text-primary` | `#18140d` | Headings, primary body text |
-| `--text-secondary` | `rgba(24,20,13,0.68)` | Supporting copy |
-| `--text-muted` | `rgba(24,20,13,0.44)` | Captions, disabled, helper text |
-| `--amber` | `#d97706` | Primary accent — buttons, active states, links |
-| `--amber-strong` | `#b45309` | Amber on hover / brighter emphasis |
-| `--amber-deep` | `#92400e` | Amber pressed state |
-| `--amber-glow` | `rgba(217,119,6,0.28)` | Interaction glow (box-shadow) |
-| `--amber-wash` | `rgba(217,119,6,0.10)` | Amber-tinted backgrounds |
-| `--success` | `#059669` | Positive states |
-| `--error` | `#e11d48` | Destructive / invalid states |
-| `--info` | `#0284c7` | Neutral informational states |
-| `--on-amber` | `#1a1204` | Text/icon color on solid amber fills |
+## UX Patterns (Loading, Errors, Empty States)
+- **Loading States:** Avoid full-page blocking spinners. Prefer Skeleton Loaders that mimic the shape and rhythm of the incoming content using `--color-bg-muted`. 
+- **Empty States:** A page with no data should never just be blank. Always include an abstract 3D icon, a short, calm explanation, and a primary CTA guiding the user on what to do next.
+- **Validation & Errors:** Inline validation is preferred over global toast errors for forms. Errors must explicitly state *how* to fix the issue, not just that an error occurred.
 
-**Rule:** never hardcode hex values in components — always reference the token, so a theme switch is a single attribute change (`data-theme="dark"` / `"light"`), not a re-implementation.
+## Data Visualization
+- **Categorical Palettes:** When rendering charts, do not rely solely on the 4 alternating secondary colors if there are more than 4 data points. Use explicitly defined, color-blind safe palettes.
+- **Tooltips:** Hovering over data points must reveal exact values using a tooltip (`--z-index-tooltip`) with inverted colors (`--color-bg-inverted` and `--color-fg-inverted`) for maximum contrast against the charts.
 
----
+## Micro-interactions & Staggered Animations
+- **Staggering:** When lists or grid items enter the screen, they should not appear all at once. Use GSAP's stagger feature (e.g., `stagger: 0.05`) to create a cascading, fluid entrance that mimics natural movement.
+- **Feedback:** Every interaction (click, toggle, drag) must provide immediate micro-feedback using `--motion-micro-feedback`.
 
-## Typography
+## Image Style
+- **Realistic Images:** Images are meant to be realistic.
+- **Abstract Fallback:** Unless real images are present, 3D abstract images with variations of colors will be used.
+- **Brand Identity:** Immediately when someone sees the images, it should tell what we're talking about and clearly show it's from Niena Labs.
 
-Three faces, three jobs. Never mix roles.
-
-| Role | Face | Weights | Use |
-|---|---|---|---|
-| Display / Headings | **Space Grotesk** | 500, 600 | Hero text, page titles, section headers, card titles |
-| Body / UI | **Inter** | 400, 500, 600 | Body copy, form labels, buttons, nav, dense UI text |
-| Data / Code | **IBM Plex Mono** | 400, 500 | Token values, numeric data, code snippets |
-
-### Type scale
-
-| Label | Size | Weight | Font | Use |
-|---|---|---|---|---|
-| Display | 56px | 600 | Space Grotesk | Hero, marketing headlines |
-| H1 | 38px | 600 | Space Grotesk | Page titles |
-| H2 | 26px | 600 | Space Grotesk | Section titles |
-| H3 | 19px | 500 | Space Grotesk | Card headers, modal titles |
-| Body Lg | 17px | 400 | Inter | Intro paragraphs |
-| Body | 15px | 400 | Inter | Default reading text |
-| Body Sm | 13px | 400 | Inter | Secondary copy, descriptions |
-| Label | 11px | 600 | Inter | UI labels, nav, buttons — uppercase, tracking 0.06em |
-| Data | 13px | 500 | IBM Plex Mono | Numeric values, tokens, code |
-
-**Note:** Label tracking is intentionally restrained (0.06em) compared to the old system's 0.14–0.28em Cinzel tracking — loud letter-spacing reads as ornamental, not confident, at UI scale.
-
----
-
-## Spacing
-
-4px base unit.
-
-| Token | Name | Value | Use |
-|---|---|---|---|
-| `--space-1` | xs | 4px | Icon padding, tight inline gaps |
-| `--space-2` | sm | 8px | Tag padding, label-to-value gaps |
-| `--space-3` | md | 12px | Compact card padding, form field gaps |
-| `--space-4` | lg | 16px | Standard inner padding, list item spacing |
-| `--space-5` | xl | 24px | Card padding, grid gutters |
-| `--space-6` | 2xl | 32px | Section sub-header spacing, hero padding |
-| `--space-7` | 3xl | 48px | Section-level breaks |
-| `--space-8` | 4xl | 64px | Page section margins |
-| `--space-9` | 5xl | 96px | Major layout divisions |
-
-## Radius
-
-| Name | Value | Use |
-|---|---|---|
-| sm | 6px | Inputs, tags, small chips |
-| md | 8px | Buttons, dropdowns |
-| lg | 12px | Cards, modals, panels |
-| full | 999px | Badges, avatars, toggle pills — the one deliberate soft shape |
-
----
-
-## Components
-
-### Buttons
-- **Primary** — solid `--amber` background, `--on-amber` text, 8px radius. Hover/focus: 4px amber glow ring + 1px lift.
-- **Secondary** — transparent background, 1px `--amber` border, `--amber` text. Hover: `--amber-wash` fill + glow ring.
-- **Ghost** — transparent, `--border` outline, `--text-secondary`. No glow — reserved for low-emphasis actions.
-
-### Inputs
-- Background `--bg` (recessed relative to surrounding card), 1px `--border` at rest.
-- Focus: border becomes `--amber`, plus a 4px amber glow ring — same visual language as button hover.
-- Label above field, uppercase, 11px, `--text-secondary`.
-
-### Cards
-- Background `--surface`, 1px `--border`, 12px radius.
-- Hover (when interactive): amber glow shadow — `0 0 0 1px var(--amber-glow), 0 8px 28px var(--amber-glow)`.
-- Numeric/data content uses IBM Plex Mono for scannability.
-
-### Badges / Status
-- Full pill radius (999px) — the system's one deliberate soft shape.
-- Background is the semantic color at ~13% opacity, 1px border at ~27% opacity, text at full semantic color.
-- Reserved strictly for status/state — never used for buttons or cards.
-
----
-
-## Signature Interaction: The Amber Glow
-
-Every interactive element — button, input, card, nav item — responds to hover/focus/active with the same soft amber halo:
-
-```css
-box-shadow: 0 0 0 4px var(--amber-glow);
-```
-
-This single repeated motif is what makes the system read as *alive* rather than decorated: one idea, applied consistently, instead of many small ornamental flourishes.
-
----
-
-## Full Token Reference (CSS)
-
-```css
-:root[data-theme="dark"] {
-  --bg: #0c0d10;
-  --surface: #16181d;
-  --surface-2: #1e2128;
-  --surface-3: #262a33;
-  --border: rgba(255,255,255,0.08);
-  --border-strong: rgba(255,255,255,0.16);
-  --text-primary: #f5f3ee;
-  --text-secondary: rgba(245,243,238,0.68);
-  --text-muted: rgba(245,243,238,0.42);
-  --amber: #ffb020;
-  --amber-strong: #ffc65c;
-  --amber-deep: #d98c0f;
-  --amber-glow: rgba(255,176,32,0.35);
-  --amber-wash: rgba(255,176,32,0.14);
-  --success: #34d399;
-  --error: #fb7185;
-  --info: #38bdf8;
-  --on-amber: #1a1204;
-
-  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
-  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px;
-
-  --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px;
-}
-
-:root[data-theme="light"] {
-  --bg: #faf8f4;
-  --surface: #ffffff;
-  --surface-2: #f2efe8;
-  --surface-3: #e9e4d9;
-  --border: rgba(20,16,8,0.10);
-  --border-strong: rgba(20,16,8,0.20);
-  --text-primary: #18140d;
-  --text-secondary: rgba(24,20,13,0.68);
-  --text-muted: rgba(24,20,13,0.44);
-  --amber: #d97706;
-  --amber-strong: #b45309;
-  --amber-deep: #92400e;
-  --amber-glow: rgba(217,119,6,0.28);
-  --amber-wash: rgba(217,119,6,0.10);
-  --success: #059669;
-  --error: #e11d48;
-  --info: #0284c7;
-  --on-amber: #1a1204;
-
-  /* spacing and radius tokens are identical across themes */
-}
-```
-
----
-
-## Fonts (import)
-
-```css
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
-```
+## Foundation
+This design system is built on top of the Microsoft Fluent Design System V2 and incorporates core UX principles from Material Design 3. Anything not explicitly available in these guidelines should be researched from these two sources.

@@ -59,7 +59,7 @@ export default function CareersSection() {
         >
           Open Roles
         </h2>
-        <div className="careers-fade" style={{ width: "40px", height: "1px", background: "var(--amber)", marginBottom: "40px" }} />
+
 
         <div className="careers-fade" style={{
           background: "linear-gradient(to bottom, rgba(255,176,32,0.02), transparent)",

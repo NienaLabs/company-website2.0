@@ -99,7 +99,6 @@ export default function WorkSection() {
           }}>
             Built with purpose.
           </h2>
-          <div style={{ width: "40px", height: "1px", background: "var(--amber)", marginBottom: "20px" }} />
           <p style={{
             fontFamily: "var(--font-body)", fontSize: "17px",
             color: "var(--text-secondary)", maxWidth: "520px", lineHeight: 1.85,

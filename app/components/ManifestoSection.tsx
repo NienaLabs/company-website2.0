@@ -38,17 +38,19 @@ export default function ManifestoSection() {
       ref={sectionRef}
       id="about"
       style={{
-        background: "var(--bg)", minHeight: "100vh",
+        backgroundColor: '#0a0a0c',
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' opacity='.5'%3E%3C/path%3E%3Cpath d='M15 15h50l-5 5H20v40l-5 5V15zm0 50h50V15L80 0v80H0l15-15zm32.07-32.07l3.54-3.54A15 15 0 0 1 29.4 50.6l3.53-3.53a10 10 0 1 0 14.14-14.14zM32.93 47.07a10 10 0 1 1 14.14-14.14L32.93 47.07z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E")`,
+        minHeight: "100vh",
         display: "flex", alignItems: "center", justifyContent: "center",
         textAlign: "center", position: "relative", overflow: "hidden",
-        padding: "var(--space-11) 0",
+        padding: "160px 0",
       }}
     >
       <div
         ref={glowRef}
         style={{
           position: "absolute", inset: 0,
-          background: "radial-gradient(ellipse at center, rgba(255,176,32,0.08) 0%, transparent 65%)",
+          background: "radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, transparent 65%)",
           pointerEvents: "none", transform: "scale(0)", opacity: 0,
         }}
       />
@@ -57,7 +59,7 @@ export default function ManifestoSection() {
           ref={overlineRef}
           style={{
             fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em",
-            color: "rgba(255,176,32,0.5)", textTransform: "uppercase",
+            color: "rgba(255, 255, 255, 0.6)", textTransform: "uppercase",
             marginBottom: "40px", opacity: 0,
           }}
         >
@@ -67,7 +69,7 @@ export default function ManifestoSection() {
           ref={part1Ref}
           style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
-            fontSize: "clamp(28px, 4.5vw, 52px)", color: "var(--text-primary)",
+            fontSize: "clamp(28px, 4.5vw, 52px)", color: "#ffffff",
             lineHeight: 1.25, marginBottom: "8px", opacity: 0,
           }}
         >
@@ -76,8 +78,8 @@ export default function ManifestoSection() {
         <div
           ref={part2Ref}
           style={{
-            fontFamily: "var(--font-display)", fontWeight: 600, fontStyle: "italic",
-            fontSize: "clamp(28px, 4.5vw, 52px)", color: "var(--amber)",
+            fontFamily: "var(--font-display)", fontWeight: 600,
+            fontSize: "clamp(28px, 4.5vw, 52px)", color: "#ffffff",
             lineHeight: 1.25, marginBottom: "56px", opacity: 0,
           }}
         >

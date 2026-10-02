@@ -380,7 +380,7 @@ export default function HeroSection() {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            padding: "0 var(--space-6)",
+            padding: "0 var(--space-4)", // Use a smaller padding base or let media query override
           }}
         >
           <div style={{ maxWidth: "820px", marginTop: "120px" }}>
@@ -448,6 +448,8 @@ export default function HeroSection() {
         @media (max-width: 768px) {
           .hero-text-wrapper {
             padding-top: 100px !important;
+            padding-left: var(--space-3) !important;
+            padding-right: var(--space-3) !important;
           }
           .hero-intro-text {
             bottom: 160px !important;

@@ -188,20 +188,20 @@ export default function VisionSection() {
       <div className="animated-words-container" style={{ 
         position: "absolute", inset: 0, pointerEvents: "none", zIndex: 10,
         display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "16px",
-        fontFamily: "var(--font-display)", fontWeight: 600, color: "var(--amber)",
+        fontFamily: "var(--font-display)", fontWeight: 600, color: "var(--color-fg)",
         padding: "0 var(--space-4)", transformOrigin: "center center"
       }}>
         <span style={{ display: "flex", alignItems: "baseline" }}>
-          <span ref={imagineAnimatedRef} style={{ visibility: "hidden", display: "inline-block", lineHeight: 1.6, fontSize: "clamp(24px, 3vw, 32px)", fontFamily: "var(--font-body)", color: "var(--amber)", fontWeight: 400 }}>imagine</span>
-          <span className="is-punctuation" style={{ visibility: "hidden", color: "var(--amber)" }}>,</span>
+          <span ref={imagineAnimatedRef} style={{ visibility: "hidden", display: "inline-block", lineHeight: 1.6, fontSize: "clamp(24px, 3vw, 32px)", fontFamily: "var(--font-body)", color: "var(--color-alt-1)", fontWeight: 400 }}>imagine</span>
+          <span className="is-punctuation" style={{ visibility: "hidden", color: "var(--color-alt-1)" }}>,</span>
         </span>
         <span style={{ display: "flex", alignItems: "baseline" }}>
-          <span ref={buildAnimatedRef} style={{ visibility: "hidden", display: "inline-block", lineHeight: 1.6, fontSize: "clamp(24px, 3vw, 32px)", fontFamily: "var(--font-body)", color: "var(--amber)", fontWeight: 400 }}>build</span>
-          <span className="is-punctuation" style={{ visibility: "hidden", color: "var(--amber)" }}>,</span>
+          <span ref={buildAnimatedRef} style={{ visibility: "hidden", display: "inline-block", lineHeight: 1.6, fontSize: "clamp(24px, 3vw, 32px)", fontFamily: "var(--font-body)", color: "var(--color-alt-2)", fontWeight: 400 }}>build</span>
+          <span className="is-punctuation" style={{ visibility: "hidden", color: "var(--color-alt-2)" }}>,</span>
         </span>
         <span style={{ display: "flex", alignItems: "baseline" }}>
-          <span ref={tellAnimatedRef} style={{ visibility: "hidden", display: "inline-block", lineHeight: 1.6, fontSize: "clamp(24px, 3vw, 32px)", fontFamily: "var(--font-body)", color: "var(--amber)", fontWeight: 400 }}>tell</span>
-          <span className="is-punctuation" style={{ visibility: "hidden", color: "var(--amber)" }}>.</span>
+          <span ref={tellAnimatedRef} style={{ visibility: "hidden", display: "inline-block", lineHeight: 1.6, fontSize: "clamp(24px, 3vw, 32px)", fontFamily: "var(--font-body)", color: "var(--color-alt-3)", fontWeight: 400 }}>tell</span>
+          <span className="is-punctuation" style={{ visibility: "hidden", color: "var(--color-alt-3)" }}>.</span>
         </span>
       </div>
       

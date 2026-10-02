@@ -10,21 +10,21 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const philosophyParts = [
   {
     text: "We believe the world can be changed the way we found it.",
-    color: "var(--text-primary)",
+    color: "#ffffff",
     size: "clamp(28px, 4vw, 48px)",
     italic: false,
   },
   {
     text: "Every product we build has one purpose:",
-    color: "var(--text-secondary)",
+    color: "rgba(255, 255, 255, 0.7)",
     size: "clamp(22px, 3vw, 36px)",
     italic: false,
   },
   {
     text: "to push humanity forward.",
-    color: "var(--amber)",
+    color: "#ffffff",
     size: "clamp(28px, 4vw, 48px)",
-    italic: true,
+    italic: false,
   },
 ];
 
@@ -92,7 +92,7 @@ function WordReveal({
           style={{
             display: "inline-block",
             marginRight: "0.28em",
-            color: "var(--text-muted)",
+            color: "rgba(255, 255, 255, 0.3)",
           }}
         >
           {word}
@@ -135,16 +135,14 @@ export default function PhilosophySection() {
     <section
       ref={sectionRef}
       id="philosophy"
-      style={{ background: "var(--bg)", padding: "var(--space-11) 0" }}
+      style={{ 
+        backgroundColor: '#0a0a0c',
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' opacity='.5'%3E%3C/path%3E%3Cpath d='M15 15h50l-5 5H20v40l-5 5V15zm0 50h50V15L80 0v80H0l15-15zm32.07-32.07l3.54-3.54A15 15 0 0 1 29.4 50.6l3.53-3.53a10 10 0 1 0 14.14-14.14zM32.93 47.07a10 10 0 1 1 14.14-14.14L32.93 47.07z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E")`,
+        padding: "160px 0" 
+      }}
     >
       <div className="section-container" style={{ maxWidth: "760px", margin: "0 auto", textAlign: "center" }}>
-        <div
-          ref={goldRuleRef}
-          style={{
-            width: "80px", height: "1px", background: "var(--amber)",
-            margin: "0 auto 48px", transformOrigin: "left", transform: "scaleX(0)",
-          }}
-        />
+
         {philosophyParts.map((part, i) => (
           <WordReveal key={i} {...part} delay={i * 0.1} />
         ))}
@@ -152,7 +150,7 @@ export default function PhilosophySection() {
           ref={separatorRef}
           style={{
             width: "1px", height: "64px",
-            background: "linear-gradient(to bottom, rgba(255,176,32,0.4), transparent)",
+            background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent)",
             margin: "48px auto 0", transformOrigin: "top", transform: "scaleY(0)",
           }}
         />

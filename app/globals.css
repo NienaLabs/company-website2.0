@@ -1,97 +1,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 @import 'lenis/dist/lenis.css';
+@import '../design system/tokens.css';
 
 @theme {
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-display: var(--font-family-heading);
+  --font-body: var(--font-family-body);
+  --font-mono: var(--font-family-monospace);
   
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-surface-3: var(--surface-3);
-  --color-border-default: var(--border);
-  --color-border-strong: var(--border-strong);
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-raised);
+  --color-surface-3: var(--color-surface-raised);
+  --color-border-default: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
   
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
+  --color-text-primary: var(--color-fg);
+  --color-text-secondary: var(--color-fg-muted);
+  --color-text-muted: var(--color-fg-subtle);
   
-  --color-amber: var(--amber);
-  --color-amber-strong: var(--amber-strong);
-  --color-amber-deep: var(--amber-deep);
-  --color-amber-wash: var(--amber-wash);
+  --color-amber: var(--color-brand);
+  --color-amber-strong: var(--color-brand-hover);
+  --color-amber-deep: var(--color-brand-active);
+  --color-amber-wash: var(--color-brand-subtle);
   
-  --color-success: var(--success);
-  --color-error: var(--error);
-  --color-info: var(--info);
+  --color-success: var(--color-success);
+  --color-error: var(--color-danger);
+  --color-info: var(--color-info);
 }
 
 /* ── Design Tokens ─────────────────────────────────────────────────────────── */
-:root, :root[data-theme="dark"] {
-  --bg: #0c0d10;
-  --nav-bg: rgba(12, 13, 16, 0.92);
-  --logo-filter: none;
-  --surface: #16181d;
-  --surface-2: #1e2128;
-  --surface-3: #262a33;
-  --border: rgba(255,255,255,0.08);
-  --border-strong: rgba(255,255,255,0.16);
-  --text-primary: #f5f3ee;
-  --text-secondary: rgba(245,243,238,0.68);
-  --text-muted: rgba(245,243,238,0.42);
-  --amber: #ffb020;
-  --amber-strong: #ffc65c;
-  --amber-deep: #d98c0f;
-  --amber-glow: rgba(255,176,32,0.35);
-  --amber-wash: rgba(255,176,32,0.14);
-  --success: #34d399;
-  --error: #fb7185;
-  --info: #38bdf8;
-  --on-amber: #1a1204;
+/* We map old custom properties to new tokens.css aliases to maintain backward compatibility */
+:root, :root[data-theme="light"] {
+  --bg: var(--color-bg);
+  --nav-bg: var(--color-surface-glass-strong);
+  --logo-filter: invert(1);
+  --surface: var(--color-surface);
+  --surface-2: var(--color-surface-raised);
+  --surface-3: var(--color-surface-raised);
+  --border: var(--color-border);
+  --border-strong: var(--color-border-strong);
+  --text-primary: var(--color-fg);
+  --text-secondary: var(--color-fg-muted);
+  --text-muted: var(--color-fg-subtle);
+  --amber: var(--color-brand);
+  --amber-strong: var(--color-brand-hover);
+  --amber-deep: var(--color-brand-active);
+  --amber-glow: color-mix(in srgb, var(--color-brand) 30%, transparent);
+  --amber-wash: var(--color-brand-subtle);
+  --success: var(--color-success);
+  --error: var(--color-danger);
+  --info: var(--color-info);
+  --on-amber: var(--color-brand-fg);
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
-  --space-8: 64px;
-  --space-9: 96px;
+  --space-1: var(--spacing-1);
+  --space-2: var(--spacing-2);
+  --space-3: var(--spacing-3);
+  --space-4: var(--spacing-4);
+  --space-5: var(--spacing-6);
+  --space-6: var(--spacing-8);
+  --space-7: var(--spacing-12);
+  --space-8: var(--spacing-16);
+  --space-9: var(--spacing-24);
 
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-full: 999px;
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
   
-  /* Semantic mappings for the old components to avoid completely breaking everything immediately, though we will refactor them. */
   --shadow-glow: 0 0 0 4px var(--amber-glow);
   --shadow-panel: 0 0 0 1px var(--amber-glow), 0 8px 28px var(--amber-glow);
 }
 
-:root[data-theme="light"] {
-  --bg: #faf8f4;
-  --nav-bg: rgba(250, 248, 244, 0.92);
-  --logo-filter: invert(1);
-  --surface: #ffffff;
-  --surface-2: #f2efe8;
-  --surface-3: #e9e4d9;
-  --border: rgba(20,16,8,0.10);
-  --border-strong: rgba(20,16,8,0.20);
-  --text-primary: #18140d;
-  --text-secondary: rgba(24,20,13,0.68);
-  --text-muted: rgba(24,20,13,0.44);
-  --amber: #d97706;
-  --amber-strong: #b45309;
-  --amber-deep: #92400e;
-  --amber-glow: rgba(217,119,6,0.28);
-  --amber-wash: rgba(217,119,6,0.10);
-  --success: #059669;
-  --error: #e11d48;
-  --info: #0284c7;
-  --on-amber: #1a1204;
+:root[data-theme="dark"] {
+  --logo-filter: none;
 }
 
 /* ── Reset & Base ──────────────────────────────────────────────────────────── */
@@ -153,11 +135,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 1024px) {
-  .section-container { padding: 0 var(--space-7); }
+  .section-container { padding: 0 var(--space-6); }
 }
 
 @media (max-width: 768px) {
-  .section-container { padding: 0 var(--space-5); }
+  .section-container { padding: 0 var(--space-3); }
 }
 
 /* ── Buttons ──────────────────────────────────────────────────────────────── */
@@ -387,3 +369,276 @@ nav[style*="position: fixed"] {
     -webkit-font-smoothing: auto;
   }
 }
+
+/* ── UI Components ─────────────────────────────────────────────────────────── */
+
+.natural-card.interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -10px var(--color-brand-subtle);
+  border-color: var(--color-brand);
+}
+
+/* ── Realistic Card 3D Box Extrusion ──────────────────────────────────────── */
+.realistic-card {
+  position: relative;
+  z-index: 1;
+}
+
+.realistic-card::before,
+.realistic-card::after {
+  content: '';
+  position: absolute;
+  background-color: var(--box-color);
+  z-index: -1;
+  transition: all var(--motion-productive-shift);
+}
+
+/* Left side of the box */
+.realistic-card::before {
+  top: 0;
+  left: calc(var(--box-depth) * -1);
+  width: var(--box-depth);
+  height: 100%;
+  transform-origin: right top;
+  transform: skewY(-45deg);
+}
+
+/* Bottom side of the box */
+.realistic-card::after {
+  bottom: calc(var(--box-depth) * -1);
+  left: 0;
+  width: 100%;
+  height: var(--box-depth);
+  transform-origin: top left;
+  transform: skewX(-45deg);
+}
+
+.natural-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.natural-btn:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color) !important;
+  outline-offset: var(--focus-outline-offset) !important;
+}
+.natural-btn:active {
+  transform: scale(0.96);
+}
+
+.natural-btn-primary:hover { background-color: var(--color-brand-hover) !important; }
+.natural-btn-primary:active { background-color: var(--color-brand-active) !important; }
+
+.natural-btn-secondary:hover { background-color: var(--color-brand-subtle) !important; box-shadow: 0 0 0 4px var(--color-brand-subtle); }
+
+.natural-btn-ghost:hover { color: var(--color-brand) !important; background-color: var(--color-bg-muted) !important; }
+
+.natural-btn-alt-1:hover { background-color: var(--color-alt-1-hover) !important; }
+.natural-btn-alt-1:active { background-color: var(--color-alt-1-active) !important; }
+
+.natural-btn-alt-2:hover { background-color: var(--color-alt-2-hover) !important; }
+.natural-btn-alt-2:active { background-color: var(--color-alt-2-active) !important; }
+
+.natural-btn-alt-3:hover { background-color: var(--color-alt-3-hover) !important; }
+.natural-btn-alt-3:active { background-color: var(--color-alt-3-active) !important; }
+
+.natural-btn-alt-4:hover { background-color: var(--color-alt-4-hover) !important; }
+.natural-btn-alt-4:active { background-color: var(--color-alt-4-active) !important; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.footer-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--amber);
+  color: var(--color-bg);
+  padding: clamp(var(--space-4), 5vw, var(--space-8));
+  overflow: hidden;
+}
+
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 10;
+  gap: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.5vw, 12px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .footer-top {
+    flex-direction: row;
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .footer-links {
+    flex-direction: row;
+    gap: var(--space-6);
+  }
+}
+
+.footer-link {
+  font-weight: 600;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s, box-shadow 0.2s;
+  border-radius: var(--radius-sm);
+}
+
+.footer-link:hover {
+  opacity: 0.7;
+  /* Signature Interaction: Amber glow on hover/focus */
+  box-shadow: 0 0 0 4px var(--amber-glow);
+}
+
+.footer-info {
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .footer-info {
+    text-align: right;
+  }
+}
+
+.footer-info-label {
+  opacity: 0.7;
+  margin-bottom: var(--space-1);
+}
+
+.footer-time {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-content: flex-start;
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .footer-time {
+    justify-content: flex-end;
+  }
+}
+
+.footer-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 4vw, 40px) 0 clamp(60px, 12vw, 120px) 0;
+  z-index: 5;
+}
+
+.footer-note-card {
+  transform: rotate(-2.5deg);
+  max-width: 680px;
+  width: 100%;
+}
+
+.footer-note-label {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.5vw, 11px);
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  margin-bottom: var(--space-5);
+  text-transform: uppercase;
+}
+
+.footer-note-text {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 3vw, 26px);
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.footer-note-line {
+  border-bottom: 1.5px dashed var(--color-border-strong);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.footer-note-line:last-child {
+  margin-bottom: 0;
+}
+
+.footer-socials {
+  position: absolute;
+  bottom: clamp(-20px, -4vw, -40px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.footer-social-btn {
+  width: clamp(80px, 18vw, 160px);
+  height: clamp(80px, 18vw, 160px);
+  background: var(--amber);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: clamp(4px, 1vw, 8px) solid var(--color-bg);
+  color: var(--color-bg);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s, z-index 0s;
+  position: relative;
+}
+
+.footer-social-btn:hover {
+  transform: translateY(-15px) scale(1.05);
+  z-index: 50 !important;
+  box-shadow: 0 0 0 4px var(--amber-glow);
+}
+
+.footer-social-icon {
+  width: 45%;
+  height: 45%;
+}
+
+/* ── Realistic Card 3D Box Extrusion ──────────────────────────────────────── */
+.realistic-card {
+  position: relative;
+  z-index: 1;
+}
+
+.realistic-card::before,
+.realistic-card::after {
+  content: '';
+  position: absolute;
+  background-color: var(--box-color);
+  z-index: -1;
+  transition: all var(--motion-productive-shift);
+}
+
+/* Left side of the box */
+.realistic-card::before {
+  top: 0;
+  left: calc(var(--box-depth) * -1);
+  width: var(--box-depth);
+  height: 100%;
+  transform-origin: right top;
+  transform: skewY(-45deg);
+}
+
+/* Bottom side of the box */
+.realistic-card::after {
+  bottom: calc(var(--box-depth) * -1);
+  left: 0;
+  width: 100%;
+  height: var(--box-depth);
+  transform-origin: top left;
+  transform: skewX(-45deg);
+}
+

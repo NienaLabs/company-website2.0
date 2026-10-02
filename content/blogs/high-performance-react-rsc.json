@@ -1,0 +1,552 @@
+{
+  "meta": {
+    "title": "Architecting High-Performance Apps with React Server Components",
+    "slug": "high-performance-react-rsc",
+    "excerpt": "A deep dive into how React Server Components reshape the way we think about performance, bundle sizes, and data fetching in modern web applications.",
+    "author": "Williams Adusei",
+    "category": "Engineering",
+    "tags": [
+      "React",
+      "Performance",
+      "Next.js",
+      "Architecture"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2475&auto=format&fit=crop",
+    "draft": false,
+    "featured": true,
+    "date": "2026-10-05",
+    "authorRole": "Software and AI engineer",
+    "readingTime": 3,
+    "authorProfile": "hffffhffhf",
+    "updatedAt": "2026-10-02"
+  },
+  "content": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "The introduction of "
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "bold"
+              }
+            ],
+            "text": "React Server Components (RSC)"
+          },
+          {
+            "type": "text",
+            "text": " fundamentally changes the architecture of React applications. For years, we struggled with the dichotomy of fast initial loads versus rich interactivity. We leaned on Server-Side Rendering (SSR) to bridge the gap, but SSR still required sending large JavaScript bundles to hydrate the client."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "In this post, we'll explore how RSCs resolve this tension, drastically reduce bundle sizes, and simplify data fetching paradigms."
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "The Core Problem: Client-Side Bloat"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Before Server Components, every React component was a client component. Even if a component only rendered static content (like a blog post layout or a complex syntax highlighter), its code was shipped to the browser. This led to:"
+          }
+        ]
+      },
+      {
+        "type": "bulletList",
+        "content": [
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Massive JavaScript bundles affecting Time to Interactive (TTI)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Complex state management solely for data fetching (Redux, React Query)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Network waterfalls when child components fetched their own data."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Enter Server Components"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Server Components execute exclusively on the server and never hydrate on the client. They stream their rendered output directly as a specialized JSON format that React understands."
+          }
+        ]
+      },
+      {
+        "type": "blockquote",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "The beauty of Server Components isn't just that they run on the server; it's that they stay on the server."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Direct Backend Access"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Because they run on the server, RSCs can directly access databases, file systems, and internal APIs without requiring an intermediary API route."
+          }
+        ]
+      },
+      {
+        "type": "codeBlock",
+        "attrs": {
+          "language": "typescript"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "// Server Component (page.tsx)\nimport db from '@/lib/db';\nimport { UserProfile } from './UserProfile';\n\nexport default async function Page() {\n  // Direct database access! No fetch() or useEffect() needed.\n  const users = await db.users.findMany({ limit: 10 });\n\n  return (\n    <main>\n      <h1>Our Team</h1>\n      <div className=\"grid\">\n        {users.map(user => (\n          <UserProfile key={user.id} data={user} />\n        ))}\n      </div>\n    </main>\n  );\n}"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Comparing Rendering Strategies"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "It is crucial to understand how Server Components differ from traditional Server-Side Rendering (SSR). Let's look at a breakdown:"
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "content": [
+          {
+            "type": "tableRow",
+            "content": [
+              {
+                "type": "tableHeader",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Feature"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "SSR (Client Components)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Server Components (RSC)"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "content": [
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Bundle Size Impact"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "High (Code sent to client)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Zero (Code stays on server)"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "content": [
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "State & Lifecycle"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Yes (useState, useEffect)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "No (Static & Data-driven)"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "content": [
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Data Fetching"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Via API routes / hydration"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Direct DB/Backend access"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "The Architecture Paradigm Shift"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "You shouldn't make everything a Server Component, nor should you default to Client Components. The mental model shifts to rendering a \"skeleton\" of Server Components and \"sprinkling\" Client Components only where interactivity is required (the \"Islands\" or \"Leaves\" architecture)."
+          }
+        ]
+      },
+      {
+        "type": "orderedList",
+        "content": [
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Root level:"
+                  },
+                  {
+                    "type": "text",
+                    "text": " Always Server Components. Fetch global data here."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Mid level:"
+                  },
+                  {
+                    "type": "text",
+                    "text": " Server Components fetching domain-specific data."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "bold"
+                      }
+                    ],
+                    "text": "Leaf level:"
+                  },
+                  {
+                    "type": "text",
+                    "text": " Client Components managing interactivity (buttons, forms, animations)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Conclusion"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "React Server Components are not just a feature; they are a structural revolution. By carefully demarcating what runs on the server versus the client, we can deliver significantly faster web experiences without compromising on the rich, interactive developer experience that React provides."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "For further reading, check out the official "
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://nextjs.org/docs/app/building-your-application/rendering/server-components",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer"
+                }
+              }
+            ],
+            "text": "Next.js documentation on Server Components"
+          },
+          {
+            "type": "text",
+            "text": "."
+          }
+        ]
+      }
+    ]
+  }
+}

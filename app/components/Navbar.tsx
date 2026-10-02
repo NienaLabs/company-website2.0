@@ -94,13 +94,14 @@ export default function Navbar() {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   
+
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   const isLightMode = resolvedTheme === 'light';
-  const currentLogo = isLightMode ? "/logo-black.svg" : "/logo-white.svg";
+  const currentLogo = "/logo-black.svg" 
 
   useGSAP(() => {
     const nav = navRef.current;
@@ -134,6 +135,11 @@ export default function Navbar() {
       "-=0.3"
     );
   }, { scope: navRef });
+
+  // Hide Navbar in the Admin dashboard
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <header

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import ChatModal from "./ChatModal";
 
 // Social Icons as inline SVGs
@@ -51,6 +52,11 @@ export default function FloatingWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   // Configuration for radial position
   const RADIUS = 96; // Distance of icons from center

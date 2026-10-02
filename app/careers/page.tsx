@@ -68,8 +68,7 @@ export default function CareersPage() {
           <div className="max-w-3xl mx-auto fade-in-up">
             <Card 
               variant="glass" 
-              className="text-center flex flex-col items-center"
-              style={{ padding: 'var(--space-8)' }}
+              className="text-center flex flex-col items-center px-6 py-12 md:px-12 md:py-16"
             >
               <div 
                 className="w-16 h-16 rounded-full flex items-center justify-center mb-6"

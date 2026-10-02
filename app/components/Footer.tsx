@@ -25,6 +25,10 @@ export default function Footer() {
       {/* Top Section */}
       <div className="footer-top">
         <div className="footer-links">
+          <Link href="/#services" className="footer-link">Services</Link>
+          <Link href="/products" className="footer-link">Products</Link>
+          <Link href="/blog" className="footer-link">Blog</Link>
+          <Link href="/bootcamp/courses" className="footer-link">Bootcamp</Link>
           <Link href="/careers" className="footer-link">Careers</Link>
           <Link href="/terms" className="footer-link">Terms & Conditions</Link>
         </div>
@@ -56,13 +60,15 @@ export default function Footer() {
       <div className="footer-socials">
         {[
           { Icon: Mail, rotation: -12, href: "mailto:hello@nienalabs.com" },
-          { Icon: Linkedin, rotation: -4, href: "#" },
-          { Icon: Github, rotation: 6, href: "#" },
-          { Icon: Twitter, rotation: 14, href: "#" }
+          { Icon: Linkedin, rotation: -4, href: "https://gh.linkedin.com/company/niena-labs", target: "_blank", rel: "noopener noreferrer" },
+          { Icon: Github, rotation: 6, href: "https://github.com/orgs/Nienalabs-community/repositories", target: "_blank", rel: "noopener noreferrer" },
+          { Icon: Twitter, rotation: 14, href: "https://x.com/LabsNiena86233", target: "_blank", rel: "noopener noreferrer" }
         ].map((item, i) => (
           <a
             key={i}
             href={item.href}
+            target={item.target}
+            rel={item.rel}
             className="footer-social-btn"
             style={{
               transform: `rotate(${item.rotation}deg)`,

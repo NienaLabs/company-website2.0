@@ -17,13 +17,15 @@ interface TipTapEditorProps {
   slug: string;
 }
 
+const extensions = getSharedExtensions();
+
 export function TipTapEditor({ initialContent, onChange, slug }: TipTapEditorProps) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const genericFileInputRef = useRef<HTMLInputElement>(null);
 
   const editor = useEditor({
-    extensions: getSharedExtensions(),
+    extensions,
     content: initialContent,
     onUpdate: ({ editor }) => {
       onChange(editor.getJSON());
@@ -166,21 +168,21 @@ export function TipTapEditor({ initialContent, onChange, slug }: TipTapEditorPro
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-1 p-2 border-b border-[var(--border)] bg-[var(--surface-2)]">
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleBold().run()}
+          onClick={() => (editor.chain().focus() as any).toggleBold().run()}
           isActive={editor.isActive('bold')}
           title="Bold"
         >
           <Bold size={16} />
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleItalic().run()}
+          onClick={() => (editor.chain().focus() as any).toggleItalic().run()}
           isActive={editor.isActive('italic')}
           title="Italic"
         >
           <Italic size={16} />
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleStrike().run()}
+          onClick={() => (editor.chain().focus() as any).toggleStrike().run()}
           isActive={editor.isActive('strike')}
           title="Strikethrough"
         >
@@ -190,14 +192,14 @@ export function TipTapEditor({ initialContent, onChange, slug }: TipTapEditorPro
         <div className="w-px h-6 bg-[var(--border)] mx-1" />
         
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          onClick={() => (editor.chain().focus() as any).toggleHeading({ level: 2 }).run()}
           isActive={editor.isActive('heading', { level: 2 })}
           title="Heading 2"
         >
           <Heading2 size={16} />
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+          onClick={() => (editor.chain().focus() as any).toggleHeading({ level: 3 }).run()}
           isActive={editor.isActive('heading', { level: 3 })}
           title="Heading 3"
         >
@@ -207,28 +209,28 @@ export function TipTapEditor({ initialContent, onChange, slug }: TipTapEditorPro
         <div className="w-px h-6 bg-[var(--border)] mx-1" />
         
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          onClick={() => (editor.chain().focus() as any).toggleBulletList().run()}
           isActive={editor.isActive('bulletList')}
           title="Bullet List"
         >
           <List size={16} />
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          onClick={() => (editor.chain().focus() as any).toggleOrderedList().run()}
           isActive={editor.isActive('orderedList')}
           title="Ordered List"
         >
           <ListOrdered size={16} />
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          onClick={() => (editor.chain().focus() as any).toggleBlockquote().run()}
           isActive={editor.isActive('blockquote')}
           title="Blockquote"
         >
           <Quote size={16} />
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          onClick={() => (editor.chain().focus() as any).toggleCodeBlock().run()}
           isActive={editor.isActive('codeBlock')}
           title="Code Block"
         >

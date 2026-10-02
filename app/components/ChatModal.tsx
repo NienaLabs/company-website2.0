@@ -2,6 +2,7 @@
 
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
+import { Card } from "./ui/Card";
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -31,7 +32,7 @@ function renderRichText(text: string): React.ReactNode[] {
         key={`lnk-${key++}`}
         href={url}
         {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        style={{ color: "#c9a84c", textDecoration: "underline", textUnderlineOffset: "2px", fontWeight: 600 }}
+        style={{ color: "var(--amber)", textDecoration: "underline", textUnderlineOffset: "2px", fontWeight: 600 }}
       >
         {label}
       </a>
@@ -75,7 +76,8 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div
+    <Card
+      variant="glass"
       data-lenis-prevent
       style={{
         position: "fixed",
@@ -84,35 +86,28 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
         width: "380px",
         height: "600px",
         maxHeight: "calc(100vh - 120px)",
-        backgroundColor: "var(--surface)", // Abyss equivalent
-        border: "1px solid rgba(255,176,32,0.15)", // Border gold faint
-        borderRadius: "4px",
         zIndex: 9998,
-        display: "flex",
-        flexDirection: "column",
-        boxShadow: "0 12px 40px rgba(12,13,16, 0.8)",
-        overflow: "hidden"
       }}
     >
-      {/* Header */}
-      <div
-        style={{
-          padding: "20px 24px",
-          borderBottom: "1px solid rgba(255,176,32,0.1)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          backgroundColor: "var(--surface-2)" // Void equivalent
-        }}
-      >
-        <div>
-          <div style={{ fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em", color: "rgba(255,176,32,0.6)", textTransform: "uppercase", marginBottom: "4px" }}>
-            Niena Labs Concierge
+      <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
+        {/* Header */}
+        <div
+          style={{
+            paddingBottom: "16px",
+            borderBottom: "1px solid var(--border)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em", color: "var(--amber)", textTransform: "uppercase", marginBottom: "4px" }}>
+              Niena Labs Concierge
+            </div>
+            <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "20px", color: "var(--text-primary)" }}>
+              How can we build together?
+            </div>
           </div>
-          <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "20px", color: "var(--text-primary)" }}>
-            How can we build together?
-          </div>
-        </div>
         <button
           onClick={onClose}
           style={{
@@ -128,7 +123,7 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
       </div>
 
       {/* Chat History */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "24px", display: "flex", flexDirection: "column", gap: "24px" }}>
+      <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "16px 0", display: "flex", flexDirection: "column", gap: "24px" }}>
         {messages.length === 0 && (
           <div style={{ textAlign: "center", color: "var(--text-secondary)", fontFamily: "var(--font-body)", fontSize: "15px", fontStyle: "italic", marginTop: "auto", marginBottom: "auto" }}>
             Ask about our services, philosophy, or process...
@@ -140,14 +135,14 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
             style={{
               alignSelf: message.role === "user" ? "flex-end" : "flex-start",
               maxWidth: "85%",
-              background: message.role === "user" ? "rgba(255,176,32,0.08)" : "transparent",
-              border: message.role === "user" ? "1px solid rgba(255,176,32,0.2)" : "none",
-              borderLeft: message.role === "assistant" ? "2px solid #c9a84c" : "none",
+              background: message.role === "user" ? "var(--surface-3)" : "transparent",
+              border: message.role === "user" ? "1px solid var(--border)" : "none",
+              borderLeft: message.role === "assistant" ? "2px solid var(--amber)" : "none",
               padding: message.role === "user" ? "12px 16px" : "4px 0 4px 16px",
-              borderRadius: "3px",
+              borderRadius: "var(--radius-sm)",
               fontFamily: "var(--font-body)",
               fontSize: "15px",
-              color: message.role === "user" ? "var(--text-primary)" : "rgba(232,223,200,0.8)",
+              color: message.role === "user" ? "var(--text-primary)" : "var(--text-secondary)",
               lineHeight: 1.6,
               whiteSpace: "pre-wrap",
             }}
@@ -160,7 +155,7 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
           </div>
         ))}
         {isLoading && (
-          <div style={{ alignSelf: "flex-start", paddingLeft: "16px", borderLeft: "2px solid #c9a84c", fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-secondary)", fontStyle: "italic" }}>
+          <div style={{ alignSelf: "flex-start", paddingLeft: "16px", borderLeft: "2px solid var(--amber)", fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-secondary)", fontStyle: "italic" }}>
             Drafting response...
           </div>
         )}
@@ -168,7 +163,7 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
       </div>
 
       {/* Input Area */}
-      <div style={{ padding: "16px", borderTop: "1px solid rgba(255,176,32,0.1)", backgroundColor: "var(--surface-2)" }}>
+      <div style={{ paddingTop: "16px", borderTop: "1px solid var(--border)" }}>
         <form onSubmit={onSubmit} style={{ display: "flex", gap: "8px" }}>
           <input
             value={localInput}
@@ -176,30 +171,30 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
             placeholder="Type your message..."
             style={{
               flex: 1,
-              background: "rgba(12,13,16, 0.5)",
-              border: "1px solid rgba(255,255,255,0.05)",
+              background: "var(--surface-3)",
+              border: "1px solid var(--border)",
               padding: "10px 14px",
-              borderRadius: "3px",
+              borderRadius: "var(--radius-sm)",
               color: "var(--text-primary)",
               fontFamily: "var(--font-body)",
               fontSize: "15px",
               outline: "none",
               transition: "border-color 0.2s ease"
             }}
-            onFocus={(e) => (e.target.style.borderColor = "rgba(255,176,32,0.5)")}
-            onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.05)")}
+            onFocus={(e) => (e.target.style.borderColor = "var(--amber)")}
+            onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
           />
           <button
             type="submit"
             disabled={!localInput.trim() || isLoading}
             style={{
               background: "var(--amber)",
-              color: "var(--surface-2)",
+              color: "var(--bg)",
               border: "none",
-              borderRadius: "3px",
+              borderRadius: "var(--radius-sm)",
               padding: "0 16px",
               fontFamily: "var(--font-display)",
-              fontSize: "11px", fontWeight: 600,
+              fontSize: "11px",
               fontWeight: 600,
               letterSpacing: "0.06em",
               cursor: localInput.trim() && !isLoading ? "pointer" : "default",
@@ -211,6 +206,7 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
           </button>
         </form>
       </div>
-    </div>
+      </div>
+    </Card>
   );
 }

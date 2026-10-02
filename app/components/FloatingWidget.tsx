@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import ChatModal from "./ChatModal";
 
@@ -54,6 +54,18 @@ export default function FloatingWidget() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const pathname = usePathname();
 
+  const [showTooltip, setShowTooltip] = useState(true);
+  const [tooltipText, setTooltipText] = useState("Our AI Concierge is active 24/7! Ask us anything.");
+
+  useEffect(() => {
+    // Determine if it is currently working hours (9:00 AM to 5:00 PM local time).
+    // Note: If you truly meant 9am to 5am (20 hours), change the condition to: (hour >= 9 || hour < 5)
+    const hour = new Date().getHours();
+    if (hour >= 9 && hour < 17) {
+      setTooltipText("Our team & AI Concierge are both online! Chat or call us now.");
+    }
+  }, []);
+
   if (pathname?.startsWith('/admin')) {
     return null;
   }
@@ -62,14 +74,20 @@ export default function FloatingWidget() {
   const RADIUS = 96; // Distance of icons from center
 
   const options = [
-    { id: "ai", icon: <BotIcon />, tooltip: "AI Chat", angle: 90, href: "#ai" },
-    { id: "telegram", icon: <TelegramIcon />, tooltip: "Telegram", angle: 120, href: "https://t.me/nienalabs", target: "_blank" },
-    { id: "linkedin", icon: <LinkedInIcon />, tooltip: "LinkedIn", angle: 150, href: "https://gh.linkedin.com/company/niena-labs", target: "_blank" },
-    { id: "whatsapp", icon: <WhatsAppIcon />, tooltip: "WhatsApp", angle: 180, href: "https://wa.me/233556732796", target: "_blank" },
+    { id: "ai", icon: <BotIcon />, tooltip: "AI Chat", angle: 90, href: "#ai", color: "var(--color-alt-1)" },
+    { id: "telegram", icon: <TelegramIcon />, tooltip: "Telegram", angle: 120, href: "https://t.me/nienalabs", target: "_blank", color: "var(--color-alt-2)" },
+    { id: "linkedin", icon: <LinkedInIcon />, tooltip: "LinkedIn", angle: 150, href: "https://gh.linkedin.com/company/niena-labs", target: "_blank", color: "var(--color-alt-3)" },
+    { id: "whatsapp", icon: <WhatsAppIcon />, tooltip: "WhatsApp", angle: 180, href: "https://wa.me/233556732796", target: "_blank", color: "var(--color-alt-4)" },
   ];
 
   return (
     <>
+      <style>{`
+        @keyframes floatTooltip {
+          0%, 100% { transform: translateY(-50%) translateX(0); }
+          50% { transform: translateY(-50%) translateX(-6px); }
+        }
+      `}</style>
       <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       <div style={{
         position: "fixed",
@@ -118,8 +136,8 @@ export default function FloatingWidget() {
                   height: "40px",
                   borderRadius: "50%",
                   background: isHovered ? "var(--bg)" : "var(--surface-2)",
-                  border: isHovered ? "1px solid var(--amber)" : "1px solid var(--border)",
-                  color: "var(--amber)",
+                  border: isHovered ? `1px solid ${opt.color}` : "1px solid var(--border)",
+                  color: opt.color,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -140,7 +158,9 @@ export default function FloatingWidget() {
 
           {/* Main interactive button */}
           <button
+            onMouseEnter={() => setShowTooltip(false)}
             onClick={() => {
+              setShowTooltip(false);
               if (isChatOpen) {
                 setIsChatOpen(false);
               } else {
@@ -193,6 +213,45 @@ export default function FloatingWidget() {
               </div>
             </div>
           </button>
+
+          {/* 24/7 Agent Tooltip */}
+          {showTooltip && !isOpen && !isChatOpen && (
+            <div
+              style={{
+                position: "absolute",
+                right: "72px",
+                top: "50%",
+                width: "200px",
+                padding: "12px 16px",
+                background: "var(--surface-2)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius-md)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                fontFamily: "var(--font-body)",
+                fontSize: "14px",
+                color: "var(--text-primary)",
+                lineHeight: 1.4,
+                pointerEvents: "none",
+                animation: "floatTooltip 3s ease-in-out infinite",
+                zIndex: -1,
+              }}
+            >
+              {tooltipText}
+              {/* Arrow */}
+              <div style={{
+                position: "absolute",
+                right: "-5px",
+                top: "50%",
+                marginTop: "-5px",
+                width: "10px",
+                height: "10px",
+                background: "var(--surface-2)",
+                borderRight: "1px solid var(--border)",
+                borderTop: "1px solid var(--border)",
+                transform: "rotate(45deg)",
+              }} />
+            </div>
+          )}
         </div>
       </div>
     </>

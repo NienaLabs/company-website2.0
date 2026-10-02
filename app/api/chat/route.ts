@@ -1,13 +1,12 @@
 import { createOpenAI } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 
-// Configure the OpenAI provider to use GitHub Models endpoint
-export const maxDuration = 60; // Set max duration for the API route
+export const maxDuration = 60;
 
-// Allow custom configuration (important for GitHub models via Azure Inference)
-const github = createOpenAI({
-  baseURL: 'https://models.inference.ai.azure.com',
-  apiKey: process.env.GITHUB_TOKEN || '',
+// Configure the OpenAI provider to use Groq's OpenAI-compatible endpoint
+const groq = createOpenAI({
+  baseURL: 'https://api.groq.com/openai/v1',
+  apiKey: process.env.GROK_API_KEY || '',
 });
 
 export async function POST(req: Request) {
@@ -24,6 +23,7 @@ Our Services:
 3. AI-Driven: Intelligence embedded, not bolted on.
 4. Cloud: Infrastructure that disappears.
 5. Desktop: Power without compromise.
+6. Team Augmentation: Senior engineers embedded alongside your team.
 
 Our Process:
 1. Understand: We begin with the problem, not the stack.
@@ -35,7 +35,12 @@ Our Process:
 Our Philosophy:
 We believe the world can be changed the way we found it. Every product we build has one purpose: to push humanity forward.
 
-If the user asks about our work, tell them we have built over 50 products across 3 continents.
+If the user asks about our work, highlight our featured projects:
+- Atlas (The Sovereign Exchange): A high-velocity event ticketing platform engineered for the modern event landscape.
+- Niena (The Professional Catalyst): An intelligent AI-driven ecosystem redefining the professional journey with resume synthesis and interview simulations.
+- Famlink (Bridging the Gap): A secure family connection platform for sharing memories and coordinating events.
+We also build custom digital solutions for local businesses (direct them to [our local business work](/local-businesses)).
+
 If they ask for contact, encourage them to "Start the conversation" and share their idea with us. Guide them to our [contact form](/#contact), email us at [support@nienalabs.com](mailto:support@nienalabs.com), or reach us on WhatsApp at [+233 55 283 7672](https://wa.me/233552837672) or [+233 55 673 2796](https://wa.me/233556732796).
 
 LINK FORMATTING (important): Never tell the visitor to "search", "navigate to", or "visit a page" without giving the actual link. Whenever you reference a page, email, or WhatsApp number, provide it as a clickable Markdown link so they can go there in one click. Use these exact links:
@@ -90,7 +95,7 @@ Limit your responses to 3-5 concise sentences unless a detailed explanation is s
   }));
 
   const result = await streamText({
-    model: github.chat('gpt-4o'),
+    model: groq.chat('openai/gpt-oss-20b'),
     system: systemPrompt,
     messages: coreMessages,
     temperature: 0.7,

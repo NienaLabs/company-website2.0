@@ -147,11 +147,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
+          minHeight: 0,
         }}
       >
         {renderImage}
         {renderIcon}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
           {children}
         </div>
       </div>

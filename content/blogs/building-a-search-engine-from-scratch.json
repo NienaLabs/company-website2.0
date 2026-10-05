@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Building a Search Engine From Scratch — Part 1: The Inverted Index",
+    "title": "Building a Search Engine From Scratch, Part 1: The Inverted Index",
     "slug": "building-a-search-engine-from-scratch",
     "excerpt": "How do you find a needle in 50,000 haystacks in a few milliseconds? You stop searching the haystacks and start searching a map of where the needles are.",
     "author": "Williams Adusei",
@@ -98,7 +98,7 @@
                     "type": "italic"
                   }
                 ],
-                "text": "How do you find a needle in 50,000 haystacks in a few milliseconds? You stop searching the haystacks and start searching a map of where the needles are."
+                "text": "I'm fascinated by how search engines like Google and Bing work under the hood but the information on the internet on how to implement one yourself is fragmented,we'll build one from scratch without any huge libraries. Reach out if you need any help, I'd be glad to help 😊 "
               }
             ]
           }
@@ -836,7 +836,7 @@
         "content": [
           {
             "type": "text",
-            "text": "The Early Web: Directories and Crawlers (19941996)"
+            "text": "The Early Web: Directories and Crawlers (1994-1996)"
           }
         ]
       },
@@ -1175,7 +1175,7 @@
         "content": [
           {
             "type": "text",
-            "text": "Stanford, BackRub and PageRank (19961998)"
+            "text": "Stanford, BackRub and PageRank (1996-1998)"
           }
         ]
       },
@@ -2652,7 +2652,7 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "19961998"
+                        "text": "1996-1998"
                       }
                     ]
                   }
@@ -24004,7 +24004,65 @@
         "content": [
           {
             "type": "text",
-            "text": "See you in Part 2. 🔍"
+            "text": "This is the"
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://github.com/Williamboy868/search-engine",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer",
+                  "class": null,
+                  "title": null
+                }
+              }
+            ],
+            "text": " link"
+          },
+          {
+            "type": "text",
+            "text": " to the python code repository for this project if you ever get stuck.Don't forget to star it."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "You can also read this 2012 "
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.ardendertat.com/2012/01/11/implementing-search-engines",
+                  "target": "_blank",
+                  "rel": "noopener noreferrer",
+                  "class": null,
+                  "title": null
+                }
+              }
+            ],
+            "text": "blog"
+          },
+          {
+            "type": "text",
+            "text": " on how to implement search engines,it's very very good."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "See you in Part 2. 🔍😊"
           }
         ]
       },

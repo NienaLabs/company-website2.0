@@ -5,28 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import ShareButtons from '@/app/components/ShareButtons';
 
 const HERO_BG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' opacity='.5'%3E%3C/path%3E%3Cpath d='M15 15h50l-5 5H20v40l-5 5V15zm0 50h50V15L80 0v80H0l15-15zm32.07-32.07l3.54-3.54A15 15 0 0 1 29.4 50.6l3.53-3.53a10 10 0 1 0 14.14-14.14zM32.93 47.07a10 10 0 1 1 14.14-14.14L32.93 47.07z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E")`;
-
-// ── Client Components (We'll extract these later if needed) ───────────────
-
-function ShareButtons({ slug, title }: { slug: string; title: string }) {
-  // In a real app, this would be a client component with interactive share functionality
-  return (
-    <div className="blog-share">
-      <span className="blog-share-label">Share this article</span>
-      <button className="blog-share-btn" aria-label="Share on Twitter" title="Share on Twitter">
-        𝕏
-      </button>
-      <button className="blog-share-btn" aria-label="Share on LinkedIn" title="Share on LinkedIn">
-        in
-      </button>
-      <button className="blog-share-btn" aria-label="Copy Link" title="Copy Link">
-        🔗
-      </button>
-    </div>
-  );
-}
 
 // ── Static Generation & Metadata ──────────────────────────────────────────
 
@@ -62,13 +43,13 @@ export async function generateMetadata({
       modifiedTime: post.meta.updatedAt || post.meta.date,
       authors: [post.meta.author],
       tags: post.meta.tags,
-      images: [{ url: post.meta.coverImage }],
+      images: [{ url: new URL(post.meta.coverImage, 'https://nienalabs.com').toString() }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.meta.title,
       description: post.meta.excerpt,
-      images: [post.meta.coverImage],
+      images: [new URL(post.meta.coverImage, 'https://nienalabs.com').toString()],
     },
   };
 }
@@ -200,7 +181,7 @@ export default async function BlogPostPage({
               dangerouslySetInnerHTML={{ __html: htmlContent }}
             />
             
-            <ShareButtons slug={post.meta.slug} title={post.meta.title} />
+            <ShareButtons slug={post.meta.slug} title={post.meta.title} author={post.meta.author} />
           </div>
 
           {/* Desktop Table of Contents */}

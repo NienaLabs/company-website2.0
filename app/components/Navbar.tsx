@@ -137,7 +137,7 @@ export default function Navbar() {
   }, { scope: navRef });
 
   // Hide Navbar in the Admin dashboard
-  if (pathname?.startsWith('/admin')) {
+  if (pathname?.startsWith('/employees')) {
     return null;
   }
 

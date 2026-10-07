@@ -54,7 +54,7 @@ export function TipTapEditor({ initialContent, onChange, slug }: TipTapEditorPro
       formData.append('file', file);
       formData.append('slug', slug || 'draft');
 
-      const res = await fetch('/api/admin/upload', {
+      const res = await fetch('/api/employees/upload', {
         method: 'POST',
         body: formData,
       });
@@ -100,7 +100,7 @@ export function TipTapEditor({ initialContent, onChange, slug }: TipTapEditorPro
       formData.append('file', file);
       formData.append('slug', slug || 'draft'); // use 'draft' if slug isn't set yet
 
-      const res = await fetch('/api/admin/upload', {
+      const res = await fetch('/api/employees/upload', {
         method: 'POST',
         body: formData,
       });

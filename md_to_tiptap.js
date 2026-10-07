@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const md = fs.readFileSync('invertedIndex.md', 'utf8');
+const md = fs.readFileSync('queryIndex.md', 'utf8');
 
 function parseInline(text) {
   const nodes = [];
@@ -227,17 +227,19 @@ const content = parseMarkdown(md);
 
 const blogJson = {
   meta: {
-    title: "Building a Search Engine From Scratch — Part 1: The Inverted Index",
-    slug: "building-a-search-engine-from-scratch",
-    excerpt: "How do you find a needle in 50,000 haystacks in a few milliseconds? You stop searching the haystacks and start searching a map of where the needles are.",
-    author: "NienaLabs Team",
+    title: "Building a Search Engine From Scratch - Part 2: Querying the Inverted Index",
+    slug: "building-a-search-engine-from-scratch-part-2",
+    excerpt: "An index is a promise: 'I already know where every word lives.' A query engine is how you collect on that promise without wasting a single millisecond.",
+    author: "Williams Adusei",
     category: "Engineering",
     tags: ["Search Engine", "Engineering", "Algorithms", "Backend"],
-    coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2475&auto=format&fit=crop",
+    coverImage: "/images/blogs/search_engine_part2_cover.jpg",
     draft: false,
     featured: true,
+    authorRole: "Software and AI engineer",
     date: new Date().toISOString().split('T')[0],
-    readingTime: 12
+    readingTime: 35,
+    authorProfile: "https://linkedin.com/in/williams-adusei-a1053a366"
   },
   content: {
     type: "doc",
@@ -245,5 +247,5 @@ const blogJson = {
   }
 };
 
-fs.writeFileSync(path.join(__dirname, 'content/blogs/building-a-search-engine-from-scratch.json'), JSON.stringify(blogJson, null, 2));
+fs.writeFileSync(path.join(__dirname, 'content/blogs/building-a-search-engine-from-scratch-part-2.json'), JSON.stringify(blogJson, null, 2));
 console.log('Successfully generated blog JSON.');

@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const jsonPath = 'content/blogs/building-a-search-engine-from-scratch.json';
+const jsonPath = 'content/blogs/building-a-search-engine-from-scratch-part-2.json';
 const data = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
 
 let mermaidIndex = 0;

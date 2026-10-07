@@ -15,7 +15,7 @@ export function DeletePostButton({ slug, title }: { slug: string; title: string 
 
     setIsDeleting(true);
     try {
-      const res = await fetch(`/api/admin/posts/${slug}`, {
+      const res = await fetch(`/api/employees/posts/${slug}`, {
         method: 'DELETE',
       });
 

@@ -5,19 +5,19 @@ import { validateAdminSession } from './lib/admin-auth';
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Protect /admin routes (excluding login)
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  // Protect /employees routes (excluding login)
+  if (pathname.startsWith('/employees') && pathname !== '/employees/login') {
     const isValid = await validateAdminSession(request);
     
     if (!isValid) {
       // Redirect to login if unauthenticated
-      const loginUrl = new URL('/admin/login', request.url);
+      const loginUrl = new URL('/employees/login', request.url);
       return NextResponse.redirect(loginUrl);
     }
   }
 
-  // Protect /api/admin routes (excluding login)
-  if (pathname.startsWith('/api/admin') && pathname !== '/api/admin/login') {
+  // Protect /api/employees routes (excluding login)
+  if (pathname.startsWith('/api/employees') && pathname !== '/api/employees/login') {
     const isValid = await validateAdminSession(request);
     
     if (!isValid) {
@@ -29,5 +29,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: ['/employees/:path*', '/api/employees/:path*'],
 };

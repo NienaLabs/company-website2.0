@@ -1,6 +1,6 @@
 /**
  * Server-side ImageKit SDK client.
- * Used only in API routes (app/api/admin/upload/).
+ * Used only in API routes (app/api/employees/upload/).
  */
 
 import ImageKit from 'imagekit';

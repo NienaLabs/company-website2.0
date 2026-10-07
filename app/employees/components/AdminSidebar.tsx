@@ -20,7 +20,7 @@ export function AdminSidebar() {
         </Typography>
 
         <Link 
-          href="/admin/posts" 
+          href="/employees/posts" 
           className="flex items-center gap-3 px-3 py-2 rounded-[var(--radius-md)] text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text-primary)] transition-colors"
         >
           <FileText size={18} />
@@ -28,7 +28,7 @@ export function AdminSidebar() {
         </Link>
         
         <Link 
-          href="/admin/posts/new" 
+          href="/employees/posts/new" 
           className="flex items-center gap-3 px-3 py-2 rounded-[var(--radius-md)] text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text-primary)] transition-colors"
         >
           <PenSquare size={18} />
@@ -39,7 +39,7 @@ export function AdminSidebar() {
       </nav>
 
       <div className="p-4 border-t border-[var(--color-border)]">
-        <form action="/api/admin/logout" method="POST">
+        <form action="/api/employees/logout" method="POST">
           <button 
             type="submit"
             className="w-full flex items-center gap-3 px-3 py-2 rounded-[var(--radius-md)] text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--color-danger)] transition-colors"

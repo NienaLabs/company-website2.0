@@ -66,7 +66,7 @@ export default function FloatingWidget() {
     }
   }, []);
 
-  if (pathname?.startsWith('/admin')) {
+  if (pathname?.startsWith('/employees')) {
     return null;
   }
 

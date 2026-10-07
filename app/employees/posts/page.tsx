@@ -22,7 +22,7 @@ export default async function AdminPostsPage() {
         </div>
         
         <Link 
-          href="/admin/posts/new" 
+          href="/employees/posts/new" 
           className="btn-primary flex items-center gap-2"
           style={{ borderRadius: 'var(--radius-full)' }}
         >
@@ -42,7 +42,7 @@ export default async function AdminPostsPage() {
               You haven't written any blog posts yet. Click the button below to create your first one.
             </Typography>
             <Link 
-              href="/admin/posts/new" 
+              href="/employees/posts/new" 
               className="btn-primary flex items-center gap-2"
               style={{ borderRadius: 'var(--radius-full)' }}
             >
@@ -75,7 +75,7 @@ export default async function AdminPostsPage() {
                           />
                         </div>
                         <div>
-                          <Link href={`/admin/posts/${post.slug}`} className="font-semibold text-[var(--text-primary)] hover:text-[var(--color-brand)] transition-colors">
+                          <Link href={`/employees/posts/${post.slug}`} className="font-semibold text-[var(--text-primary)] hover:text-[var(--color-brand)] transition-colors">
                             {post.title}
                           </Link>
                           <div className="text-xs text-[var(--text-muted)] mt-1 truncate max-w-xs">
@@ -110,7 +110,7 @@ export default async function AdminPostsPage() {
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link 
-                          href={`/admin/posts/${post.slug}`}
+                          href={`/employees/posts/${post.slug}`}
                           className="p-2 text-[var(--text-secondary)] hover:text-[var(--color-brand)] hover:bg-[rgba(224,209,46,0.1)] rounded-md transition-colors"
                           title="Edit Post"
                         >

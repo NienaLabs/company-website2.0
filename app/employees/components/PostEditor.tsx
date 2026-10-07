@@ -67,7 +67,7 @@ export function PostEditor({ initialMeta, initialContent, isNew = false }: PostE
       // Use the slug or title (slugified later) for the folder
       formData.append('slug', meta.slug || meta.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'draft');
 
-      const res = await fetch('/api/admin/upload', {
+      const res = await fetch('/api/employees/upload', {
         method: 'POST',
         body: formData,
       });
@@ -102,8 +102,8 @@ export function PostEditor({ initialMeta, initialContent, isNew = false }: PostE
 
     try {
       const url = isNew 
-        ? '/api/admin/posts' 
-        : `/api/admin/posts/${initialMeta?.slug}`;
+        ? '/api/employees/posts' 
+        : `/api/employees/posts/${initialMeta?.slug}`;
         
       const method = isNew ? 'POST' : 'PUT';
 
@@ -118,7 +118,7 @@ export function PostEditor({ initialMeta, initialContent, isNew = false }: PostE
         throw new Error(errorData.error || 'Failed to save post');
       }
 
-      router.push('/admin/posts');
+      router.push('/employees/posts');
       router.refresh(); // Ensure the list updates
     } catch (error: any) {
       alert(`Error saving post: ${error.message}`);
@@ -132,7 +132,7 @@ export function PostEditor({ initialMeta, initialContent, isNew = false }: PostE
       {/* Top Bar */}
       <header className="sticky top-0 z-10 bg-[var(--surface-glass-strong)] backdrop-blur-md border-b border-[var(--border)] px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link href="/admin/posts" className="p-2 rounded-full hover:bg-[var(--surface-2)] transition-colors">
+          <Link href="/employees/posts" className="p-2 rounded-full hover:bg-[var(--surface-2)] transition-colors">
             <ArrowLeft size={20} />
           </Link>
           <Typography variant="title3" as="h1">

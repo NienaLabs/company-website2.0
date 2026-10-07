@@ -53,19 +53,30 @@ export async function PUT(
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
 
-    // Sync ImageKit: Find orphaned assets and delete them
+      // Sync ImageKit: Find orphaned assets and delete them
     try {
       const usedUrls = new Set<string>(extractAssetUrls(content));
       if (meta.coverImage) {
         usedUrls.add(meta.coverImage);
       }
 
+      // Extract just the filenames from the used URLs to avoid domain/protocol mismatches
+      const usedFileNames = new Set(
+        Array.from(usedUrls).map(url => {
+          try {
+            return new URL(url).pathname.split('/').pop();
+          } catch {
+            return url.split('/').pop();
+          }
+        })
+      );
+
       // List all files in this post's folder
       const files = await imagekit.listFiles({ path: `/blog/${slug}/` });
       
       for (const file of files) {
-        if (!usedUrls.has(file.url)) {
-          console.log(`Deleting unused image from ImageKit: ${file.url}`);
+        if (!usedFileNames.has(file.name)) {
+          console.log(`Deleting unused image from ImageKit: ${file.name}`);
           await imagekit.deleteFile(file.fileId);
         }
       }

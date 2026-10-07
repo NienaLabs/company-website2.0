@@ -17,7 +17,7 @@
     "authorRole": "Software and AI engineer",
     "date": "2026-10-05",
     "readingTime": 42,
-    "updatedAt": "2026-10-05",
+    "updatedAt": "2026-10-07",
     "authorProfile": "https://linkedin.com/in/williams-adusei-a1053a366"
   },
   "content": {
@@ -1827,7 +1827,7 @@
       {
         "type": "image",
         "attrs": {
-          "src": "https://ik.imagekit.io/williamboylib/blog/building-a-search-engine-from-scratch/1791175501420-biz-google-524309146.webp",
+          "src": "https://ik.imagekit.io/williamboylib/blog/building-a-search-engine-from-scratch/1791367098338-google.webp",
           "alt": null,
           "title": null,
           "width": null,

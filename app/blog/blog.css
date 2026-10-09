@@ -691,3 +691,39 @@
   text-align: center;
   padding: var(--space-9) var(--space-5);
 }
+
+/* ── KaTeX LaTeX Mathematical Equations ─────────────────────────────────── */
+.blog-math-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  max-width: 100%;
+  padding: var(--space-4) var(--space-5);
+  margin: var(--space-5) 0;
+  background: var(--color-surface-glass-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.blog-math-block .katex-display {
+  margin: 0 !important;
+  text-align: center;
+}
+
+.blog-math-inline {
+  display: inline-block;
+  vertical-align: -0.1em;
+  padding: 0 2px;
+  color: var(--text-primary);
+}
+
+.blog-math-inline .katex {
+  font-size: 1.05em;
+}
+

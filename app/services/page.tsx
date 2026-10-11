@@ -12,22 +12,14 @@ export const metadata: Metadata = {
 
 export default function ServicesIndexPage() {
   return (
-    <div
-      style={{
-        background: "var(--color-bg)",
-        color: "var(--color-fg)",
-        minHeight: "100vh",
-        paddingTop: "140px",
-        paddingBottom: "var(--spacing-24)",
-      }}
-    >
+    <div className="services-index-container">
       <div className="section-container">
         {/* Header */}
-        <div style={{ maxWidth: "780px", marginBottom: "var(--spacing-16)" }}>
+        <div style={{ maxWidth: "780px", marginBottom: "var(--spacing-12)" }}>
           <h1
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(40px, 6vw, 64px)",
+              fontSize: "clamp(36px, 6vw, 64px)",
               fontWeight: 600,
               color: "var(--color-fg)",
               lineHeight: 1.1,
@@ -39,7 +31,7 @@ export default function ServicesIndexPage() {
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "20px",
+              fontSize: "clamp(16px, 2vw, 20px)",
               color: "var(--color-fg-muted)",
               lineHeight: 1.7,
             }}
@@ -51,31 +43,14 @@ export default function ServicesIndexPage() {
         </div>
 
         {/* Capabilities Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-            gap: "var(--spacing-8)",
-          }}
-        >
+        <div className="services-index-grid">
           {servicesList.map((service) => {
             const altColorVar = `var(--color-alt-${service.altColorIndex})`;
 
             return (
               <div
                 key={service.id}
-                style={{
-                  backgroundColor: "var(--color-surface)",
-                  borderRadius: "var(--radius-3xl)",
-                  border: "1px solid var(--color-border)",
-                  padding: "var(--spacing-8)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  transition: "all var(--motion-productive-shift)",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
+                className="services-index-card group"
               >
                 {/* Background soft glow on card */}
                 <div
@@ -128,6 +103,7 @@ export default function ServicesIndexPage() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        flexShrink: 0,
                       }}
                     >
                       {service.iconType === "3d" ? (
@@ -161,12 +137,13 @@ export default function ServicesIndexPage() {
                   <h2
                     style={{
                       fontFamily: "var(--font-display)",
-                      fontSize: "26px",
+                      fontSize: "clamp(20px, 2.5vw, 26px)",
                       fontWeight: 600,
                       color: "var(--color-fg)",
                       whiteSpace: "pre-line",
                       lineHeight: 1.25,
                       marginBottom: "12px",
+                      wordBreak: "break-word",
                     }}
                   >
                     {service.title}
@@ -175,9 +152,9 @@ export default function ServicesIndexPage() {
                   <p
                     style={{
                       fontFamily: "var(--font-body)",
-                      fontSize: "15px",
+                      fontSize: "14.5px",
                       color: "var(--color-fg-muted)",
-                      lineHeight: 1.7,
+                      lineHeight: 1.65,
                       marginBottom: "var(--spacing-6)",
                     }}
                   >

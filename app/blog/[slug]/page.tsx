@@ -33,24 +33,42 @@ export async function generateMetadata({
     };
   }
 
+  const postUrl = `https://nienalabs.com/blog/${slug}`;
+  const imageUrl = post.meta.coverImage.startsWith('http')
+    ? post.meta.coverImage
+    : `https://nienalabs.com${post.meta.coverImage}`;
+
   return {
     title: `${post.meta.title} — Niena Labs Blog`,
     description: post.meta.excerpt,
+    keywords: post.meta.tags,
+    alternates: {
+      canonical: postUrl,
+    },
     openGraph: {
       title: post.meta.title,
       description: post.meta.excerpt,
+      url: postUrl,
+      siteName: 'Niena Labs',
       type: 'article',
       publishedTime: post.meta.date,
       modifiedTime: post.meta.updatedAt || post.meta.date,
       authors: [post.meta.author],
       tags: post.meta.tags,
-      images: [{ url: new URL(post.meta.coverImage, 'https://nienalabs.com').toString() }],
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.meta.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.meta.title,
       description: post.meta.excerpt,
-      images: [new URL(post.meta.coverImage, 'https://nienalabs.com').toString()],
+      images: [imageUrl],
     },
   };
 }
@@ -78,23 +96,79 @@ export default async function BlogPostPage({
     year: 'numeric',
   }).format(new Date(post.meta.date));
 
+  const postUrl = `https://nienalabs.com/blog/${slug}`;
+  const imageUrl = post.meta.coverImage.startsWith('http')
+    ? post.meta.coverImage
+    : `https://nienalabs.com${post.meta.coverImage}`;
+
+  const articleStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+    headline: post.meta.title,
+    description: post.meta.excerpt,
+    image: [imageUrl],
+    datePublished: post.meta.date,
+    dateModified: post.meta.updatedAt || post.meta.date,
+    author: {
+      '@type': 'Person',
+      name: post.meta.author,
+      ...(post.meta.authorRole ? { jobTitle: post.meta.authorRole } : {}),
+      ...(post.meta.authorProfile?.startsWith('http') ? { url: post.meta.authorProfile } : {}),
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Niena Labs',
+      url: 'https://nienalabs.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://nienalabs.com/android-chrome-512x512.png',
+      },
+    },
+    keywords: post.meta.tags?.join(', '),
+  };
+
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://nienalabs.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://nienalabs.com/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.meta.title,
+        item: postUrl,
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-[var(--bg)]">
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BlogPosting',
-            headline: post.meta.title,
-            datePublished: post.meta.date,
-            dateModified: post.meta.updatedAt || post.meta.date,
-            author: { '@type': 'Person', name: post.meta.author },
-            publisher: { '@type': 'Organization', name: 'Niena Labs' },
-            image: post.meta.coverImage,
-            description: post.meta.excerpt,
-          }),
+          __html: JSON.stringify(articleStructuredData),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
 

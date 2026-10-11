@@ -6,10 +6,7 @@ import Footer from "./components/Footer";
 import SmoothScrollProvider from "./components/SmoothScrollProvider";
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#d97706" },
-    { media: "(prefers-color-scheme: dark)", color: "#ffb020" },
-  ],
+  themeColor: "#e0d12e",
 };
 
 export const metadata: Metadata = {

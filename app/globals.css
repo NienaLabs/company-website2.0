@@ -3,6 +3,7 @@
 @import 'lenis/dist/lenis.css';
 @import '../design system/tokens.css';
 @import './blog/blog.css';
+@import './services/services.css';
 
 @theme {
   --font-display: var(--font-family-heading);

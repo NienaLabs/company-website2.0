@@ -30,11 +30,38 @@ const testimonials = [
 
 export default function TestimonialsSection() {
   return (
-    <section id="testimonials" style={{ background: "transparent", padding: "var(--space-10) 0", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-      <div className="testimonials-scale-wrapper" style={{ transformOrigin: "center center", willChange: "transform, opacity" }}>
-        
+    <section
+      id="testimonials"
+      style={{
+        position: "relative",
+        background: "transparent",
+        padding: "var(--space-10) 0",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        className="testimonials-scale-wrapper"
+        style={{
+          position: "relative",
+          transformOrigin: "center center",
+          willChange: "transform, opacity",
+        }}
+      >
+        {/* Watermark Spiral Background */}
+        <div className="section-watermark" aria-hidden="true">
+          <img
+            src="/niena-spiral-background.svg"
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+
         {/* Header */}
-        <div className="section-container">
+        <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ marginBottom: "var(--spacing-16)", textAlign: "center" }}>
             <Typography variant="large-title" style={{ marginBottom: "4px" }}>
               What they say.
@@ -43,7 +70,7 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Carousel */}
-        <div>
+        <div style={{ position: "relative", zIndex: 1 }}>
           <Carousel
             items={testimonials}
             variant="marquee"

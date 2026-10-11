@@ -80,9 +80,24 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      style={{ background: "var(--bg)", padding: "160px 0" }}
+      style={{
+        position: "relative",
+        background: "var(--bg)",
+        padding: "160px 0",
+        overflow: "hidden",
+      }}
     >
-      <div className="section-container">
+      {/* Watermark Spiral Background */}
+      <div className="section-watermark" aria-hidden="true">
+        <img
+          src="/niena-spiral-background.svg"
+          alt=""
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "start" }}>
           {/* Left */}
           <div ref={leftRef} style={{ opacity: 0, flex: "1 1 400px" }}>

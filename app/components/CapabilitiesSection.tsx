@@ -201,9 +201,24 @@ export default function CapabilitiesSection() {
     <section
       ref={sectionRef}
       id="services"
-      style={{ background: "var(--color-bg)", padding: "var(--spacing-20) 0" }}
+      style={{
+        position: "relative",
+        background: "var(--color-bg)",
+        padding: "var(--spacing-20) 0",
+        overflow: "hidden",
+      }}
     >
-      <div className="section-container">
+      {/* Watermark Spiral Background */}
+      <div className="section-watermark" aria-hidden="true">
+        <img
+          src="/niena-spiral-background.svg"
+          alt=""
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
         <div style={{ marginBottom: "var(--spacing-16)" }}>
           <Typography variant="large-title" style={{ marginBottom: "4px" }}>
             What we build.

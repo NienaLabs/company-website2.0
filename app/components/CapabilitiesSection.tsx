@@ -7,7 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Card, DynamicColor } from "./ui/Card";
 import { Typography } from "./ui/Typography";
 import { Carousel } from "./ui/Carousel";
-import { Terminal } from "lucide-react";
+import Link from "next/link";
+import { Terminal, ArrowUpRight } from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -69,7 +70,7 @@ function CapabilityCardItem({ cap, isFocused, altColorIndex }: { cap: any, isFoc
       onMouseLeave={() => setIsHovered(false)}
       style={{
         flex: 1,
-        minHeight: "340px",
+        minHeight: "380px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
@@ -111,7 +112,7 @@ function CapabilityCardItem({ cap, isFocused, altColorIndex }: { cap: any, isFoc
         zIndex: 2,
         display: "flex",
         flexDirection: "column",
-        maxWidth: "70%",
+        maxWidth: "75%",
       }}>
         <Typography 
           variant="caption1" 
@@ -137,11 +138,41 @@ function CapabilityCardItem({ cap, isFocused, altColorIndex }: { cap: any, isFoc
           <Typography 
             variant="body1" 
             color={active ? "inherit" : "secondary"}
-            style={{ opacity: active ? 0.9 : 1 }}
+            style={{ opacity: active ? 0.9 : 1, marginBottom: "var(--spacing-5)" }}
           >
             {cap.body}
           </Typography>
         )}
+
+        {/* Learn More Action Button navigating to dynamic screen */}
+        <div style={{ zIndex: 3 }}>
+          <Link
+            href={`/services/${cap.id}`}
+            className="natural-btn"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "0 var(--spacing-5)",
+              minHeight: "44px",
+              borderRadius: "var(--radius-full)",
+              fontSize: "13px",
+              fontWeight: 600,
+              fontFamily: "var(--typography-body1-font)",
+              textDecoration: "none",
+              backgroundColor: active ? "rgba(0,0,0,0.22)" : "var(--color-surface-raised)",
+              color: active ? "#ffffff" : "var(--color-fg)",
+              border: active ? "1px solid rgba(255,255,255,0.35)" : "1px solid var(--color-border-strong)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              transition: "all var(--motion-micro-feedback)",
+              boxShadow: active ? "0 4px 14px rgba(0,0,0,0.25)" : "none",
+            }}
+          >
+            <span>Learn More</span>
+            <ArrowUpRight size={15} />
+          </Link>
+        </div>
       </div>
     </Card>
   );

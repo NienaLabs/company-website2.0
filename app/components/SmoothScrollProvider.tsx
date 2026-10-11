@@ -13,11 +13,13 @@ export default function SmoothScrollProvider({
   children: React.ReactNode;
 }) {
   const lenisRef = useRef<any>(null);
-  const [isTouchOnly, setIsTouchOnly] = useState<boolean | null>(null);
+  const [isTouchOnly, setIsTouchOnly] = useState<boolean>(false);
 
   useEffect(() => {
     const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-    setIsTouchOnly(isTouch);
+    if (isTouch) {
+      setIsTouchOnly(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -49,7 +51,10 @@ export default function SmoothScrollProvider({
     // Prevent massive layout thrashing on mobile when the URL bar hides/shows
     ScrollTrigger.config({ ignoreMobileResize: true });
 
-    if (isTouchOnly === true) return; // Native momentum scroll handles it
+    if (isTouchOnly) {
+      lenisRef.current?.lenis?.destroy();
+      return; // Native momentum scroll handles it on mobile
+    }
 
     const update = (time: number) => {
       lenisRef.current?.lenis?.raf(time * 1000);
@@ -78,11 +83,7 @@ export default function SmoothScrollProvider({
     };
   }, [isTouchOnly]);
 
-  if (isTouchOnly === null) {
-    // SSR or initial client render, render children normally
-    return <>{children}</>;
-  }
-
+  // On touch-only mobile devices, disable Lenis completely for native momentum scroll
   if (isTouchOnly) {
     return <>{children}</>;
   }
@@ -96,8 +97,7 @@ export default function SmoothScrollProvider({
         smoothWheel: true,
         wheelMultiplier: 0.9,
         syncTouch: false,
-        touchMultiplier: 0,
-        autoRaf:false
+        autoRaf: false,
       }}
     >
       {children}

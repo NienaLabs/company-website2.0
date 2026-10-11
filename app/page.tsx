@@ -1,5 +1,5 @@
 import HeroSection from "./components/HeroSection";
-import PhilosophySection from "./components/PhilosophySection";
+import PartnerWithUsSection from "./components/PartnerWithUsSection";
 import VisionSection from "./components/VisionSection";
 import OpenSourceSection from "./components/OpenSourceSection";
 import ManifestoSection from "./components/ManifestoSection";
@@ -14,11 +14,11 @@ export default function Home() {
       {/* Section 01 — Hero: The Manifesto */}
       <HeroSection />
 
-        {/* Section 02 — Philosophy: A Scroll-Driven Reveal */}
-        <PhilosophySection />
+      {/* Section 02 — Partner With Us */}
+      <PartnerWithUsSection />
 
-        {/* Section 03 — Capabilities: The Bento Grid */}
-        <CapabilitiesSection />
+      {/* Section 03 — Capabilities: The Bento Grid */}
+      <CapabilitiesSection />
 
      
 

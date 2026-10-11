@@ -17,6 +17,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const servicesData = [
   {
     title: "Enterprise Web",
+    href: "/services/enterprise",
     description: "End-to-end web platforms engineered to grow with your business, from 100 users to 10 million.",
     tags: ["SCALABLE ARCHITECTURE", "WEB PLATFORMS", "HIGH PERFORMANCE"],
     icon: Globe,
@@ -24,6 +25,7 @@ const servicesData = [
   },
   {
     title: "Mobile",
+    href: "/services/mobile",
     description: "Cross-platform applications that feel native on every device, delivering performance users expect.",
     tags: ["IOS & ANDROID", "NATIVE PERFORMANCE", "CROSS-PLATFORM"],
     icon: Smartphone,
@@ -31,6 +33,7 @@ const servicesData = [
   },
   {
     title: "AI-Driven",
+    href: "/services/ai",
     description: "AI systems integrated at the architecture level, not afterthoughts, but load-bearing pillars.",
     tags: ["EMBEDDED INTELLIGENCE", "AI ARCHITECTURE", "MACHINE LEARNING"],
     icon: Brain,
@@ -38,6 +41,7 @@ const servicesData = [
   },
   {
     title: "Cloud",
+    href: "/services/cloud",
     description: "Cloud architecture so reliable and invisible that your team only thinks about the product.",
     tags: ["CLOUD INFRASTRUCTURE", "RELIABILITY", "DEVOPS"],
     icon: Cloud,
@@ -45,6 +49,7 @@ const servicesData = [
   },
   {
     title: "Desktop",
+    href: "/services/desktop",
     description: "High-performance desktop applications for professionals who demand more from their tools.",
     tags: ["HIGH PERFORMANCE", "NATIVE DESKTOP", "PROFESSIONAL TOOLS"],
     icon: Monitor,
@@ -52,6 +57,7 @@ const servicesData = [
   },
   {
     title: "Team augmentation",
+    href: "/#contact",
     description: "Senior engineers embedded alongside your team.",
     tags: ["EMBEDDED ENGINEERS", "SENIOR TEAM EXTENSION", "FLEXIBLE SCALING", "DELIVERY SUPPORT"],
     icon: Users,
@@ -59,6 +65,7 @@ const servicesData = [
   },
   {
     title: "Consulting & advisory",
+    href: "/#contact",
     description: "Audits, architecture reviews and technical guidance.",
     tags: ["TECHNICAL AUDITS", "ARCHITECTURE REVIEWS", "TECH CONSULTING", "WORKSHOPS & UPSKILLING"],
     icon: Compass,
@@ -66,6 +73,7 @@ const servicesData = [
   },
   {
     title: "App modernization & optimization",
+    href: "/services/enterprise",
     description: "Faster, healthier apps - upgrades, migrations and performance.",
     tags: ["PERFORMANCE OPTIMIZATION", "ARCHITECTURE MIGRATIONS", "BROWNFIELD INTEGRATION", "RN UPGRADES"],
     icon: RefreshCw,
@@ -96,7 +104,7 @@ export default function Navbar() {
   
 
   const navRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
@@ -118,21 +126,16 @@ export default function Navbar() {
       },
     });
 
-    const tl = gsap.timeline({ delay: 0.6 });
+    const tl = gsap.timeline({ delay: 0.2 });
 
-    tl.fromTo(logoRef.current,
-      { scale: 0.8, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.6, ease: "power2.out" }
-    );
     tl.fromTo(linksRef.current?.querySelectorAll("a") ?? [],
-      { y: -20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: "power2.out" },
-      "-=0.4"
+      { y: -12, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.45, stagger: 0.06, ease: "power2.out" }
     );
     tl.fromTo(ctaRef.current,
-      { y: -20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
-      "-=0.3"
+      { y: -12, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
+      "-=0.25"
     );
   }, { scope: navRef });
 
@@ -163,9 +166,17 @@ export default function Navbar() {
         style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "20px", paddingBottom: "20px", width: "100%" }}
       >
         {/* Logo */}
-        <div
+        <Link
+          href="/"
           ref={logoRef}
-          style={{ display: "flex", alignItems: "center", gap: "4px" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "pointer",
+          }}
         >
 
           <Image src={currentLogo} alt="Logo" width={25} height={25} />
@@ -179,7 +190,7 @@ export default function Navbar() {
           }}>
             Niena Labs
           </span>
-        </div>
+        </Link>
 
         {/* Nav Links */}
         <div
@@ -224,7 +235,7 @@ export default function Navbar() {
               <div className="section-container" style={{ padding: '40px var(--space-8)' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '40px' }}>
                   {servicesData.map((service, idx) => (
-                    <a key={idx} href="#services" style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', textDecoration: 'none', cursor: 'pointer' }} className="group">
+                    <Link key={idx} href={service.href} onClick={() => setIsServicesOpen(false)} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', textDecoration: 'none', cursor: 'pointer' }} className="group">
                       {/* Icon Box */}
                       <Card 
                         variant="dynamic"
@@ -259,7 +270,7 @@ export default function Navbar() {
                           ))}
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>

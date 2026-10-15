@@ -5,9 +5,19 @@ import { servicesList } from "../../lib/services";
 import { Terminal, ArrowUpRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "What We Build — Capabilities & Engineering Services | Niena Labs",
+  title: "What We Build — Capabilities & Engineering Services",
   description:
     "Explore our complete suite of software capabilities: Developer Tools, Enterprise Web, Mobile, AI-Driven Systems, Cloud Infrastructure, and Desktop Applications.",
+  alternates: {
+    canonical: "/services",
+  },
+  openGraph: {
+    title: "What We Build — Capabilities & Engineering Services | Niena Labs",
+    description:
+      "Explore our complete suite of software capabilities: Developer Tools, Enterprise Web, Mobile, AI-Driven Systems, Cloud Infrastructure, and Desktop Applications.",
+    url: "https://www.nienalabs.com/services",
+    type: "website",
+  },
 };
 
 export default function ServicesIndexPage() {

@@ -3,8 +3,17 @@ import type { Metadata } from 'next';
 import { Typography } from '../../components/ui/Typography';
 
 export const metadata: Metadata = {
-  title: 'Bootcamp — Niena Labs',
-  description: 'Our Software Development Bootcamp is currently ongoing.',
+  title: 'Bootcamp — Software Development Intensive',
+  description: 'Our intensive Software Development Bootcamp is currently ongoing. Applications and registrations are announced each cohort.',
+  alternates: {
+    canonical: '/bootcamp/courses',
+  },
+  openGraph: {
+    title: 'Bootcamp — Software Development Intensive | Niena Labs',
+    description: 'Our intensive Software Development Bootcamp is currently ongoing. Applications and registrations are announced each cohort.',
+    url: 'https://www.nienalabs.com/bootcamp/courses',
+    type: 'website',
+  },
 };
 
 export default function CoursesPage() {

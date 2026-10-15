@@ -693,6 +693,10 @@ export function getServiceBySlug(slug: string): ServiceData | undefined {
   );
 }
 
+export function getPrimaryServiceSlugs(): string[] {
+  return servicesList.map((s) => s.slug);
+}
+
 export function getAllServiceSlugs(): string[] {
   const slugs: string[] = [];
   servicesList.forEach((s) => {
@@ -701,3 +705,4 @@ export function getAllServiceSlugs(): string[] {
   });
   return slugs;
 }
+

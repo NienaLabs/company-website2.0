@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/employees/'],
     },
-    sitemap: 'https://nienalabs.com/sitemap.xml',
+    sitemap: 'https://www.nienalabs.com/sitemap.xml',
   };
 }

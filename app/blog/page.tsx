@@ -3,8 +3,26 @@ import { Typography } from '@/app/components/ui/Typography';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, DynamicColor } from '@/app/components/ui/Card';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Engineering Blog & Technical Insights',
+  description:
+    'Explore in-depth engineering essays on enterprise software architecture, AI integration, distributed systems, and modern web development.',
+  alternates: {
+    canonical: '/blog',
+  },
+  openGraph: {
+    title: 'Engineering Blog & Technical Insights — Niena Labs',
+    description:
+      'Explore in-depth engineering essays on enterprise software architecture, AI integration, distributed systems, and modern web development.',
+    url: 'https://www.nienalabs.com/blog',
+    type: 'website',
+  },
+};
 
 // ── Components ─────────────────────────────────────────────────────────────
+
 
 function BlogCard({ post, index }: { post: BlogPostMeta; index: number }) {
   const variant = post.cardTheme && post.cardTheme !== 'default' ? 'dynamic' : 'outlined';

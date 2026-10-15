@@ -1,9 +1,11 @@
 import { MetadataRoute } from 'next';
 import { getBlogPosts } from '../lib/blog';
-import { getAllServiceSlugs } from '../lib/services';
+import { getPrimaryServiceSlugs } from '../lib/services';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://nienalabs.com';
+  const baseUrl = 'https://www.nienalabs.com';
+  // Use a stable build/revision date rather than changing dynamically on every request
+  const siteRevisionDate = new Date('2026-10-15T00:00:00.000Z');
 
   const posts = await getBlogPosts();
   const blogUrls = posts.map((post) => ({
@@ -13,10 +15,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const serviceSlugs = getAllServiceSlugs();
+  const serviceSlugs = getPrimaryServiceSlugs();
   const serviceUrls = serviceSlugs.map((slug) => ({
     url: `${baseUrl}/services/${slug}`,
-    lastModified: new Date(),
+    lastModified: siteRevisionDate,
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
@@ -24,51 +26,51 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: siteRevisionDate,
       changeFrequency: 'weekly',
       priority: 1.0,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
+      lastModified: posts[0]?.date ? new Date(posts[0].date) : siteRevisionDate,
+      changeFrequency: 'daily',
       priority: 0.9,
     },
     ...blogUrls,
     {
       url: `${baseUrl}/services`,
-      lastModified: new Date(),
+      lastModified: siteRevisionDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     ...serviceUrls,
     {
       url: `${baseUrl}/products`,
-      lastModified: new Date(),
+      lastModified: siteRevisionDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/projects`,
-      lastModified: new Date(),
+      lastModified: siteRevisionDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/bootcamp/courses`,
-      lastModified: new Date(),
+      lastModified: siteRevisionDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/careers`,
-      lastModified: new Date(),
+      lastModified: siteRevisionDate,
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${baseUrl}/local-businesses`,
-      lastModified: new Date(),
+      lastModified: siteRevisionDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },

@@ -9,8 +9,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const course = courses.find((c) => c.slug === resolvedParams.slug);
   if (!course) return { title: 'Course Not Found' };
   return {
-    title: `${course.title} — Niena Labs Bootcamp`,
+    title: `${course.title} — Software Development Bootcamp`,
     description: course.description,
+    alternates: {
+      canonical: `/bootcamp/courses/${course.slug}`,
+    },
+    openGraph: {
+      title: `${course.title} — Software Development Bootcamp | Niena Labs`,
+      description: course.description,
+      url: `https://www.nienalabs.com/bootcamp/courses/${course.slug}`,
+      type: 'website',
+    },
   };
 }
 

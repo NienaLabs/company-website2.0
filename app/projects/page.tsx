@@ -1,8 +1,21 @@
-"use client";
-
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Projects We've Built — Engineering Case Studies",
+  description:
+    "A selection of products and platforms engineered by Niena Labs: high-velocity ticketing systems, intelligent AI ecosystems, and community platforms.",
+  alternates: {
+    canonical: "/projects",
+  },
+  openGraph: {
+    title: "Projects We've Built — Engineering Case Studies | Niena Labs",
+    description:
+      "A selection of products and platforms engineered by Niena Labs: high-velocity ticketing systems, intelligent AI ecosystems, and community platforms.",
+    url: "https://www.nienalabs.com/projects",
+    type: "website",
+  },
+};
 
 const allProjects = [
   {
@@ -37,8 +50,6 @@ const allProjects = [
 export default function ProjectsPage() {
   return (
     <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
-      <Navbar />
-      
       <section style={{ paddingTop: "160px", paddingBottom: "var(--space-10)" }}>
         <div className="section-container">
           <div style={{ marginBottom: "var(--space-10)" }}>
@@ -115,7 +126,6 @@ export default function ProjectsPage() {
         </div>
       </section>
       
-      <Footer />
       <style>{`
         .work-grid { grid-template-columns: 58% 38%; }
         @media (max-width: 900px) {

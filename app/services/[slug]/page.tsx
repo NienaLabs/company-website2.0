@@ -41,11 +41,16 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${service.label} — ${service.title.replace("\n", " ")} | Niena Labs`,
+    title: `${service.label} — ${service.title.replace("\n", " ")}`,
     description: service.heroDescription,
+    alternates: {
+      canonical: `/services/${service.slug}`,
+    },
     openGraph: {
       title: `${service.label} — Niena Labs`,
       description: service.heroDescription,
+      url: `https://www.nienalabs.com/services/${service.slug}`,
+      type: "website",
     },
   };
 }

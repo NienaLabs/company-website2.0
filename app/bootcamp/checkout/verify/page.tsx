@@ -4,6 +4,15 @@ import { CheckCircle, XCircle } from 'lucide-react';
 import { courses } from '../../../../lib/courses';
 import { getWelcomeEmailHtml, getAdminEnrollmentEmailHtml } from '../../../../lib/email-templates';
 import { Resend } from 'resend';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Payment Verification — Niena Labs Bootcamp',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function VerifyPaymentPage({
   searchParams,

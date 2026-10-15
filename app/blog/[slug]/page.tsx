@@ -33,10 +33,10 @@ export async function generateMetadata({
     };
   }
 
-  const postUrl = `https://nienalabs.com/blog/${slug}`;
+  const postUrl = `https://www.nienalabs.com/blog/${slug}`;
   const imageUrl = post.meta.coverImage.startsWith('http')
     ? post.meta.coverImage
-    : `https://nienalabs.com${post.meta.coverImage}`;
+    : `https://www.nienalabs.com${post.meta.coverImage}`;
 
   return {
     title: `${post.meta.title} — Niena Labs Blog`,
@@ -96,10 +96,10 @@ export default async function BlogPostPage({
     year: 'numeric',
   }).format(new Date(post.meta.date));
 
-  const postUrl = `https://nienalabs.com/blog/${slug}`;
+  const postUrl = `https://www.nienalabs.com/blog/${slug}`;
   const imageUrl = post.meta.coverImage.startsWith('http')
     ? post.meta.coverImage
-    : `https://nienalabs.com${post.meta.coverImage}`;
+    : `https://www.nienalabs.com${post.meta.coverImage}`;
 
   const articleStructuredData = {
     '@context': 'https://schema.org',
@@ -122,10 +122,10 @@ export default async function BlogPostPage({
     publisher: {
       '@type': 'Organization',
       name: 'Niena Labs',
-      url: 'https://nienalabs.com',
+      url: 'https://www.nienalabs.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://nienalabs.com/android-chrome-512x512.png',
+        url: 'https://www.nienalabs.com/android-chrome-512x512.png',
       },
     },
     keywords: post.meta.tags?.join(', '),
@@ -139,13 +139,13 @@ export default async function BlogPostPage({
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://nienalabs.com',
+        item: 'https://www.nienalabs.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Blog',
-        item: 'https://nienalabs.com/blog',
+        item: 'https://www.nienalabs.com/blog',
       },
       {
         '@type': 'ListItem',

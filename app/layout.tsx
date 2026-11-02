@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Niena Labs — Intelligence for the Real Economy",
+    title: "Niena Labs | There's alwaays a beginning",
     description:
       "Specialized software, infrastructure, and hardware designed to bring intelligence into businesses, factories, institutions, and living spaces.",
     type: "website",

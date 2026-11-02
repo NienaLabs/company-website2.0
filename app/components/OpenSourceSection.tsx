@@ -4,10 +4,9 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Layers, Feather, Accessibility, Zap, ShieldCheck, Server, Database, FolderTree } from "lucide-react";
+import { Layers, Feather, Accessibility, Zap, ShieldCheck, Server, Database, FolderTree, Cpu, Network } from "lucide-react";
 import { Card } from "./ui/Card";
 import { Typography } from "./ui/Typography";
-
 
 function GitHubIcon() {
   return (
@@ -28,91 +27,102 @@ const libraries = [
   {
     id: "alugard-drop",
     name: "alugard-drop",
-    tagline: "Drag-and-drop, without the framework tax.",
+    tagline: "High-performance sensory interaction, zero framework tax.",
     description:
-      "A zero-dependency, framework-agnostic drag-and-drop library built for precision and performance. Works identically in React, Vue, Svelte, Angular, or vanilla JavaScript, no lock-in, no overhead.",
+      "A zero-dependency, ultra-light interaction runtime engineered for precision UI and tactile control surfaces. Runs identically in embedded web views, industrial touch interfaces, and standard web applications.",
     highlights: [
-      { text: "Framework agnostic, runs on any stack", Icon: Layers },
-      { text: "Zero dependencies", Icon: Feather },
-      { text: "Accessible by default with keyboard and screen reader support", Icon: Accessibility },
-      { text: "Tree-shakeable, < 4kb gzipped", Icon: Zap },
+      { text: "Framework agnostic, runs on any UI runtime", Icon: Layers },
+      { text: "Zero dependencies, pure micro-loop performance", Icon: Feather },
+      { text: "Accessible by default with hardware input support", Icon: Accessibility },
+      { text: "Tree-shakeable, < 4kb gzipped overhead", Icon: Zap },
     ],
     href: "https://github.com/orgs/Nienalabs-community/repositories",
-    tag: "Library",
+    tag: "Interaction Runtime",
     logoImage: "/images/projects/alugard.png",
   },
   {
-    id: "niena-starter-kit",
-    name: "niena-starter-kit",
-    tagline: "Scaffold a production Next.js app in under a minute.",
+    id: "niena-telemetry-kit",
+    name: "niena-telemetry-kit",
+    tagline: "Deterministic binary telemetry and edge model serialization.",
     description:
-      "An opinionated CLI scaffolder for Next.js projects. Ships with enterprise-grade authentication out of the box, fully customizable auth screens, and a menu-driven stack selection, so your first commit is already production-ready.",
+      "A high-throughput telemetry pipeline and model communication protocol for edge computing appliances. Stream real-time sensor metrics and vision inference results with microsecond latency.",
     highlights: [
-      { text: "Built-in Auth with customizable UI screens", Icon: ShieldCheck },
-      { text: "Choose your backend: tRPC or REST", Icon: Server },
-      { text: "Choose your ORM: Prisma or Drizzle, fully configured", Icon: Database },
-      { text: "Environment scaffolding, typed routes, and project structure included", Icon: FolderTree },
+      { text: "Sub-millisecond binary serialization format", Icon: Cpu },
+      { text: "Air-gapped edge buffer with auto-reconnection", Icon: ShieldCheck },
+      { text: "Hardware cryptographic signatures for telemetry", Icon: Server },
+      { text: "Zero memory allocation in hot ingestion loops", Icon: Network },
     ],
     href: "https://github.com/orgs/Nienalabs-community/repositories",
-    tag: "CLI Tool",
-    logoText: "Niena Starter Kit",
+    tag: "Edge Telemetry Protocol",
+    logoText: "Niena Telemetry",
   },
 ];
-
 
 export default function OpenSourceSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const manifestoRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useGSAP((_context, contextSafe) => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) {
-      // Revert opacity to 1 if no animation
-      gsap.set(".opensource-card", { opacity: 1 });
-      return;
-    }
+  useGSAP(
+    (_context, contextSafe) => {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      if (prefersReducedMotion) {
+        gsap.set(".opensource-card", { opacity: 1 });
+        return;
+      }
 
-    if (!contextSafe) return;
+      if (!contextSafe) return;
 
-    const createAnimation = contextSafe(() => {
-      // Header block enter
-      gsap.fromTo(headerRef.current,
-        { y: 32, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 0.8, ease: "power2.out",
-          scrollTrigger: { trigger: headerRef.current, start: "top 80%" },
-        }
-      );
-
-      // Manifesto statement
-      gsap.fromTo(manifestoRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1, duration: 0.7, ease: "power2.out",
-          scrollTrigger: { trigger: manifestoRef.current, start: "top 80%" },
-        }
-      );
-
-      // Library cards
-      const cards = gsap.utils.toArray(".opensource-card");
-      cards.forEach((card: any, i) => {
-        gsap.fromTo(card,
-          { y: 48, opacity: 0 },
+      const createAnimation = contextSafe(() => {
+        gsap.fromTo(
+          headerRef.current,
+          { y: 32, opacity: 0 },
           {
-            y: 0, opacity: 1, duration: 0.75, ease: "power2.out", delay: i * 0.15,
-            scrollTrigger: { trigger: card, start: "top 82%" },
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: { trigger: headerRef.current, start: "top 80%" },
           }
         );
-      });
-    });
 
-    const timer = setTimeout(() => {
-      createAnimation();
-    }, 100);
-    return () => clearTimeout(timer);
-  }, { scope: sectionRef, dependencies: [] });
+        gsap.fromTo(
+          manifestoRef.current,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.7,
+            ease: "power2.out",
+            scrollTrigger: { trigger: manifestoRef.current, start: "top 80%" },
+          }
+        );
+
+        const cards = gsap.utils.toArray(".opensource-card");
+        cards.forEach((card: any, i) => {
+          gsap.fromTo(
+            card,
+            { y: 48, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.75,
+              ease: "power2.out",
+              delay: i * 0.15,
+              scrollTrigger: { trigger: card, start: "top 82%" },
+            }
+          );
+        });
+      });
+
+      const timer = setTimeout(() => {
+        createAnimation();
+      }, 100);
+      return () => clearTimeout(timer);
+    },
+    { scope: sectionRef, dependencies: [] }
+  );
 
   return (
     <section
@@ -127,12 +137,30 @@ export default function OpenSourceSection() {
       <div className="section-container">
         {/* Header */}
         <div ref={headerRef} style={{ marginBottom: "var(--space-8)", opacity: 0 }}>
-          <div style={{ maxWidth: "540px" }}>
-
+          <div style={{ marginBottom: "16px" }}>
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "6px 16px",
+                borderRadius: "var(--radius-full)",
+                backgroundColor: "rgba(224, 209, 46, 0.08)",
+                border: "1px solid rgba(224, 209, 46, 0.3)",
+                color: "var(--color-brand)",
+                fontSize: "12px",
+                fontFamily: "var(--font-body)",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+              }}
+            >
+              Open Infrastructure
+            </span>
           </div>
 
           <Typography variant="large-title" style={{ marginBottom: "16px" }}>
-            We build in public.
+            Open tools for the intelligence frontier.
           </Typography>
         </div>
 
@@ -141,149 +169,164 @@ export default function OpenSourceSection() {
           ref={manifestoRef}
           style={{
             opacity: 0,
-            maxWidth: "640px",
+            maxWidth: "680px",
             marginBottom: "var(--space-9)",
           }}
         >
-          <p style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "clamp(18px, 2.2vw, 22px)",
-            color: "var(--text-primary)",
-            lineHeight: 1.8,
-          }}>
-            The best tools should be free. Everything we build internally that can
-            help other engineers — we open-source. No paywalls. No waitlists.
-            Pull it, use it, ship faster.
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(17px, 2vw, 21px)",
+              color: "var(--text-primary)",
+              lineHeight: 1.75,
+            }}
+          >
+            Bringing intelligence into the physical economy requires open, battle-tested
+            foundations. Everything we build at the runtime and telemetry layer that
+            accelerates engineering for operators and roboticists, we publish openly. No gatekeeping. No cloud lock-in.
           </p>
         </div>
 
         {/* Library cards */}
-        <div className="bento-grid" style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "var(--space-6)",
-        }}>
+        <div
+          className="bento-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "var(--space-6)",
+          }}
+        >
           {libraries.map((lib, i) => {
             const cardColorIndex = (i % 4) + 1;
-            const availableIconColors = [1, 2, 3, 4]
-              .filter(c => c !== cardColorIndex)
-              .map(c => `var(--color-alt-${c})`);
 
             return (
-            <Card
-              key={lib.id}
-              className="opensource-card"
-              variant="dynamic"
-              dynamicColor={cardColorIndex.toString() as any}
-              interactive={true}
-              style={{
-                opacity: 0,
-                position: "relative",
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-5)",
-              }}
-            >
-              {/* Tag */}
-              <Typography 
-                variant="caption1"
+              <Card
+                key={lib.id}
+                className="opensource-card"
+                variant="dynamic"
+                dynamicColor={cardColorIndex.toString() as any}
+                interactive={true}
                 style={{
-                  textTransform: "uppercase",
-                  color: "inherit",
-                  opacity: 0.6,
+                  opacity: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  padding: "32px",
                 }}
               >
-                {lib.tag}
-              </Typography>
-
-              {/* Name / Logo */}
-              <div>
-                <div style={{ marginBottom: "16px", minHeight: "40px", display: "flex", alignItems: "center" }}>
-                  {lib.logoImage ? (
-                    <img src={lib.logoImage} alt={lib.name} style={{ height: "40px", objectFit: "contain" }} />
-                  ) : lib.logoText ? (
-                    <Typography variant="title2" style={{ fontStyle: "italic", margin: 0 }}>
-                      {lib.logoText}
-                    </Typography>
-                  ) : (
-                    <Typography variant="title2" style={{ margin: 0 }}>
-                      {lib.name}
-                    </Typography>
-                  )}
-                </div>
-                <Typography variant="body1" color="inherit" style={{ opacity: 0.9 }}>
-                  {lib.tagline}
-                </Typography>
-              </div>
-
-              {/* Description */}
-              <Typography variant="body2" color="inherit" style={{ opacity: 0.8 }}>
-                {lib.description}
-              </Typography>
-
-              {/* Highlights */}
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "8px" }}>
-                {lib.highlights.map((h, j) => {
-                  const IconComp = h.Icon;
-                  return (
-                  <li
-                    key={j}
+                <div>
+                  <div
                     style={{
                       display: "flex",
-                      alignItems: "flex-start",
-                      gap: "10px",
-                      fontFamily: "var(--font-body)",
-                      fontSize: "14px",
-                      color: "inherit",
-                      opacity: 0.8,
-                      lineHeight: 1.6,
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: "20px",
                     }}
                   >
-                    <span style={{ color: availableIconColors[j % availableIconColors.length], flexShrink: 0, marginTop: "2px", opacity: 1 }}>
-                      <IconComp size={16} strokeWidth={2.5} />
+                    <span
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: "11px",
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        padding: "4px 10px",
+                        borderRadius: "var(--radius-full)",
+                        backgroundColor: "rgba(0,0,0,0.2)",
+                        color: "inherit",
+                      }}
+                    >
+                      {lib.tag}
                     </span>
-                    {h.text}
-                  </li>
-                )})}
-              </ul>
+                    <a
+                      href={lib.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: "inherit",
+                        display: "flex",
+                        alignItems: "center",
+                        opacity: 0.8,
+                        transition: "opacity 150ms ease",
+                      }}
+                      className="hover:opacity-100"
+                    >
+                      <GitHubIcon />
+                    </a>
+                  </div>
 
-              {/* View on GitHub */}
-              <div style={{ marginTop: "auto", paddingTop: "var(--space-4)" }}>
-                <a
-                  href={lib.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "24px",
+                      fontWeight: 600,
+                      marginBottom: "8px",
+                      color: "inherit",
+                    }}
+                  >
+                    {lib.name}
+                  </h3>
+
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                      opacity: 0.9,
+                      marginBottom: "16px",
+                    }}
+                  >
+                    {lib.tagline}
+                  </p>
+
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "13px",
+                      lineHeight: 1.6,
+                      opacity: 0.85,
+                      marginBottom: "24px",
+                    }}
+                  >
+                    {lib.description}
+                  </p>
+                </div>
+
+                <div
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
+                    display: "flex",
+                    flexDirection: "column",
                     gap: "8px",
-                    fontFamily: "var(--font-display)",
-                    fontSize: "11px", fontWeight: 600,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                    color: "inherit",
-                    textDecoration: "none",
-                    borderBottom: "1px solid rgba(255,255,255,0.3)",
-                    paddingBottom: "2px",
-                    transition: "opacity 200ms ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = "0.7";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.opacity = "1";
+                    borderTop: "1px solid rgba(255,255,255,0.15)",
+                    paddingTop: "20px",
                   }}
                 >
-                  <GitHubIcon />
-                  View on GitHub
-                </a>
-              </div>
-            </Card>
-          )})}
+                  {lib.highlights.map((h, hIdx) => {
+                    const HIcon = h.Icon;
+                    return (
+                      <div
+                        key={hIdx}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                          fontSize: "12px",
+                          opacity: 0.9,
+                        }}
+                      >
+                        <HIcon size={14} />
+                        <span>{h.text}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            );
+          })}
         </div>
 
         {/* Community CTA */}
-        <Card 
+        <Card
           variant="glass"
           style={{
             marginTop: "var(--space-8)",
@@ -292,15 +335,16 @@ export default function OpenSourceSection() {
             justifyContent: "space-between",
             flexWrap: "wrap",
             gap: "24px",
+            padding: "28px 36px",
           }}
         >
           <div>
-            <Typography variant="title3" style={{ marginBottom: "8px" }}>
-              Join the community 🎉
+            <Typography variant="title3" style={{ marginBottom: "6px" }}>
+              Join the Niena Labs Community
             </Typography>
-            <Typography variant="body2" color="secondary" style={{ maxWidth: "480px" }}>
-              All our libraries live in the Niena Labs Community GitHub organization.
-              Contributions, issues, and ideas are always welcome.
+            <Typography variant="body2" color="secondary" style={{ maxWidth: "520px" }}>
+              Our telemetry protocols, runtime benchmarks, and hardware schematics live in the
+              Niena Labs Community GitHub organization.
             </Typography>
           </div>
           <a
@@ -308,7 +352,16 @@ export default function OpenSourceSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary"
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "11px", fontWeight: 600, flexShrink: 0 }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              fontSize: "12px",
+              fontWeight: 600,
+              flexShrink: 0,
+              padding: "10px 24px",
+              borderRadius: "var(--radius-full)",
+            }}
           >
             <GitHubIcon />
             Explore on GitHub
@@ -318,9 +371,6 @@ export default function OpenSourceSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          #open-source .section-container > div:last-child {
-            flex-direction: column !important;
-          }
           #open-source .bento-grid {
             grid-template-columns: 1fr !important;
           }

@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import ProductsClient from "./ProductsClient";
 
 export const metadata: Metadata = {
-  title: "Products & Open Source Software",
+  title: "Specialized Software & Systems | Niena Labs",
   description:
-    "Explore software built by Niena Labs: AI career platforms, desktop utilities, high-performance drag-and-drop libraries, and Next.js developer tools.",
+    "Explore specialized software, edge perception pipelines, and infrastructure engineered by Niena Labs: Compound-V retail perception, factory defect inspection, sortation classifiers, and ambient voice agents.",
   alternates: {
     canonical: "/products",
   },
   openGraph: {
-    title: "Products & Open Source Software | Niena Labs",
+    title: "Specialized Software & Systems | Niena Labs",
     description:
-      "Explore software built by Niena Labs: AI career platforms, desktop utilities, high-performance drag-and-drop libraries, and Next.js developer tools.",
+      "Explore specialized software, edge perception pipelines, and infrastructure engineered by Niena Labs: Compound-V retail perception, factory defect inspection, sortation classifiers, and ambient voice agents.",
     url: "https://www.nienalabs.com/products",
     type: "website",
   },

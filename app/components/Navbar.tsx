@@ -4,84 +4,60 @@ import { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Globe, Smartphone, Brain, Cloud, Monitor, ChevronDown, RefreshCw, Users, Compass } from "lucide-react";
-
-import { Card } from './ui/Card';
+import {
+  Factory,
+  Building2,
+  Landmark,
+  Home,
+  ChevronDown,
+  ArrowUpRight,
+} from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const servicesData = [
+const environmentsData = [
   {
-    title: "Enterprise Web",
-    href: "/services/enterprise",
-    description: "End-to-end web platforms engineered to grow with your business, from 100 users to 10 million.",
-    tags: ["SCALABLE ARCHITECTURE", "WEB PLATFORMS", "HIGH PERFORMANCE"],
-    icon: Globe,
-    dynamicColor: "2" as const
+    title: "Factories & Manufacturing",
+    href: "/#capabilities",
+    description:
+      "Real-time sub-millimeter computer vision, automated defect interception, and predictive industrial telemetry.",
+    tags: ["COMPUTER VISION", "EDGE INFERENCE", "DEFECT INTERCEPTION"],
+    icon: Factory,
+    dynamicColor: "1" as const,
   },
   {
-    title: "Mobile",
-    href: "/services/mobile",
-    description: "Cross-platform applications that feel native on every device, delivering performance users expect.",
-    tags: ["IOS & ANDROID", "NATIVE PERFORMANCE", "CROSS-PLATFORM"],
-    icon: Smartphone,
-    dynamicColor: "1" as const
+    title: "Businesses & Enterprise",
+    href: "/#capabilities",
+    description:
+      "Autonomous operational intelligence, decision engines, and high-velocity workflow automation.",
+    tags: ["DECISION INTELLIGENCE", "AUTONOMOUS WORKFLOWS", "PREDICTIVE OPS"],
+    icon: Building2,
+    dynamicColor: "2" as const,
   },
   {
-    title: "AI-Driven",
-    href: "/services/ai",
-    description: "AI systems integrated at the architecture level, not afterthoughts, but load-bearing pillars.",
-    tags: ["EMBEDDED INTELLIGENCE", "AI ARCHITECTURE", "MACHINE LEARNING"],
-    icon: Brain,
-    dynamicColor: "4" as const
+    title: "Institutions & Healthcare",
+    href: "/#capabilities",
+    description:
+      "High-assurance compute platforms, secure research intelligence, and clinical workflow assistance.",
+    tags: ["HIGH ASSURANCE", "RESEARCH COMPUTE", "DATA INTEGRITY"],
+    icon: Landmark,
+    dynamicColor: "3" as const,
   },
   {
-    title: "Cloud",
-    href: "/services/cloud",
-    description: "Cloud architecture so reliable and invisible that your team only thinks about the product.",
-    tags: ["CLOUD INFRASTRUCTURE", "RELIABILITY", "DEVOPS"],
-    icon: Cloud,
-    dynamicColor: "3" as const
+    title: "Homes & Living Spaces",
+    href: "/#capabilities",
+    description:
+      "Private on-device ambient intelligence, local neural compute appliances, and intelligent living spaces.",
+    tags: ["AMBIENT INTELLIGENCE", "LOCAL COMPUTE", "PRIVACY PRESERVING"],
+    icon: Home,
+    dynamicColor: "4" as const,
   },
-  {
-    title: "Desktop",
-    href: "/services/desktop",
-    description: "High-performance desktop applications for professionals who demand more from their tools.",
-    tags: ["HIGH PERFORMANCE", "NATIVE DESKTOP", "PROFESSIONAL TOOLS"],
-    icon: Monitor,
-    dynamicColor: "2" as const
-  },
-  {
-    title: "Team augmentation",
-    href: "/#contact",
-    description: "Senior engineers embedded alongside your team.",
-    tags: ["EMBEDDED ENGINEERS", "SENIOR TEAM EXTENSION", "FLEXIBLE SCALING", "DELIVERY SUPPORT"],
-    icon: Users,
-    dynamicColor: "4" as const
-  },
-  {
-    title: "Consulting & advisory",
-    href: "/#contact",
-    description: "Audits, architecture reviews and technical guidance.",
-    tags: ["TECHNICAL AUDITS", "ARCHITECTURE REVIEWS", "TECH CONSULTING", "WORKSHOPS & UPSKILLING"],
-    icon: Compass,
-    dynamicColor: "3" as const
-  },
-  {
-    title: "App modernization & optimization",
-    href: "/services/enterprise",
-    description: "Faster, healthier apps - upgrades, migrations and performance.",
-    tags: ["PERFORMANCE OPTIMIZATION", "ARCHITECTURE MIGRATIONS", "BROWNFIELD INTEGRATION", "RN UPGRADES"],
-    icon: RefreshCw,
-    dynamicColor: "1" as const
-  }
 ];
 
-// Inline GitHub SVG — no icon library needed
 function GitHubIcon() {
   return (
     <svg
@@ -97,73 +73,109 @@ function GitHubIcon() {
 }
 
 export default function Navbar() {
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isEnvironmentsOpen, setIsEnvironmentsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
-  
 
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
-  const isLightMode = resolvedTheme === 'light';
-  const currentLogo = "/logo-black.svg" 
+  useEffect(() => {
+    setMounted(true);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
 
-  useGSAP(() => {
-    const nav = navRef.current;
-    if (!nav) return;
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    ScrollTrigger.create({
-      start: "top top-=" + 80,
-      onUpdate: (self) => {
-        if (self.direction === 1) {
-          gsap.to(nav, { yPercent: -100, duration: 0.3, ease: "power2.out", overwrite: true });
-        } else {
-          gsap.to(nav, { yPercent: 0, duration: 0.3, ease: "power2.out", overwrite: true });
-        }
-      },
-    });
+  const isDarkHero = pathname === "/" && !isScrolled;
 
-    const tl = gsap.timeline({ delay: 0.2 });
+  const logoSrc =
+    !mounted
+      ? pathname === "/"
+        ? "/logo-white.svg"
+        : resolvedTheme === "dark"
+        ? "/logo-white.svg"
+        : "/logo-black.svg"
+      : isDarkHero
+      ? "/logo-white.svg"
+      : resolvedTheme === "dark"
+      ? "/logo-white.svg"
+      : "/logo-black.svg";
 
-    tl.fromTo(linksRef.current?.querySelectorAll("a") ?? [],
-      { y: -12, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.45, stagger: 0.06, ease: "power2.out" }
-    );
-    tl.fromTo(ctaRef.current,
-      { y: -12, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
-      "-=0.25"
-    );
-  }, { scope: navRef });
+  useGSAP(
+    () => {
+      const nav = navRef.current;
+      if (!nav) return;
+
+      ScrollTrigger.create({
+        start: "top top-=80",
+        onUpdate: (self) => {
+          if (self.direction === 1 && self.scroll() > 140) {
+            gsap.to(nav, {
+              yPercent: -100,
+              duration: 0.3,
+              ease: "power2.out",
+              overwrite: true,
+            });
+          } else {
+            gsap.to(nav, {
+              yPercent: 0,
+              duration: 0.3,
+              ease: "power2.out",
+              overwrite: true,
+            });
+          }
+        },
+      });
+
+      const tl = gsap.timeline({ delay: 0.2 });
+
+      tl.fromTo(
+        linksRef.current?.querySelectorAll("a, span.nav-trigger") ?? [],
+        { y: -12, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, stagger: 0.06, ease: "power2.out" }
+      );
+      tl.fromTo(
+        ctaRef.current,
+        { y: -12, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
+        "-=0.25"
+      );
+    },
+    { scope: navRef }
+  );
 
   // Hide Navbar in the Admin dashboard
-  if (pathname?.startsWith('/employees')) {
+  if (pathname?.startsWith("/employees")) {
     return null;
   }
 
   return (
     <header
       ref={navRef}
-      className="nav-scrolled"
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        backgroundColor: "transparent",
-        transition: "background-color 300ms ease, backdrop-filter 300ms ease",
-        willChange: "transform",
-        transform: "translateZ(0)",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >      <div
+      className={`navbar-header ${
+        isDarkHero ? "nav-dark-hero" : isScrolled ? "nav-scrolled" : "nav-standard"
+      }`}
+      aria-label="Main Navigation"
+    >
+      <div
         className="section-container"
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "20px", paddingBottom: "20px", width: "100%" }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingTop: "18px",
+          paddingBottom: "18px",
+          width: "100%",
+        }}
       >
         {/* Logo */}
         <Link
@@ -172,22 +184,30 @@ export default function Navbar() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "4px",
+            gap: "10px",
             textDecoration: "none",
             color: "inherit",
             cursor: "pointer",
           }}
         >
-
-          <Image src={currentLogo} alt="Logo" width={25} height={25} />
-
-          <span className="logo-text" style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "18px",
-            letterSpacing: "0.06em",
-            color: "var(--text-primary)",
-            textTransform: "uppercase",
-          }}>
+          <Image
+            src={logoSrc}
+            alt="Niena Labs Logo"
+            width={26}
+            height={26}
+            priority
+          />
+          <span
+            className="logo-text"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "17px",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              transition: "color 200ms ease",
+            }}
+          >
             Niena Labs
           </span>
         </Link>
@@ -196,25 +216,36 @@ export default function Navbar() {
         <div
           ref={linksRef}
           className="desktop-nav-links"
-          style={{ display: "flex", gap: "36px", alignItems: "center" }}
+          style={{ display: "flex", gap: "32px", alignItems: "center" }}
         >
-          {/* Services with Mega Menu */}
-          <div 
-            onMouseEnter={() => setIsServicesOpen(true)}
-            onMouseLeave={() => setIsServicesOpen(false)}
-            style={{ padding: '20px 0', margin: '-20px 0', display: 'flex', alignItems: 'center', position: 'static' }}
+          {/* Environments Mega Menu */}
+          <div
+            onMouseEnter={() => setIsEnvironmentsOpen(true)}
+            onMouseLeave={() => setIsEnvironmentsOpen(false)}
+            style={{
+              padding: "20px 0",
+              margin: "-20px 0",
+              display: "flex",
+              alignItems: "center",
+              position: "static",
+            }}
           >
-            <span 
-              className={`nav-link ${isServicesOpen ? 'active' : ''}`}
-              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+            <span
+              className={`nav-link nav-trigger ${isEnvironmentsOpen ? "active" : ""}`}
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
             >
-              Services 
-              <ChevronDown 
-                size={14} 
-                style={{ 
-                  transform: isServicesOpen ? 'rotate(180deg)' : 'none', 
-                  transition: 'transform 200ms ease' 
-                }} 
+              Industries
+              <ChevronDown
+                size={14}
+                style={{
+                  transform: isEnvironmentsOpen ? "rotate(180deg)" : "none",
+                  transition: "transform 200ms ease",
+                }}
               />
             </span>
 
@@ -222,50 +253,119 @@ export default function Navbar() {
             <div
               className="absolute left-0 w-full"
               style={{
-                top: '100%',
-                background: 'var(--surface)',
-                borderTop: '1px solid var(--border)',
-                borderBottom: '1px solid var(--border)',
-                opacity: isServicesOpen ? 1 : 0,
-                visibility: isServicesOpen ? 'visible' : 'hidden',
-                transition: 'opacity 200ms ease, visibility 200ms ease',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+                top: "100%",
+                background: "var(--md-sys-color-surface-container, var(--color-surface))",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                borderTop: "1px solid var(--color-border)",
+                borderBottom: "1px solid var(--color-border)",
+                opacity: isEnvironmentsOpen ? 1 : 0,
+                visibility: isEnvironmentsOpen ? "visible" : "hidden",
+                transition: "opacity 200ms ease, visibility 200ms ease",
+                boxShadow: "0 24px 48px rgba(0,0,0,0.35)", /* taste-skill-ignore */
               }}
             >
-              <div className="section-container" style={{ padding: '40px var(--space-8)' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '40px' }}>
-                  {servicesData.map((service, idx) => (
-                    <Link key={idx} href={service.href} onClick={() => setIsServicesOpen(false)} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', textDecoration: 'none', cursor: 'pointer' }} className="group">
-                      {/* Icon Box */}
-                      <Card 
-                        variant="dynamic"
-                        dynamicColor={service.dynamicColor}
-                        className="w-14 h-14 shrink-0 transition-transform duration-200 group-hover:scale-110 group-hover:shadow-lg [&_.natural-card]:!p-0 [&_.natural-card]:items-center [&_.natural-card]:justify-center"
+              <div
+                className="section-container"
+                style={{ padding: "36px var(--space-8)" }}
+              >
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "32px",
+                  }}
+                >
+                  {environmentsData.map((item, idx) => (
+                    <Link
+                      key={idx}
+                      href={item.href}
+                      onClick={() => setIsEnvironmentsOpen(false)}
+                      style={{
+                        display: "flex",
+                        gap: "20px",
+                        alignItems: "flex-start",
+                        textDecoration: "none",
+                        cursor: "pointer",
+                        padding: "12px",
+                        borderRadius: "var(--radius-lg)",
+                        transition: "background-color 150ms ease",
+                      }}
+                      className="group hover:bg-[var(--md-sys-color-surface-container-high)]"
+                    >
+                      <div
+                        style={{
+                          width: "48px",
+                          height: "48px",
+                          borderRadius: "var(--radius-xl)",
+                          backgroundColor: `var(--color-alt-${item.dynamicColor})`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                          transition: "transform 200ms ease",
+                        }}
+                        className="group-hover:scale-105"
                       >
-                        <service.icon size={24} color="#ffffff" />
-                      </Card>
-                      
-                      {/* Content */}
+                        <item.icon size={22} color="#ffffff" />
+                      </div>
+
                       <div>
-                        <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontWeight: 600, color: 'var(--color-fg)', marginBottom: '8px', marginTop: 0, transition: 'color 200ms ease' }}>
-                          {service.title}
+                        <h4
+                          style={{
+                            fontFamily: "var(--font-display)",
+                            fontSize: "16px",
+                            fontWeight: 600,
+                            color: "var(--color-fg)",
+                            marginBottom: "6px",
+                            marginTop: 0,
+                          }}
+                        >
+                          {item.title}
                         </h4>
-                        <p style={{ fontSize: '14px', color: 'var(--color-fg-muted)', marginBottom: '16px' }}>
-                          {service.description}
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            lineHeight: 1.5,
+                            color: "var(--color-fg-muted)",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          {item.description}
                         </p>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', rowGap: '4px' }}>
-                          {service.tags.map((tag, tIdx) => (
-                            <span key={tIdx} style={{ 
-                              fontSize: '10px', 
-                              fontWeight: 600, 
-                              color: 'var(--color-fg-subtle)', 
-                              letterSpacing: '0.05em',
-                              textTransform: 'uppercase',
-                              display: 'flex',
-                              alignItems: 'center'
-                            }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: "8px",
+                            rowGap: "4px",
+                          }}
+                        >
+                          {item.tags.map((tag, tIdx) => (
+                            <span
+                              key={tIdx}
+                              style={{
+                                fontSize: "10px",
+                                fontWeight: 600,
+                                color: "var(--color-fg-subtle)",
+                                letterSpacing: "0.06em",
+                                textTransform: "uppercase",
+                                display: "flex",
+                                alignItems: "center",
+                              }}
+                            >
                               {tag}
-                              {tIdx < service.tags.length - 1 && <span style={{ margin: '0 6px', width: '3px', height: '3px', borderRadius: '50%', backgroundColor: 'var(--border)' }}></span>}
+                              {tIdx < item.tags.length - 1 && (
+                                <span
+                                  style={{
+                                    margin: "0 6px",
+                                    width: "3px",
+                                    height: "3px",
+                                    borderRadius: "50%",
+                                    backgroundColor: "var(--border)",
+                                  }}
+                                />
+                              )}
                             </span>
                           ))}
                         </div>
@@ -277,22 +377,32 @@ export default function Navbar() {
             </div>
           </div>
 
+          <Link href="/#capabilities" className="nav-link">
+            Capabilities
+          </Link>
           <Link href="/products" className="nav-link">
             Products
           </Link>
-          <Link href="/careers" className="nav-link">
-            Careers
-          </Link>
+          <a
+            href="https://github.com/orgs/Nienalabs-community/repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link"
+            style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
+          >
+            Open Source <ArrowUpRight size={12} />
+          </a>
           <Link href="/blog" className="nav-link">
-            Blog
+            Research & Blog
           </Link>
         </div>
 
-        {/* Right — GitHub + CTA */}
-        <div ref={ctaRef} className="cta-container" style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Link href="/bootcamp/courses" className="nav-link mobile-hidden" style={{ fontSize: "13px", fontWeight: 600 }}>
-            Bootcamp
-          </Link>
+        {/* Right — GitHub + Theme + Deploy CTA */}
+        <div
+          ref={ctaRef}
+          className="cta-container"
+          style={{ display: "flex", alignItems: "center", gap: "14px" }}
+        >
           {/* GitHub Community Link */}
           <a
             href="https://github.com/orgs/Nienalabs-community/repositories"
@@ -300,41 +410,53 @@ export default function Navbar() {
             rel="noopener noreferrer"
             aria-label="Niena Labs GitHub Community"
             title="Niena Labs Open Source Community"
-            className="mobile-hidden"
+            className="mobile-hidden nav-meta-btn"
             style={{
-              color: "var(--text-muted)",
               display: "flex",
               alignItems: "center",
-              transition: "color 200ms ease",
+              justifyContent: "center",
+              width: "36px",
+              height: "36px",
+              borderRadius: "var(--radius-full, 9999px)",
+              backgroundColor: "transparent",
+              border: "1px solid",
+              cursor: "pointer",
+              transition:
+                "color 200ms ease, border-color 200ms ease, transform 150ms ease",
               lineHeight: 1,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--amber)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
           >
             <GitHubIcon />
           </a>
 
           <ThemeToggle />
-          <CallButton />
+
+          <Link
+            href="/#contact"
+            className="btn-primary"
+            style={{
+              padding: "10px 22px",
+              fontSize: "12px",
+              fontWeight: 600,
+              letterSpacing: "0.04em",
+              borderRadius: "var(--radius-full)",
+              textTransform: "uppercase",
+            }}
+          >
+            Contact Us
+          </Link>
         </div>
       </div>
+
       <style>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-150%) skewX(-20deg); }
-          100% { transform: translateX(250%) skewX(-20deg); }
-        }
-        .shimmer-effect {
-          animation: shimmer 5s infinite;
-        }
-        @media (max-width: 768px) {
+        @media (max-width: 860px) {
           .desktop-nav-links { display: none !important; }
           .mobile-hidden { display: none !important; }
-          .cta-container { gap: 12px !important; }
-          .logo-text { font-size: 14px !important; letter-spacing: 0.15em !important; }
+          .cta-container { gap: 10px !important; }
+          .logo-text { font-size: 14px !important; letter-spacing: 0.12em !important; }
         }
         @media (max-width: 480px) {
-          .logo-text { font-size: 12px !important; letter-spacing: 0.1em !important; }
-          .call-btn { padding: 8px 12px !important; font-size: 8px !important; }
+          .logo-text { font-size: 13px !important; }
         }
         @media (max-width: 360px) {
           .logo-text { display: none !important; }
@@ -342,51 +464,6 @@ export default function Navbar() {
       `}</style>
     </header>
   );
-}
-
-function CallButton() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCallClick = () => {
-    navigator.clipboard.writeText("+233556732796");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div style={{ position: "relative", display: "inline-block" }}>
-      <a
-        href="tel:+233556732796"
-        onClick={handleCallClick}
-        className="btn-secondary call-btn"
-        style={{ fontSize: "11px", fontWeight: 600 }}
-      >
-        Book a Call
-      </a>
-      {copied && (
-        <div style={{
-          position: "absolute",
-          top: "100%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          marginTop: "8px",
-          background: "var(--bg)",
-          border: "1px solid var(--border)",
-          color: "var(--amber)",
-          fontSize: "11px", fontWeight: 600,
-          padding: "4px 8px",
-          borderRadius: "4px",
-          whiteSpace: "nowrap",
-          fontFamily: "var(--font-display)",
-          letterSpacing: "0.06em",
-          zIndex: 10,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
-        }}>
-          Number Copied!
-        </div>
-      )}
-    </div>
-  )
 }
 
 function ThemeToggle() {
@@ -398,39 +475,41 @@ function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <div style={{ width: 28, height: 28 }} />;
+    return <div style={{ width: 36, height: 36 }} />;
   }
 
-  const isDark = resolvedTheme === 'dark';
+  const isDark = resolvedTheme === "dark";
 
   return (
     <button
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label="Toggle Theme"
+      className="nav-meta-btn"
       style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        width: "28px",
-        height: "28px",
-        borderRadius: "50%",
+        width: "36px",
+        height: "36px",
+        borderRadius: "var(--radius-full, 9999px)",
         backgroundColor: "transparent",
-        color: "var(--text-muted)",
-        border: "1px solid var(--border)",
+        border: "1px solid",
         cursor: "pointer",
-        transition: "all 200ms ease",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.color = "var(--text-primary)";
-        e.currentTarget.style.borderColor = "var(--border-strong)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.color = "var(--text-muted)";
-        e.currentTarget.style.borderColor = "var(--border)";
+        transition:
+          "color 200ms ease, border-color 200ms ease, transform 150ms ease",
       }}
     >
       {isDark ? (
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <circle cx="12" cy="12" r="5" />
           <line x1="12" y1="1" x2="12" y2="3" />
           <line x1="12" y1="21" x2="12" y2="23" />
@@ -442,7 +521,16 @@ function ThemeToggle() {
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
         </svg>
       ) : (
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       )}

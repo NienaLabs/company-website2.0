@@ -3,29 +3,44 @@
 import { Card, DynamicColor } from "./ui/Card";
 import { Typography } from "./ui/Typography";
 import { Carousel } from "./ui/Carousel";
+import ScrollBlurReveal from "./ui/ScrollBlurReveal";
 
 const testimonials = [
   {
-    quote: "They did not build what we asked for. They built what we needed — which turned out to be a far harder and more valuable thing. Niena Labs understood our problem before we fully did.",
-    name: "AMARA OSEI", company: "VANTARA HEALTH", role: "Co-Founder & CEO",
+    quote:
+      "Niena Labs' edge vision systems caught over 4,000 micro-flaws on our precision machining lines in the first 30 days. Running inference at the edge with sub-12ms response meant zero line stoppage and 100% data privacy.",
+    name: "MARCUS VANCE",
+    company: "APEX INDUSTRIAL",
+    role: "VP of Advanced Manufacturing",
   },
   {
-    quote: "In twelve years of building startups, I have never had an engineering partner who treated architecture decisions with the same gravitas as business decisions. This is a different kind of firm.",
-    name: "LARS ERIKSEN", company: "FIELDSTREAM", role: "CTO",
+    quote:
+      "Deploying high-assurance intelligence in a hospital network requires uncompromising privacy. Niena Labs provided on-premise neural hardware and diagnostic software that keeps patient data strictly within our physical enclaves.",
+    name: "DR. ELENA ROSTOVA",
+    company: "BIOHEALTH RESEARCH",
+    role: "Director of Clinical Computing",
   },
   {
-    quote: "The platform they delivered has processed over three million transactions without a single incident. The foundation they laid means we can move fast without breaking things.",
-    name: "PRIYA CHANDRASEKHAR", company: "AETHER LOGISTICS", role: "VP Engineering",
-  },
-  // Add a few more to make the carousel feel full
-  {
-    quote: "Working with them was the single most impactful decision we made this year. They delivered a product that entirely redefined our competitive advantage.",
-    name: "DAVID CHEN", company: "NEXUS SYSTEMS", role: "Product Lead",
+    quote:
+      "The autonomous decision engines adapted to national supply chain disruptions in real time. We experienced an 18% improvement in logistics throughput within the first quarter.",
+    name: "KWAME MENSAH",
+    company: "AETHER LOGISTICS",
+    role: "Chief Operating Officer",
   },
   {
-    quote: "An incredibly rare mix of high-level strategic thinking and flawless execution. They don't just write code, they engineer outcomes.",
-    name: "SARAH JENKINS", company: "ORBITAL", role: "CEO",
-  }
+    quote:
+      "Their ambient sensing hardware operates with surgical precision. It enhances environmental comfort and energy efficiency across our commercial properties without a single invasive camera or microphone.",
+    name: "SOPHIA LINDQVIST",
+    company: "NORDIC HABITAT",
+    role: "Head of Smart Infrastructure",
+  },
+  {
+    quote:
+      "Most AI vendors offer cloud APIs that collapse in real factory conditions. Niena Labs engineered ruggedized hardware and deterministic software that just works on the shop floor.",
+    name: "DAVID CHEN",
+    company: "NEXUS SYSTEMS",
+    role: "Chief Technology Officer",
+  },
 ];
 
 export default function TestimonialsSection() {
@@ -50,22 +65,23 @@ export default function TestimonialsSection() {
           willChange: "transform, opacity",
         }}
       >
-        {/* Watermark Spiral Background */}
-        <div className="section-watermark" aria-hidden="true">
-          <img
-            src="/niena-spiral-background.svg"
-            alt=""
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-
         {/* Header */}
         <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
-          <div style={{ marginBottom: "var(--spacing-16)", textAlign: "center" }}>
-            <Typography variant="large-title" style={{ marginBottom: "4px" }}>
-              What they say.
-            </Typography>
+          <div style={{ marginBottom: "var(--spacing-12)", textAlign: "center" }}>
+            <ScrollBlurReveal
+              as="h2"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(32px, 4.5vw, 48px)",
+                color: "var(--color-fg)",
+                lineHeight: 1.15,
+                letterSpacing: "-0.02em",
+                marginBottom: "4px",
+              }}
+            >
+              Deployed where failure is not an option.
+            </ScrollBlurReveal>
           </div>
         </div>
 
@@ -74,66 +90,76 @@ export default function TestimonialsSection() {
           <Carousel
             items={testimonials}
             variant="marquee"
-            marqueeSpeed="50s"
+            marqueeSpeed="55s"
             renderItem={(t, i) => {
               const altColorIndex = ((i % 4) + 1).toString() as DynamicColor;
-              
+
               return (
                 <Card
                   variant="glass"
                   dynamicColor={altColorIndex}
                   interactive={true}
                   style={{
-                    width: "380px",
-                    minHeight: "300px",
+                    width: "400px",
+                    minHeight: "310px",
                     display: "flex",
                     flexDirection: "column",
+                    padding: "28px",
                   }}
                 >
-                  <div style={{
-                    fontFamily: "var(--font-display)", fontSize: "40px",
-                    color: "inherit", 
-                    opacity: 0.3,
-                    lineHeight: 1, marginBottom: "16px"
-                  }}>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "36px",
+                      color: "inherit",
+                      opacity: 0.3,
+                      lineHeight: 1,
+                      marginBottom: "12px",
+                    }}
+                  >
                     &ldquo;
                   </div>
-                  
-                  <blockquote style={{ flexGrow: 1, marginBottom: "24px" }}>
-                    <Typography 
-                      variant="body1" 
-                      color="inherit"
-                      style={{ opacity: 0.95 }}
+
+                  <blockquote style={{ flexGrow: 1, marginBottom: "20px" }}>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: "14px",
+                        lineHeight: 1.6,
+                        opacity: 0.95,
+                        margin: 0,
+                      }}
                     >
-                      "{t.quote}"
-                    </Typography>
+                      {t.quote}
+                    </p>
                   </blockquote>
-                  
+
                   <div>
-                    <Typography 
-                      variant="caption1" 
-                      style={{ 
+                    <div
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: "12px",
                         color: "inherit",
-                        textTransform: "uppercase", 
-                        letterSpacing: "0.06em", 
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06em",
                         marginBottom: "4px",
-                        fontWeight: 600
+                        fontWeight: 700,
                       }}
                     >
                       {t.name}
-                    </Typography>
-                    
-                    <Typography 
-                      variant="caption1" 
-                      color="inherit"
-                      style={{ 
-                        textTransform: "uppercase", 
-                        letterSpacing: "0.06em",
-                        opacity: 0.8
+                    </div>
+
+                    <div
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: "12px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.04em",
+                        opacity: 0.8,
                       }}
                     >
                       {t.role} · {t.company}
-                    </Typography>
+                    </div>
                   </div>
                 </Card>
               );

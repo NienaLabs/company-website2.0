@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignore": [
+    ".agents/**",
+    "apply_fixes.js",
+    "md_to_tiptap.js",
+    "process_mermaid.js",
+    "scratch*.js",
+    "test-imagekit.js",
+    "update_routes.js"
+  ],
+  "tags": [
+    "-lintignore"
+  ]
+}

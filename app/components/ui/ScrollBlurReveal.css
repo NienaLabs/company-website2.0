@@ -1,0 +1,12 @@
+/* ── ScrollBlurReveal: Kinetic Line-by-Line Unblur Animation ── */
+
+.scroll-blur-container {
+  position: relative;
+}
+
+.scroll-blur-word {
+  display: inline-block;
+  margin-right: 0.28em;
+  will-change: filter, opacity, transform;
+}
+

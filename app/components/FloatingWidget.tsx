@@ -87,17 +87,32 @@ export default function FloatingWidget() {
           0%, 100% { transform: translateY(-50%) translateX(0); }
           50% { transform: translateY(-50%) translateX(-6px); }
         }
+        @media (max-width: 639px) {
+          .floating-agent-tooltip {
+            display: none !important;
+          }
+          .floating-widget-wrapper {
+            bottom: 16px !important;
+            right: 16px !important;
+          }
+          .floating-widget-wrapper.is-chat-open {
+            display: none !important;
+          }
+        }
       `}</style>
       <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
-      <div style={{
-        position: "fixed",
-        bottom: "32px",
-        right: "32px",
-        zIndex: 9999,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}>
+      <div
+        className={`floating-widget-wrapper ${isChatOpen ? "is-chat-open" : ""}`}
+        style={{
+          position: "fixed",
+          bottom: "32px",
+          right: "32px",
+          zIndex: 9999,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {/* Container holding everything relative to the center origin */}
         <div style={{ position: "relative", width: "56px", height: "56px" }}>
 
@@ -217,6 +232,7 @@ export default function FloatingWidget() {
           {/* 24/7 Agent Tooltip */}
           {showTooltip && !isOpen && !isChatOpen && (
             <div
+              className="floating-agent-tooltip"
               style={{
                 position: "absolute",
                 right: "72px",

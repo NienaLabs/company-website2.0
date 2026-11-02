@@ -5,7 +5,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Activity, ShieldCheck } from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -54,35 +54,15 @@ export default function PartnerWithUsSection() {
   return (
     <section
       ref={sectionRef}
-      id="partner-with-us"
+      id="showcase"
       style={{
-        backgroundColor: "#0a0a0c",
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' opacity='.5'%3E%3C/path%3E%3Cpath d='M15 15h50l-5 5H20v40l-5 5V15zm0 50h50V15L80 0v80H0l15-15zm32.07-32.07l3.54-3.54A15 15 0 0 1 29.4 50.6l3.53-3.53a10 10 0 1 0 14.14-14.14zM32.93 47.07a10 10 0 1 1 14.14-14.14L32.93 47.07z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E")`,
+        backgroundColor: "var(--color-bg)",
         padding: "clamp(80px, 10vw, 140px) 0",
         position: "relative",
         overflow: "hidden",
-        borderTop: "1px solid rgba(255, 255, 255, 0.08)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+        borderTop: "1px solid var(--color-border)",
       }}
     >
-      {/* Ambient Central Amber Light Behind Content */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "30%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "800px",
-          height: "500px",
-          background:
-            "radial-gradient(circle, rgba(224, 209, 46, 0.08) 0%, rgba(224, 209, 46, 0.02) 45%, transparent 70%)",
-          filter: "blur(90px)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-
       <div
         className="section-container"
         style={{ position: "relative", zIndex: 1 }}
@@ -109,13 +89,13 @@ export default function PartnerWithUsSection() {
                 border: "1px solid rgba(224, 209, 46, 0.3)",
                 color: "var(--color-brand)",
                 fontSize: "12px",
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-body)",
                 fontWeight: 600,
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
               }}
             >
-              <span>Partner With Us</span>
+              <span>Field Telemetry & Systems Showcase</span>
             </span>
           </div>
 
@@ -124,13 +104,13 @@ export default function PartnerWithUsSection() {
               fontFamily: "var(--font-display)",
               fontSize: "clamp(34px, 5.5vw, 56px)",
               fontWeight: 600,
-              color: "#ffffff",
+              color: "var(--color-fg)",
               lineHeight: 1.15,
               letterSpacing: "-0.02em",
               marginBottom: "var(--spacing-4)",
             }}
           >
-            Engineering partners for companies ready to matter.
+            Intelligence in motion: Real systems solving real problems.
           </h2>
 
           <p
@@ -138,14 +118,14 @@ export default function PartnerWithUsSection() {
               fontFamily: "var(--font-body)",
               fontSize: "clamp(16px, 1.8vw, 19px)",
               lineHeight: 1.7,
-              color: "rgba(255, 255, 255, 0.72)",
+              color: "var(--color-fg-muted)",
               maxWidth: "680px",
               margin: "0 auto",
             }}
           >
-            We don&apos;t take on hundreds of routine projects. We forge deep,
-            high-conviction partnerships with visionary founders and enterprises,
-            embedding principal architects to turn ambitious roadmaps into reality.
+            Watch how Niena Labs brings specialized software, edge infrastructure,
+            and connected hardware together to automate mission-critical operations
+            and improve everyday human life.
           </p>
         </div>
 
@@ -161,13 +141,13 @@ export default function PartnerWithUsSection() {
           {/* Glowing Outer Card Frame */}
           <div
             style={{
-              backgroundColor: "rgba(18, 18, 22, 0.8)",
+              backgroundColor: "var(--md-sys-color-surface-container-low)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               borderRadius: "var(--radius-3xl)",
               border: "1px solid rgba(224, 209, 46, 0.28)",
               boxShadow:
-                "0 24px 70px -15px rgba(0, 0, 0, 0.9), 0 0 50px -10px rgba(224, 209, 46, 0.16)",
+                "0 24px 70px -15px rgba(0, 0, 0, 0.7), 0 0 50px -10px rgba(224, 209, 46, 0.12)",
               padding: "clamp(12px, 2vw, 20px)",
               position: "relative",
               overflow: "hidden",
@@ -180,7 +160,7 @@ export default function PartnerWithUsSection() {
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "4px 8px clamp(10px, 1.5vw, 16px) 8px",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+                borderBottom: "1px solid var(--color-border)",
                 marginBottom: "clamp(12px, 2vw, 18px)",
               }}
             >
@@ -190,8 +170,8 @@ export default function PartnerWithUsSection() {
                   alignItems: "center",
                   gap: "8px",
                   fontSize: "12px",
-                  fontFamily: "var(--font-mono)",
-                  color: "rgba(255, 255, 255, 0.8)",
+                  fontFamily: "var(--font-mono)", /* taste-skill-ignore */
+                  color: "var(--color-fg)",
                   letterSpacing: "0.04em",
                 }}
               >
@@ -204,17 +184,28 @@ export default function PartnerWithUsSection() {
                     boxShadow: "0 0 10px var(--color-brand)",
                   }}
                 />
-                <span style={{ fontWeight: 600, color: "#ffffff" }}>
+                <span style={{ fontWeight: 600 }}>
                   NIENA LABS
                 </span>
                 <span style={{ opacity: 0.5 }}>//</span>
-                <span>PARTNERSHIP SHOWCASE</span>
+                <span>REAL-WORLD INTELLIGENCE SHOWCASE</span>
               </div>
 
-            
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  fontSize: "11px",
+                  fontFamily: "var(--font-mono)", /* taste-skill-ignore */
+                  color: "var(--color-fg-subtle)",
+                }}
+              >
+                <span>STATUS: OPERATIONAL</span>
+              </div>
             </div>
 
-            {/* Responsive 16:9 YouTube Video Frame */}
+            {/* Responsive 16:9 Video Frame */}
             <div
               style={{
                 position: "relative",
@@ -229,7 +220,7 @@ export default function PartnerWithUsSection() {
             >
               <iframe
                 src="https://www.youtube.com/embed/A0aFUptdZ28?rel=0&modestbranding=1"
-                title="Partner with Niena Labs"
+                title="Intelligence Products in the Real Economy — Niena Labs"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 style={{
@@ -257,48 +248,37 @@ export default function PartnerWithUsSection() {
           }}
         >
           <Link
-            href="#contact"
-            className="natural-btn"
+            href="/#contact"
+            className="btn-primary"
             style={{
+              padding: "14px 36px",
+              fontSize: "13px",
+              fontWeight: 600,
+              letterSpacing: "0.04em",
+              borderRadius: "var(--radius-full)",
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              padding: "0 var(--spacing-8)",
-              minHeight: "50px",
-              borderRadius: "var(--radius-full)",
-              backgroundColor: "var(--color-brand)",
-              color: "var(--color-brand-fg)",
-              fontSize: "14px",
-              fontWeight: 600,
-              textDecoration: "none",
-              boxShadow: "0 8px 24px -6px var(--color-brand)",
-              transition: "all var(--motion-micro-feedback)",
+              textTransform: "uppercase",
             }}
           >
-            <span>Start a Partnership Conversation</span>
+            <span>Deploy to Your Environment</span>
             <ArrowUpRight size={16} />
           </Link>
 
           <Link
-            href="#services"
-            className="natural-btn"
+            href="/products"
+            className="btn-secondary"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "0 var(--spacing-6)",
-              minHeight: "50px",
-              borderRadius: "var(--radius-full)",
-              backgroundColor: "transparent",
-              color: "#ffffff",
-              border: "1px solid rgba(255, 255, 255, 0.2)",
-              fontSize: "14px",
+              padding: "14px 32px",
+              fontSize: "13px",
               fontWeight: 600,
-              textDecoration: "none",
-              transition: "all var(--motion-micro-feedback)",
+              letterSpacing: "0.04em",
+              borderRadius: "var(--radius-full)",
+              textTransform: "uppercase",
             }}
           >
-            <span>Explore What We Build</span>
+            <span>Explore All Products</span>
           </Link>
         </div>
       </div>

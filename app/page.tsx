@@ -1,41 +1,35 @@
 import HeroSection from "./components/HeroSection";
+import IntroSection from "./components/IntroSection";
+import CapabilitiesSection from "./components/CapabilitiesSection";
 import PartnerWithUsSection from "./components/PartnerWithUsSection";
 import VisionSection from "./components/VisionSection";
 import OpenSourceSection from "./components/OpenSourceSection";
 import ManifestoSection from "./components/ManifestoSection";
-import TestimonialsSection from "./components/TestimonialsSection";
 import ContactSection from "./components/ContactSection";
-import Footer from "./components/Footer";
 import FloatingWidget from "./components/FloatingWidget";
-import CapabilitiesSection from "./components/CapabilitiesSection";
+
 export default function Home() {
   return (
     <main>
-      {/* Section 01 — Hero: The Manifesto */}
+      {/* 01: Hero — Intelligence for the Real Economy */}
       <HeroSection />
 
-      {/* Section 02 — Partner With Us */}
-      <PartnerWithUsSection />
+      {/* 02: Introduction & Vision — Intelligence in the Real Economy */}
+      <IntroSection />
 
-      {/* Section 03 — Capabilities: The Bento Grid */}
+      {/* 03: Capabilities — How We Integrate Intelligence Into Your Environment */}
       <CapabilitiesSection />
 
-     
+      {/* 03: Physical-World Intelligence — Kinetic perspective & deployments */}
+      <VisionSection />
 
-        
-        {/* Section 06 — Vision & Testimonials (Perspective Transition) */}
-        <VisionSection />
+      {/* 04: Manifesto Interlude — Built for operators & industrial reality */}
+      <ManifestoSection />
 
-        {/* Section 08 — Open Source */}
-        <OpenSourceSection />
+      {/* 05: Deployment Engagement & Intake */}
+      <ContactSection />
 
-        {/* Section 09 — Manifesto Interlude */}
-        <ManifestoSection />
-
-        {/* Section 09 — Contact: The Closing Invitation */}
-        <ContactSection />
-
-      {/* Floating Social Widget (Bottom Right) */}
+      {/* Floating Concierge & Community Access */}
       <FloatingWidget />
     </main>
   );

@@ -8,21 +8,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   dynamicColor?: DynamicColor; // Required if variant is 'dynamic'
   interactive?: boolean; // If true, adds hover lift effect
   image?: string; // URL for an image to display at the top of the card
-  icon?: React.ReactNode; // 3D icon or react-icon
-}
-
-const BOX_DEPTH = 14;
-
-/**
- * Determines the 3D extrusion side-panel color based on the card variant.
- * - dynamic (solid): uses a shade of the card's alt color
- * - outlined / elevated / default / glass: uses the border color
- */
-function getSideColor(variant: CardVariant, dynamicColor: DynamicColor): string {
-  if (variant === 'dynamic') {
-    return `var(--color-alt-${dynamicColor}-hover)`;
-  }
-  return 'var(--color-border-strong)';
+  icon?: React.ReactNode;
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(({
@@ -36,33 +22,34 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
   children,
   ...props
 }, ref) => {
-
-  // ── Resolve face styles per variant ──────────────────────────────────
+  // ── Resolve surface styles per variant ──────────────────────────────────
   let surfaceColor = 'var(--color-surface)';
   let backdropFilter = 'none';
-  let border = '1px solid transparent';
+  let border = '1px solid var(--color-border)';
   let faceTextColor: string | undefined = undefined;
+  let boxShadow = 'none';
 
   if (variant === 'elevated') {
     surfaceColor = 'var(--color-surface-raised)';
     border = '1px solid var(--color-border)';
+    boxShadow = '0 2px 8px -2px rgba(0, 0, 0, 0.2), 0 1px 3px -1px rgba(0, 0, 0, 0.1)';
   } else if (variant === 'glass') {
     surfaceColor = 'var(--color-surface-glass-base)';
     backdropFilter = 'blur(16px)';
     border = '1px solid var(--color-border-strong)';
     faceTextColor = 'var(--color-fg)';
+    boxShadow = '0 4px 16px -4px rgba(0, 0, 0, 0.3)';
   } else if (variant === 'outlined') {
     surfaceColor = 'transparent';
     border = '1px solid var(--color-border-strong)';
   } else if (variant === 'dynamic') {
     surfaceColor = `var(--color-alt-${dynamicColor})`;
     faceTextColor = `var(--color-alt-${dynamicColor}-fg)`;
+    border = `1px solid var(--color-alt-${dynamicColor}-hover)`;
   } else if (variant === 'default') {
     surfaceColor = 'var(--color-surface)';
     border = '1px solid var(--color-border)';
   }
-
-  const sideColor = getSideColor(variant, dynamicColor);
 
   // ── Image + Icon helpers ─────────────────────────────────────────────
   const renderImage = image ? (
@@ -70,6 +57,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
       width: '100%',
       height: '200px',
       overflow: 'hidden',
+      borderRadius: 'calc(var(--radius-2xl, 16px) - 4px)',
       marginBottom: 'var(--spacing-6)',
       flexShrink: 0,
     }}>
@@ -81,80 +69,38 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({
     <div style={{
       marginBottom: 'var(--spacing-6)',
       display: 'inline-flex',
-      fontSize: '48px',
+      fontSize: '32px',
+      color: 'var(--color-brand)',
     }}>
       {icon}
     </div>
   ) : null;
 
-  // ── Render: every card gets the 3D extrusion wrapper ────────────────
   return (
     <div
       ref={ref}
-      className={`natural-card-wrapper ${interactive ? 'interactive' : ''} ${className}`}
+      className={`material-card ${interactive ? 'interactive-card' : ''} ${className}`}
       style={{
         position: 'relative',
-        paddingRight: `${BOX_DEPTH}px`,
-        paddingBottom: `${BOX_DEPTH}px`,
+        backgroundColor: surfaceColor,
+        backdropFilter,
+        WebkitBackdropFilter: backdropFilter !== 'none' ? backdropFilter : undefined,
+        border,
+        borderRadius: 'var(--radius-2xl, 16px)',
+        padding: 'var(--spacing-container-padding, 24px)',
+        boxShadow,
         display: 'flex',
         flexDirection: 'column',
-        transition: 'all var(--motion-productive-shift)',
+        ...(faceTextColor ? { color: faceTextColor } : {}),
+        transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease',
         ...style,
       }}
       {...props}
     >
-      {/* Right side panel (3D extrusion) */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          width: `${BOX_DEPTH}px`,
-          bottom: `${BOX_DEPTH}px`,
-          backgroundColor: sideColor,
-          transformOrigin: 'left top',
-          transform: 'skewY(45deg)',
-        }}
-      />
-      {/* Bottom side panel (3D extrusion) */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: `${BOX_DEPTH}px`,
-          height: `${BOX_DEPTH}px`,
-          backgroundColor: sideColor,
-          transformOrigin: 'top right',
-          transform: 'skewX(45deg)',
-        }}
-      />
-      {/* The card face */}
-      <div
-        className={`natural-card ${variant === 'elevated' ? 'shadow-md' : ''}`}
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          backgroundColor: surfaceColor,
-          backdropFilter,
-          WebkitBackdropFilter: backdropFilter !== 'none' ? backdropFilter : undefined,
-          border,
-          ...(faceTextColor ? { color: faceTextColor } : {}),
-          borderRadius: '0px',
-          padding: 'var(--spacing-container-padding)',
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 1,
-          minHeight: 0,
-        }}
-      >
-        {renderImage}
-        {renderIcon}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
-          {children}
-        </div>
+      {renderImage}
+      {renderIcon}
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+        {children}
       </div>
     </div>
   );

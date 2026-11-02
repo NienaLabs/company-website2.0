@@ -1,92 +1,240 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { Typography } from "../components/ui/Typography";
-import { Card } from "../components/ui/Card";
-import { SearchX } from "lucide-react";
+import { useState } from "react";
+import {
+  Eye,
+  Cpu,
+  Network,
+  Layers,
+  ArrowUpRight,
+  Mail,
+  Copy,
+  Check,
+} from "lucide-react";
+import ScrollBlurReveal from "../components/ui/ScrollBlurReveal";
+import "./careers.css";
 
-gsap.registerPlugin(useGSAP);
+interface Discipline {
+  id: string;
+  track: string;
+  title: string;
+  description: string;
+  tags: string[];
+  icon: typeof Eye;
+}
+
+const disciplines: Discipline[] = [
+  {
+    id: "edge-vision",
+    track: "Track 01 · Perception Systems",
+    title: "Streaming Vision & Causal Reasoning",
+    description:
+      "Design sub-millimeter defect interception models, illumination-invariant spatial perception engines (like Compound-V), and causal temporal sequence models running deterministically on edge silicon.",
+    tags: ["TensorRT / ONNX", "PyTorch", "Spatial Perception", "Temporal GRU", "C++ / Python"],
+    icon: Eye,
+  },
+  {
+    id: "embedded-kernel",
+    track: "Track 02 · Edge Hardware & OS",
+    title: "Real-Time Runtime & Device Drivers",
+    description:
+      "Architect low-latency Linux kernel optimizations, multi-camera sensor synchronization pipelines (MIPI / GMSL / USB3), and deterministic hardware-accelerated inference appliances for physical facilities.",
+    tags: ["NVIDIA Jetson", "Linux RT-Preempt", "GStreamer / V4L2", "Rust / C++", "MIPI / RTSP"],
+    icon: Cpu,
+  },
+  {
+    id: "distributed-systems",
+    track: "Track 03 · Core Infrastructure",
+    title: "Resilient Edge-to-Cloud Fabric",
+    description:
+      "Build zero-data-loss telemetry pipelines, local-first offline storage sinks, deterministic arbitration state machines, and real-time composite operational streams operating reliably under intermittent network connectivity.",
+    tags: ["Distributed State", "Local-First", "High Throughput", "TypeScript / Go", "WebSockets"],
+    icon: Network,
+  },
+  {
+    id: "industrial-hardware",
+    track: "Track 04 · Systems Engineering",
+    title: "Ruggedized Field Computing & I/O",
+    description:
+      "Integrate edge computer vision appliances into live factory conveyor belts, warehouse sortation lines, and commercial retail fixtures with industrial I/O protocols and rigorous thermal management.",
+    tags: ["Industrial I/O", "PLC / SCADA", "Thermal Dynamics", "Field Validation", "CAD / Mechanical"],
+    icon: Layers,
+  },
+];
+
+const principles = [
+  {
+    number: "01",
+    heading: "Physical Ground Truth",
+    body: "We calibrate against optical noise, mechanical vibrations, and variable factory lighting, not sterile academic benchmarks.",
+  },
+  {
+    number: "02",
+    heading: "Deterministic Latency",
+    body: "Our inference and control loops operate within rigid frame budgets where delayed decisions cause physical defects or inventory leakage.",
+  },
+  {
+    number: "03",
+    heading: "Deep System Ownership",
+    body: "Engineers touch hardware enclosures, sensor firmware, sequence models, and client control planes. There is no hand-off to someone else.",
+  },
+];
 
 export default function CareersClient() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
 
-  useGSAP((_context, contextSafe) => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-    
-    gsap.fromTo(
-      ".fade-in-up",
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out", delay: 0.2 }
-    );
-  }, { scope: containerRef });
+  const handleCopy = () => {
+    navigator.clipboard.writeText("careers@nienalabs.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
+  };
+
+  const mailtoUrl =
+    "mailto:careers@nienalabs.com?subject=Engineering%20Collective%20Inquiry%20%E2%80%94%20Niena%20Labs&body=Hi%20Niena%20Labs%20Team%2C%0A%0AI'm%20reaching%20out%20regarding%20engineering%20opportunities%20at%20Niena%20Labs.%0A%0A%E2%80%A2%20Core%20Focus%20%2F%20Discipline%3A%0A%E2%80%A2%20Selected%20Projects%20%2F%20GitHub%20Links%3A%0A%E2%80%A2%20A%20hard%20system%20problem%20I've%20solved%3A%0A%0ABest%20regards%2C";
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-[var(--bg)]">
-      {/* SVG Pattern Hero Section */}
-      <section 
-        className="relative overflow-hidden flex flex-col justify-center border-b border-[var(--color-border)]"
-        style={{
-          backgroundColor: '#0a0a0c',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' opacity='.5'%3E%3C/path%3E%3Cpath d='M15 15h50l-5 5H20v40l-5 5V15zm0 50h50V15L80 0v80H0l15-15zm32.07-32.07l3.54-3.54A15 15 0 0 1 29.4 50.6l3.53-3.53a10 10 0 1 0 14.14-14.14zM32.93 47.07a10 10 0 1 1 14.14-14.14L32.93 47.07z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E")`,
-          color: '#f5f3ee',
-          minHeight: '85vh',
-          paddingTop: 'calc(var(--space-9) + 80px)',
-          paddingBottom: 'var(--space-9)',
-        }}
-      >
-        <div className="section-container relative z-10 w-full">
-          <div className="max-w-4xl flex flex-col" style={{ gap: 'var(--space-5)' }}>
-            <div className="fade-in-up">
-              <Typography variant="caption1" color="brand" className="uppercase tracking-widest font-bold" style={{ marginBottom: 'var(--space-3)' }}>
-                Careers
-              </Typography>
-              <Typography variant="display" className="leading-tight tracking-tight" style={{ color: '#f5f3ee' }}>
-                Join the <br />
-                <span className="opacity-75">collective.</span>
-              </Typography>
+    <div className="careers-page">
+      {/* ── 01: Hero Section ── */}
+      <section className="careers-hero" aria-label="Careers Overview">
+        <div className="careers-container">
+          <div className="careers-hero-content">
+            <div className="careers-status-pill">
+              <span className="careers-status-dot" />
+              <span>Engineering Roster: Full Capacity · Accepting Speculative Inquiries</span>
             </div>
-            
-            <div className="flex flex-col max-w-2xl fade-in-up" style={{ gap: 'var(--space-4)' }}>
-              <Typography variant="body1" className="text-xl md:text-2xl leading-relaxed opacity-90 font-medium" style={{ color: '#d4d4d8' }}>
-                We build scalable, AI-driven enterprise applications for businesses ready to scale. 
-              </Typography>
-              
-              <Typography variant="body1" className="text-xl md:text-2xl leading-relaxed opacity-90 font-medium" style={{ color: '#d4d4d8' }}>
-                We're looking for individuals who believe in building with unprecedented purpose and precision.
-              </Typography>
-            </div>
+
+            <ScrollBlurReveal as="h1" className="careers-hero-title">
+              Build intelligence for physical reality.
+            </ScrollBlurReveal>
+
+            <ScrollBlurReveal as="p" className="careers-hero-lead">
+              We engineer deterministic computer vision pipelines, embedded perception engines,
+              and high-assurance systems for factories, physical facilities, and edge hardware.
+              We look for deep generalists and systems specialists who thrive under physical
+              constraints.
+            </ScrollBlurReveal>
           </div>
         </div>
       </section>
 
-      {/* No Openings Section */}
-      <section style={{ paddingTop: 'calc(var(--spacing-section-gap) * 1.5)', paddingBottom: 'calc(var(--spacing-section-gap) * 1.5)' }}>
-        <div className="section-container">
-          <div className="max-w-3xl mx-auto fade-in-up">
-            <Card 
-              variant="glass" 
-              className="text-center flex flex-col items-center px-6 py-12 md:px-12 md:py-16"
-            >
-              <div 
-                className="w-16 h-16 rounded-full flex items-center justify-center mb-6"
-                style={{ backgroundColor: 'var(--color-surface-raised)', color: 'var(--color-fg-muted)' }}
-              >
-                <SearchX size={32} strokeWidth={1.5} />
+      {/* ── 02: Core Engineering Disciplines ── */}
+      <section className="careers-disciplines-section" aria-label="Engineering Disciplines">
+        <div className="careers-container">
+          <div className="careers-section-header">
+            <ScrollBlurReveal as="h2" className="careers-section-title">
+              Engineering Disciplines We Build With
+            </ScrollBlurReveal>
+            <ScrollBlurReveal as="p" className="careers-section-desc">
+              Our products require deep integration between hardware, machine perception, and
+              fault-tolerant edge runtimes.
+            </ScrollBlurReveal>
+          </div>
+
+          <div className="careers-grid">
+            {disciplines.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.id} className="discipline-card">
+                  <div className="discipline-card-header">
+                    <div className="discipline-icon-wrap">
+                      <Icon size={24} strokeWidth={1.75} />
+                    </div>
+                    <span className="discipline-track-label">{item.track}</span>
+                  </div>
+
+                  <h3 className="discipline-title">{item.title}</h3>
+                  <p className="discipline-description">{item.description}</p>
+
+                  <div className="discipline-tags">
+                    {item.tags.map((tag) => (
+                      <span key={tag} className="discipline-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 03: Engineering Principles ── */}
+      <section className="careers-principles-section" aria-label="How We Build">
+        <div className="careers-container">
+          <div className="careers-section-header">
+            <ScrollBlurReveal as="h2" className="careers-section-title">
+              Engineering Principles
+            </ScrollBlurReveal>
+            <ScrollBlurReveal as="p" className="careers-section-desc">
+              How we approach problems, make tradeoffs, and measure our craft.
+            </ScrollBlurReveal>
+          </div>
+
+          <div className="principles-grid">
+            {principles.map((pr) => (
+              <div key={pr.number} className="principle-item">
+                <span className="principle-num">{pr.number}</span>
+                <h3 className="principle-heading">{pr.heading}</h3>
+                <p className="principle-body">{pr.body}</p>
               </div>
-              
-              <Typography variant="title2" style={{ marginBottom: 'var(--space-3)' }}>
-                No Current Openings
-              </Typography>
-              
-              <Typography variant="body1" color="secondary" style={{ maxWidth: '500px', margin: '0 auto', lineHeight: 1.6 }}>
-                Our engineering team is currently at full capacity. We aren't actively 
-                recruiting for new roles today, but we're always looking out for exceptional 
-                talent. We will update this space when new roles open.
-              </Typography>
-            </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 04: Speculative Application / Talent Network ── */}
+      <section className="careers-cta-section" aria-label="Join the Collective">
+        <div className="careers-container">
+          <div className="careers-cta-card">
+            <div>
+              <h2 className="careers-cta-title">
+                Submit a Speculative Profile
+              </h2>
+              <p className="careers-cta-text">
+                While our active roster is currently at full capacity, we always make room for
+                exceptional engineers who demonstrate deep systems intuition and rigorous craft.
+              </p>
+
+              <div className="careers-cta-specs">
+                <div className="careers-cta-spec-item">
+                  <span className="careers-cta-spec-bullet">✓</span>
+                  <span>GitHub repositories, open-source commits, or live system architectures</span>
+                </div>
+                <div className="careers-cta-spec-item">
+                  <span className="careers-cta-spec-bullet">✓</span>
+                  <span>Teardowns or write-ups of non-trivial engineering bottlenecks you solved</span>
+                </div>
+                <div className="careers-cta-spec-item">
+                  <span className="careers-cta-spec-bullet">✓</span>
+                  <span>Direct experience with edge silicon, camera pipelines, or deterministic software</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="careers-cta-action-panel">
+              <a
+                href={mailtoUrl}
+                className="careers-btn-primary"
+              >
+                <Mail size={16} />
+                <span>Email Systems Team</span>
+                <ArrowUpRight size={15} />
+              </a>
+
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="careers-btn-secondary"
+              >
+                {copied ? <Check size={16} color="var(--color-brand)" /> : <Copy size={16} />}
+                <span>{copied ? "Email Copied to Clipboard" : "careers@nienalabs.com"}</span>
+              </button>
+
+              <p className="careers-action-note">
+                Directly reviewed by our principal engineers within 48 hours.
+              </p>
+            </div>
           </div>
         </div>
       </section>

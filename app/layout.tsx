@@ -12,17 +12,19 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.nienalabs.com"),
   title: {
-    default: "Niena Labs — Building the Software That Pushes Humanity Forward",
+    default: "Niena Labs — Intelligence for the Real Economy",
     template: "%s | Niena Labs",
   },
   description:
-    "Niena Labs builds scalable, AI-driven enterprise applications for businesses ready to scale. Custom software engineered with precision, for ideas that matter.",
+    "Niena Labs builds specialized software, infrastructure, and hardware that bring intelligence into the real economy and improve people's lives across businesses, factories, institutions, and living spaces.",
   keywords: [
-    "enterprise software",
-    "AI applications",
-    "custom software development",
-    "scalable applications",
-    "software engineering",
+    "intelligence products",
+    "specialized software",
+    "edge infrastructure",
+    "connected hardware",
+    "industrial computer vision",
+    "real economy intelligence",
+    "decision intelligence",
     "Niena Labs",
   ],
   alternates: {
@@ -40,9 +42,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Niena Labs — Built with Purpose",
+    title: "Niena Labs — Intelligence for the Real Economy",
     description:
-      "We build scalable enterprise software for companies that intend to matter.",
+      "Specialized software, infrastructure, and hardware designed to bring intelligence into businesses, factories, institutions, and living spaces.",
     type: "website",
     url: "https://www.nienalabs.com",
     siteName: "Niena Labs",
@@ -57,9 +59,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Niena Labs — Built with Purpose",
+    title: "Niena Labs — Intelligence for the Real Economy",
     description:
-      "We build scalable enterprise software for companies that intend to matter.",
+      "Specialized software, infrastructure, and hardware that bring intelligence into the real economy.",
     images: ["/android-chrome-512x512.png"],
   },
   icons: {
@@ -85,7 +87,7 @@ const organizationStructuredData = {
   url: "https://www.nienalabs.com",
   logo: "https://www.nienalabs.com/android-chrome-512x512.png",
   description:
-    "Niena Labs builds scalable, AI-driven enterprise applications for businesses ready to scale. Custom software engineered with precision.",
+    "Niena Labs builds specialized software, infrastructure, and hardware that bring intelligence into the real economy and improve people's lives.",
   sameAs: [
     "https://github.com/orgs/Nienalabs-community",
     "https://gh.linkedin.com/company/niena-labs",
@@ -108,12 +110,6 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="preload"
-          href="/niena-spiral-background.svg"
-          as="image"
-          type="image/svg+xml"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -1,0 +1,314 @@
+.slider-container {
+  --diameter: 1600px; /* calculated via viewport diagonal in ResizeObserver */
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  background-color: #05080d;
+  color: #ffffff;
+  isolation: isolate;
+}
+
+/* ── Giant Circular Slide List ─────────────────────────────────────────── */
+.slider-list {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.slider-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+}
+
+.slider-item.active {
+  pointer-events: auto;
+  opacity: 1;
+  z-index: 6;
+}
+
+/* ── Giant Rotating Circular Mask ──────────────────────────────────────── */
+.slider-image {
+  flex-shrink: 0;
+  width: var(--diameter, 1500px);
+  height: var(--diameter, 1500px);
+  border-radius: 50%;
+  transform: rotate(-60deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: calc(var(--diameter, 1500px) / -2);
+  margin-left: calc(var(--diameter, 1500px) / -2);
+  transition: 1s cubic-bezier(0.25, 1, 0.5, 1);
+  filter: blur(30px);
+  z-index: 1;
+  overflow: hidden;
+  will-change: transform, filter;
+}
+
+.slider-item.active .slider-image {
+  filter: blur(0px);
+  transform: rotate(0deg);
+}
+
+.slider-item.active ~ .slider-item .slider-image {
+  transform: rotate(60deg);
+}
+
+/* ── Media Layers inside Circle: Fallback Image & Video ─────────────────── */
+.slider-media-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  z-index: 1;
+  display: block;
+}
+
+.slider-media-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  background: transparent;
+}
+
+.slider-media-video.is-playing {
+  opacity: 1;
+}
+
+/* ── Pseudo-Elements: Multi-Layered Rotating Rings ────────────────────── */
+.slider-image::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  width: 70%;
+  height: 70%;
+  border: 1.5px solid rgba(224, 209, 46, 0.55); /* taste-skill-ignore */
+  background: linear-gradient(135deg, rgba(5, 8, 13, 0.58) 0%, rgba(5, 8, 13, 0.32) 100%); /* taste-skill-ignore */
+  transform: translate(-50%, -50%) rotate(-120deg);
+  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 3;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Inner Center Aperture Behind the Text */
+.slider-image::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  width: 36%;
+  height: 36%;
+  border: 1px solid rgba(224, 209, 46, 0.2); /* taste-skill-ignore */
+  background: rgba(5, 8, 13, 0.12);
+  transform: translate(-50%, -50%) rotate(-170deg);
+  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 4;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.slider-item.active .slider-image::before,
+.slider-item.active .slider-image::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.slider-item.active ~ .slider-item .slider-image::before {
+  transform: translate(-50%, -50%) rotate(120deg);
+}
+
+.slider-item.active ~ .slider-item .slider-image::after {
+  transform: translate(-50%, -50%) rotate(170deg);
+}
+
+/* ── Cinematic Scrim Overlay (Guarantees text contrast) ─────────────────── */
+.slider-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(5, 8, 13, 0.35) 0%, rgba(5, 8, 13, 0.8) 100%), /* taste-skill-ignore */
+    linear-gradient(to top, rgba(5, 8, 13, 0.95) 0%, transparent 40%), /* taste-skill-ignore */
+    linear-gradient(to bottom, rgba(5, 8, 13, 0.8) 0%, transparent 30%); /* taste-skill-ignore */
+}
+
+/* ── Content Layout ─────────────────────────────────────────────────────── */
+.slider-content {
+  position: relative;
+  z-index: 20;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(6.5rem, 15vh, 9.5rem) clamp(1.5rem, 5vw, 5rem) clamp(2rem, 5vh, 3.5rem);
+  max-width: 1440px;
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+/* ── Centered Single Manifesto Statement ───────────────────────────────── */
+.hero-center-statement {
+  margin-block: auto;
+  text-align: center;
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: 0 1rem;
+  pointer-events: auto;
+}
+
+.hero-statement-title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(2.35rem, 5.2vw, 4.8rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  color: #ffffff;
+  text-shadow: 0 8px 32px rgba(0, 0, 0, 0.85); /* taste-skill-ignore */
+  margin: 0;
+  animation: heroTextReveal 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroTextReveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Footer Controls: Caption, Dots & Slide Counter ────────────────────── */
+.slider-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.slider-footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hero-caption {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.85);
+  animation: heroCaptionFade 0.5s ease both;
+  max-width: 440px;
+}
+
+@keyframes heroCaptionFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slider-indicators {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.slider-dot {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full, 9999px);
+  transition: opacity 0.2s ease;
+}
+
+.slider-dot::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+}
+
+.slider-dot.active::before {
+  background: var(--color-brand, #e0d12e);
+  transform: scale(1.6);
+}
+
+.slider-dot:hover::before {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.slider-dot:focus-visible {
+  outline: 2px solid var(--color-brand, #e0d12e);
+  outline-offset: 2px;
+}
+
+.slider-counter {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.slider-counter-current {
+  color: var(--color-brand, #e0d12e);
+  font-weight: 700;
+}
+
+/* ── Mobile Breakpoints ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slider-content {
+    padding: 6rem 1.25rem 2rem;
+  }
+
+  .hero-statement-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.12;
+  }
+
+  .slider-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

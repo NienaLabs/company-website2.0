@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SmoothScrollProvider from "./components/SmoothScrollProvider";
+import CookieConsent from "./components/CookieConsent";
 
 export const viewport: Viewport = {
   themeColor: "#e0d12e",
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Niena Labs | There's alwaays a beginning",
+    title: "Niena Labs — Intelligence for the Real Economy",
     description:
       "Specialized software, infrastructure, and hardware designed to bring intelligence into businesses, factories, institutions, and living spaces.",
     type: "website",
@@ -59,7 +61,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Niena Labs — Intelligence for the Real Economy",
+    title: "Niena Labs | There's always a beginning",
     description:
       "Specialized software, infrastructure, and hardware that bring intelligence into the real economy.",
     images: ["/android-chrome-512x512.png"],
@@ -105,11 +107,45 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+
+  const hasValidGtm = Boolean(gtmId && gtmId.startsWith("GTM-"));
+  const hasValidGa = Boolean(gaId && gaId.startsWith("G-"));
+
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Google Consent Mode v2: Default to denied unless previously granted */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              try {
+                var consent = localStorage.getItem('niena_cookie_consent');
+                var defaultState = (consent === 'granted') ? 'granted' : 'denied';
+                gtag('consent', 'default', {
+                  'ad_storage': defaultState,
+                  'ad_user_data': defaultState,
+                  'ad_personalization': defaultState,
+                  'analytics_storage': defaultState,
+                  'wait_for_update': 500
+                });
+              } catch(e) {
+                gtag('consent', 'default', {
+                  'ad_storage': 'denied',
+                  'ad_user_data': 'denied',
+                  'ad_personalization': 'denied',
+                  'analytics_storage': 'denied',
+                  'wait_for_update': 500
+                });
+              }
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -117,6 +153,7 @@ export default function RootLayout({
           }}
         />
       </head>
+      {hasValidGtm && <GoogleTagManager gtmId={gtmId!} />}
       <body className="min-h-full flex flex-col antialiased">
         <ThemeProvider
           attribute="data-theme"
@@ -130,8 +167,10 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <CookieConsent />
           </SmoothScrollProvider>
         </ThemeProvider>
+        {hasValidGa && <GoogleAnalytics gaId={gaId!} />}
       </body>
     </html>
   );

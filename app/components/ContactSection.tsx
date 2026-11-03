@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, Check, Send } from "lucide-react";
 import ScrollBlurReveal from "./ui/ScrollBlurReveal";
+import { trackEvent } from "../../lib/analytics";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -100,6 +101,10 @@ export default function ContactSection() {
       if (response.ok) {
         setFormState("sent");
         setForm({ name: "", email: "", idea: "" });
+        trackEvent("generate_lead", {
+          environment: selectedEnvironment,
+          form_name: "deployment_inquiry",
+        });
       } else {
         const data = await response.json();
         console.error("Form Error:", data.error);
@@ -118,6 +123,7 @@ export default function ContactSection() {
   const handlePhoneClick = () => {
     navigator.clipboard.writeText("+233556732796");
     setCopiedPhone(true);
+    trackEvent("contact_click", { method: "phone" });
     setTimeout(() => setCopiedPhone(false), 2000);
   };
 

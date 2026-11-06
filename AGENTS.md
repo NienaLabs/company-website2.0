@@ -17,16 +17,18 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - Tailwind CSS v4 via `@tailwindcss/postcss` (not the old `tailwindcss` PostCSS plugin)
 - GSAP + ScrollTrigger for scroll-driven animations; Lenis for smooth scroll
 - `next-themes` with `data-theme` attribute (not `class`) for dark/light
-- Vercel AI SDK (`ai`, `@ai-sdk/react`) for chat; Resend for email; Paystack for payments
+- Vercel AI SDK (`ai`, `@ai-sdk/react`) for chat; Resend for email
 - Package manager is **bun** — never run `npm install` or `npm run`
 
 ## Architecture
 
-- `app/page.tsx` — landing page, composed of ~12 section components in `app/components/`
-- `app/api/` — API routes: `chat/`, `contact/`, `paystack/`
-- `app/bootcamp/` — bootcamp checkout + courses
-- `app/careers/`, `app/local-businesses/` — separate pages
-- `lib/` — shared data (`courses.ts`, `email-templates.ts`)
+- `app/page.tsx` — landing page, composed of section components in `app/components/`
+- `app/products/` — specialized software products & vision engines showcase
+- `app/case-studies/compound-v/` — dedicated Compound-V perception engine case study
+- `app/blog/` — research & engineering blog
+- `app/careers/` — engineering collective & discipline tracks
+- `app/terms/` — terms of service & GDPR privacy policy
+- `app/api/` — API routes: `chat/`, `contact/`
 - All section components are `"use client"` (GSAP needs browser APIs)
 
 ## Design system (strict — do not deviate)

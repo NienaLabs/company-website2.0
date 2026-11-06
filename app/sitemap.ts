@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
 import { getBlogPosts } from '../lib/blog';
-import { courses } from '../lib/courses';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.nienalabs.com';
@@ -16,14 +15,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     }));
-
-  // Dynamic Bootcamp Course Tracks
-  const courseUrls = courses.map((course) => ({
-    url: `${baseUrl}/bootcamp/courses/${course.slug}`,
-    lastModified: siteRevisionDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
 
   return [
     // 01. Primary Landing Page
@@ -59,16 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...blogUrls,
 
-    // 05. Software Development Bootcamp
-    {
-      url: `${baseUrl}/bootcamp/courses`,
-      lastModified: siteRevisionDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    ...courseUrls,
-
-    // 06. Careers & Engineering Collective
+    // 05. Careers & Engineering Collective
     {
       url: `${baseUrl}/careers`,
       lastModified: siteRevisionDate,
@@ -76,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
 
-    // 07. Governance & Terms of Service
+    // 06. Governance & Terms of Service
     {
       url: `${baseUrl}/terms`,
       lastModified: siteRevisionDate,
